@@ -1,0 +1,9 @@
+{
+  "name": "emerald-ui-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/emerald-ui-e2e/src",
+  "implicitDependencies": ["emerald-ui"],
+  "// targets": "to see all targets run: nx show project emerald-ui-e2e --web",
+  "targets": {}
+}
