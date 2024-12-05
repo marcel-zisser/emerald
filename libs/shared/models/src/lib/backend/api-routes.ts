@@ -1,0 +1,11 @@
+import { ApiEndpoint } from './api-endpoints.enum';
+
+export const ApiRoutes = new Map<ApiEndpoint, string>([
+  [ApiEndpoint.Login, 'auth/login'],
+  [ApiEndpoint.Logout, 'auth/logout'],
+  [ApiEndpoint.Register, 'auth/register'],
+  [ApiEndpoint.RefreshJWT, 'auth/refresh'],
+
+
+  [ApiEndpoint.GetUser, 'user']
+]);
