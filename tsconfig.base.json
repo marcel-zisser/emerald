@@ -15,9 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@emerald/components": ["libs/frontend/components/src/index.ts"],
+      "@emerald/admin": ["libs/features/admin/src/index.ts"],
+      "@emerald/components": ["libs/shared/components/src/index.ts"],
       "@emerald/models": ["libs/shared/models/src/index.ts"],
-      "@emerald/services": ["libs/frontend/services/src/index.ts"]
+      "@emerald/services": ["libs/shared/services/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
