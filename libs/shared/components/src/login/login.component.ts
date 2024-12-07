@@ -65,9 +65,15 @@ export class LoginComponent {
 
       this.authenticationService
         .login(email, password)
-        .pipe(
-          first(),
-          catchError((err) => {
+        .pipe(first())
+        .subscribe({
+          next: (response) => {
+            this.authenticationService.saveToken(response.accessToken);
+            this.authenticationService.authenticate();
+            this.snackbarService.dismiss();
+            this.router.navigate([FeatureRoutes.get(Feature.Admin)]);
+          },
+          error: () => {
             this.snackbarService.open(
               'Login failed. Please try again!',
               'Dismiss',
@@ -76,13 +82,7 @@ export class LoginComponent {
                 panelClass: ['error-snack'],
               }
             );
-            return of(err);
-          })
-        )
-        .subscribe((response) => {
-          this.authenticationService.saveToken(response.accessToken);
-          this.authenticationService.authenticate();
-          this.router.navigate([FeatureRoutes.get(Feature.Admin)]);
+          },
         });
     }
   }
