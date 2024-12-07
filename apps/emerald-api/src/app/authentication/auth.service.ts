@@ -1,6 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LoginRequest, LoginResponse, RefreshTokenResponse, User } from '@club-master/models';
+import {
+  LoginRequest,
+  LoginResponse,
+  RefreshTokenResponse,
+  User,
+} from '@emerald/models';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -8,9 +13,11 @@ import { Request, Response } from 'express';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectRepository(User)
-              private userRepository: Repository<User>,
-              private readonly jwtService: JwtService) {}
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    private readonly jwtService: JwtService
+  ) {}
 
   /**
    * Registers a user
@@ -30,14 +37,20 @@ export class AuthService {
    * @param response the response object to set the refreshToken
    * @returns {Promise<LoginResponse>} Returns JWT token on success
    */
-  async login(request: LoginRequest, response: Response): Promise<LoginResponse> {
-    const user = await this.userRepository.findOneBy({ username: request.username });
+  async login(
+    request: LoginRequest,
+    response: Response
+  ): Promise<LoginResponse> {
+    const user = await this.userRepository.findOneBy({ email: request.email });
     if (!user) {
       throw new UnauthorizedException();
     }
 
-    const passwordCorrect = await bcrypt.compare(request.password, user.password);
-    if(!passwordCorrect) {
+    const passwordCorrect = await bcrypt.compare(
+      request.password,
+      user.password
+    );
+    if (!passwordCorrect) {
       throw new UnauthorizedException();
     }
 
@@ -46,10 +59,11 @@ export class AuthService {
       httpOnly: true,
       secure: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      sameSite: 'strict',
     });
 
     return {
-      accessToken: await this.generateAccessToken(user.userId)
+      accessToken: await this.generateAccessToken(user.userId),
     };
   }
 
@@ -66,7 +80,7 @@ export class AuthService {
     }
 
     const valid = this.validateRefreshToken(refreshToken);
-    if(!valid) {
+    if (!valid) {
       throw new UnauthorizedException('Invalid refresh token');
     }
 
@@ -83,7 +97,7 @@ export class AuthService {
    */
   private async generateAccessToken(userId: string): Promise<string> {
     const payload = { sub: userId };
-    return this.jwtService.signAsync(payload)
+    return this.jwtService.signAsync(payload);
   }
 
   /**
@@ -92,7 +106,7 @@ export class AuthService {
    */
   private async generateRefreshToken(userId: string): Promise<string> {
     const payload = { sub: userId };
-    return this.jwtService.signAsync(payload, { expiresIn: '7d' })
+    return this.jwtService.signAsync(payload, { expiresIn: '7d' });
   }
 
   /**
@@ -103,7 +117,7 @@ export class AuthService {
   private async validateRefreshToken(token: string): Promise<any> {
     try {
       return this.jwtService.verifyAsync(token);
-    } catch (e) {
+    } catch (error) {
       return null;
     }
   }

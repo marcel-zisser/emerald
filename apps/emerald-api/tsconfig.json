@@ -11,6 +11,7 @@
     }
   ],
   "compilerOptions": {
-    "esModuleInterop": true
+    "lib": ["es2021"],  // No 'dom'
+    "types": ["node", "@types/express"]
   }
 }

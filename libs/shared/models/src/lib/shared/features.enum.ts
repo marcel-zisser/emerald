@@ -1,6 +1,5 @@
 export enum Feature {
-  Dashboard = 'Dashboard',
+  Admin = 'Admin',
   Login = 'Login',
   Logout = 'Logout',
-  UserSettings = 'User Settings'
 }

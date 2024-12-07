@@ -1,0 +1,45 @@
+/* Center the login card on the page */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd, var(--mat-sys-primary));
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Style the login card */
+.login-card {
+  width: 30rem;
+  padding: 2rem;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background-color: white;
+}
+
+/* Styling for the form fields */
+mat-form-field {
+  margin-bottom: 1rem;
+}
+
+/* Full-width buttons for better visual alignment */
+.full-width {
+  width: 100%;
+}
+
+/* Add some hover effects for buttons */
+.login-button {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.login-button:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Aesthetic adjustment for the Forgot Password button */
+.forgot-password {
+  font-size: 0.9rem;
+  text-transform: none;
+}

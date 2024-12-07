@@ -1,26 +1,33 @@
-import { inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
+import {
+  inject,
+  Injectable,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { first, map, Observable, of } from 'rxjs';
 import {
   ApiEndpoint,
-  ApiRoutes, Feature, FeatureRoutes,
+  ApiRoutes,
+  Feature,
+  FeatureRoutes,
   LoginRequest,
   LoginResponse,
   RefreshTokenResponse,
   RegisterRequest,
-  User
-} from '@club-master/models';
+  User,
+} from '@emerald/models';
 import { BackendService } from '../backend';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
-
   private readonly router = inject(Router);
-  private jwtHelper =inject(JwtHelperService);
+  private jwtHelper = inject(JwtHelperService);
   private backendService = inject(BackendService);
   private _isAuthenticated: WritableSignal<boolean> = signal(false);
 
@@ -41,17 +48,17 @@ export class AuthenticationService {
     return this.backendService.doPost<void, RegisterRequest>(
       `${ApiRoutes.get(ApiEndpoint.Register)}`,
       body
-      )
+    );
   }
 
   /**
    * Logs in a user with the provided credentials
-   * @param username the provided username
+   * @param email the provided email
    * @param password the provided password
    * @returns {Observable<LoginResponse>} Observable with information about the success of the login
    */
-  login(username: string, password: string): Observable<LoginResponse> {
-    const body: LoginRequest = { username: username, password: password };
+  login(email: string, password: string): Observable<LoginResponse> {
+    const body: LoginRequest = { email: email, password: password };
 
     return this.backendService.doPost<LoginResponse, LoginRequest>(
       `${ApiRoutes.get(ApiEndpoint.Login)}`,
@@ -72,13 +79,12 @@ export class AuthenticationService {
    */
   saveToken(token: string): void {
     localStorage.setItem('auth_token', token);
-    window.dispatchEvent( new StorageEvent(
-      'storage',
-      {
+    window.dispatchEvent(
+      new StorageEvent('storage', {
         key: 'auth_token',
-        newValue: token
-      }
-    ));
+        newValue: token,
+      })
+    );
   }
 
   /**
@@ -94,17 +100,18 @@ export class AuthenticationService {
    * @returns {Observable<RefreshTokenResponse>} a new and valid JWT token response
    */
   refreshToken(): Observable<RefreshTokenResponse | null> {
-
-    return this.backendService.doPost<RefreshTokenResponse, Record<string, never>>(
-      `${ApiRoutes.get(ApiEndpoint.RefreshJWT)}`,
-      {}
-    ).pipe(
-      first(),
-      catchError(() => {
-        this.logout();
-        return of(null)
-      })
-    );
+    return this.backendService
+      .doPost<RefreshTokenResponse, Record<string, never>>(
+        `${ApiRoutes.get(ApiEndpoint.RefreshJWT)}`,
+        {}
+      )
+      .pipe(
+        first(),
+        catchError(() => {
+          this.logout();
+          return of(null);
+        })
+      );
   }
 
   /**
@@ -112,21 +119,23 @@ export class AuthenticationService {
    */
   checkAuthentication(): Observable<boolean> {
     const token = this.getToken();
-    const isAuthenticated = token ? !this.jwtHelper.isTokenExpired(token) : false;
+    const isAuthenticated = token
+      ? !this.jwtHelper.isTokenExpired(token)
+      : false;
 
     if (!isAuthenticated) {
-     return this.refreshToken().pipe(
-       map(response => {
-         if (response?.accessToken) {
-           this.saveToken(response.accessToken);
-           this._isAuthenticated.set(true);
-           return true;
-         } else {
-           this.logout();
-           return false;
-         }
-       })
-     );
+      return this.refreshToken().pipe(
+        map((response) => {
+          if (response?.accessToken) {
+            this.saveToken(response.accessToken);
+            this._isAuthenticated.set(true);
+            return true;
+          } else {
+            this.logout();
+            return false;
+          }
+        })
+      );
     }
 
     this._isAuthenticated.set(true);
@@ -140,13 +149,14 @@ export class AuthenticationService {
     this._isAuthenticated.set(false);
     localStorage.removeItem('auth_token');
 
-    this.backendService.doPost<never, Record<string, never>>(
-      `${ApiRoutes.get(ApiEndpoint.Logout)}`,
-      {}
-    ).pipe(
-      first()
-    ).subscribe(() => {
-      this.router.navigate([FeatureRoutes.get(Feature.Login)])
-    });
+    this.backendService
+      .doPost<never, Record<string, never>>(
+        `${ApiRoutes.get(ApiEndpoint.Logout)}`,
+        {}
+      )
+      .pipe(first())
+      .subscribe(() => {
+        this.router.navigate([FeatureRoutes.get(Feature.Login)]);
+      });
   }
 }
