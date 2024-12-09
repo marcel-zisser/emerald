@@ -24,6 +24,11 @@
           {
             "glob": "**/*",
             "input": "apps/emerald-ui/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/assets",
+            "output": "/assets/"
           }
         ],
         "styles": [

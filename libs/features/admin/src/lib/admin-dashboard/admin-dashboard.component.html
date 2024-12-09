@@ -1,1 +1,29 @@
-<p>dashboard works!</p>
+<!-- sidebar.component.html -->
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    [opened]="isExpanded"
+    [class.collapsed]="!isExpanded"
+    class="sidenav"
+  >
+    <div class="sidenav-header">
+      <div class="logo-container">
+        <img src="/assets/emerald.svg" alt="Logo" class="logo" />
+        <h3>Emerald</h3>
+      </div>
+      <button mat-icon-button (click)="toggleSidebar()">
+        <mat-icon>{{ isExpanded ? 'chevron_left' : 'menu' }}</mat-icon>
+      </button>
+    </div>
+    <hr class="header-separator" />
+    <mat-nav-list>
+      <a mat-list-item href="#">User Management</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
