@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthenticationService } from '@emerald/services';
-import { catchError, first, of } from 'rxjs';
+import { first} from 'rxjs';
 import { Router } from '@angular/router';
 import { Feature, FeatureRoutes } from '@emerald/models';
 import {

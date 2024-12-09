@@ -27,8 +27,8 @@ import { Router } from '@angular/router';
 })
 export class AuthenticationService {
   private readonly router = inject(Router);
-  private jwtHelper = inject(JwtHelperService);
-  private backendService = inject(BackendService);
+  private readonly jwtHelper = inject(JwtHelperService);
+  private readonly backendService = inject(BackendService);
   private _isAuthenticated: WritableSignal<boolean> = signal(false);
 
   /**
