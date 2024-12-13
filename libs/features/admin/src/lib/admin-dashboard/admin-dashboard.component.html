@@ -13,7 +13,7 @@
         <h3>Emerald</h3>
       </div>
       <button mat-icon-button (click)="toggleSidebar()">
-        <mat-icon>{{ isExpanded ? 'chevron_left' : 'menu' }}</mat-icon>
+        <mat-icon>{{ 'chevron_left' }}</mat-icon>
       </button>
     </div>
     <hr class="header-separator" />
@@ -23,6 +23,11 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
+      @if(!isExpanded) {
+        <button mat-icon-button (click)="toggleSidebar()">
+          <mat-icon>{{ 'menu' }}</mat-icon>
+        </button>
+      }
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ScreenSizeService } from '@emerald/services';
 
 @Component({
   imports: [RouterModule],
@@ -10,4 +11,7 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent {
   title = 'emerald-ui';
+
+  private readonly screenSizeService = inject(ScreenSizeService);
+
 }

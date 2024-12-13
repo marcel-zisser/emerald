@@ -14,7 +14,7 @@ export const appRoutes: Route[] = [
     path: FeatureRoutes.get(Feature.Admin),
     component: AdminDashboardComponent,
     title: Feature.Admin,
-    canActivate: [authenticationGuard],
+    canActivate: [authenticationGuard]
   },
   {
     path: '',

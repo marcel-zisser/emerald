@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, inject, signal } from '@angular/core';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { NgOptimizedImage } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { isMobile, ScreenSizeService } from '@emerald/services';
 
 @Component({
   selector: 'admin-dashboard',
@@ -25,9 +26,22 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
 })
 export class AdminDashboardComponent {
+  private readonly cdr = inject(ChangeDetectorRef);
   isExpanded = true;
+
+  constructor() {
+    effect(() => {
+      if (this.isExpanded && isMobile()) {
+        this.isExpanded = false;
+      } else if (!this.isExpanded && !isMobile()) {
+        this.isExpanded = true;
+      }
+      this.cdr.markForCheck();
+    });
+  }
 
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;
   }
+
 }

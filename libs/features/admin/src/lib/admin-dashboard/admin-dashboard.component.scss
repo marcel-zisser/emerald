@@ -45,13 +45,3 @@
 .sidenav-container .content {
   padding: 16px;
 }
-
-@media (max-width: 768px) {
-  .sidenav {
-    width: 0;
-  }
-
-  .sidenav.collapsed {
-    width: 0;
-  }
-}
