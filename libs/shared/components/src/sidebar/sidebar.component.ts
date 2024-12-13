@@ -1,14 +1,25 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  effect,
+  inject,
+} from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { AuthenticationService, isMobile } from '@emerald/services';
-import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
-import { MatListItem, MatListItemMeta, MatNavList } from '@angular/material/list';
+import { isMobile } from '@emerald/services';
+import {
+  MatSidenav,
+  MatSidenavContainer,
+  MatSidenavContent,
+} from '@angular/material/sidenav';
+import { MatListItem, MatNavList } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { SidebarService } from './sidebar.service';
 import { MatLine } from '@angular/material/core';
 import { Feature, FeatureRoutes, MenuItem } from '@emerald/models';
+import { AuthenticationService } from '@emerald/authentication';
 
 @Component({
   selector: 'em-sidebar',
@@ -22,9 +33,8 @@ import { Feature, FeatureRoutes, MenuItem } from '@emerald/models';
     MatIconButton,
     NgOptimizedImage,
     RouterOutlet,
-    MatListItemMeta,
     RouterLink,
-    MatLine
+    MatLine,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
@@ -41,8 +51,8 @@ export class SidebarComponent {
   protected logoutItem: MenuItem = {
     icon: 'logout',
     label: Feature.Logout,
-    route: FeatureRoutes.get(Feature.Logout) ?? ''
-  }
+    route: FeatureRoutes.get(Feature.Logout) ?? '',
+  };
 
   constructor() {
     effect(() => {

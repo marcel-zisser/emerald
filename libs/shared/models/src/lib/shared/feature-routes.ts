@@ -6,4 +6,8 @@ export const FeatureRoutes = new Map<Feature, string>([
 
   [Feature.Admin, 'admin'],
   [Feature.UserManagement, 'user-management'],
+
+  [Feature.ProjectOwner, 'project-owner'],
+
+  [Feature.Reviewer, 'reviewer'],
 ]);

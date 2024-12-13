@@ -7,7 +7,7 @@ import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authenticationInterceptor } from '@emerald/services';
+import { authenticationInterceptor } from '@emerald/authentication';
 import { JwtModule } from '@auth0/angular-jwt';
 
 export function tokenGetter() {
@@ -26,6 +26,7 @@ export const appConfig: ApplicationConfig = {
           tokenGetter: tokenGetter,
         },
       })
-    ), provideAnimationsAsync(),
+    ),
+    provideAnimationsAsync(),
   ],
 };

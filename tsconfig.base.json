@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@emerald/admin": ["libs/features/admin/src/index.ts"],
+      "@emerald/authentication": ["libs/shared/authentication/src/index.ts"],
       "@emerald/components": ["libs/shared/components/src/index.ts"],
       "@emerald/models": ["libs/shared/models/src/index.ts"],
       "@emerald/project-owner": ["libs/features/project-owner/src/index.ts"],

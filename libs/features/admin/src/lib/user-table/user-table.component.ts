@@ -3,7 +3,6 @@ import {
   Component,
   inject,
   OnInit,
-  Signal,
   WritableSignal,
   signal,
 } from '@angular/core';
@@ -14,11 +13,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
-import { UserDetailsComponent } from './user-details/user-details.component';
+import { UserDetailsComponent } from './user-details';
 import { UserTableService } from './user-table.service';
 import { User } from '@emerald/models';
-import { DatePipe, NgClass } from '@angular/common';
-import { of, first, filter, switchMap, take } from 'rxjs';
+import { first, filter, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'admin-user-table',
@@ -31,8 +29,6 @@ import { of, first, filter, switchMap, take } from 'rxjs';
     MatPaginatorModule,
     MatSnackBarModule,
     MatIconModule,
-    DatePipe,
-    NgClass,
   ],
   providers: [],
   templateUrl: './user-table.component.html',
@@ -46,8 +42,12 @@ export class UserTableComponent implements OnInit {
 
   protected users: WritableSignal<User[]> = signal([]);
 
-  protected displayedColumns: string[] = ['lastName', 'firstName', 'email', 'actions'];
-
+  protected displayedColumns: string[] = [
+    'lastName',
+    'firstName',
+    'email',
+    'actions',
+  ];
 
   ngOnInit(): void {
     this.initUsers();
@@ -106,9 +106,7 @@ export class UserTableComponent implements OnInit {
       .subscribe((updateResult) => {
         if (updateResult.affected !== 0) {
           this.users.update((users) =>
-            users.map((u) =>
-              u.userId === updated.userId ? updated : u
-            )
+            users.map((u) => (u.userId === updated.userId ? updated : u))
           );
           this.snackBar.open('User updated successfully!', 'Close', {
             duration: 3000,

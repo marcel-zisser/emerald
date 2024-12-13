@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
+  JwtTokenInformation,
   LoginRequest,
   LoginResponse,
   RefreshTokenResponse,
@@ -54,7 +55,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const refreshToken = await this.generateRefreshToken(user.userId);
+    const refreshToken = await this.generateRefreshToken(user);
     response.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
@@ -63,7 +64,7 @@ export class AuthService {
     });
 
     return {
-      accessToken: await this.generateAccessToken(user.userId),
+      accessToken: await this.generateAccessToken(user),
     };
   }
 
@@ -84,28 +85,47 @@ export class AuthService {
       throw new UnauthorizedException('Invalid refresh token');
     }
 
-    const userId = this.jwtService.decode(refreshToken).sub;
+    const user = new User(
+      this.jwtService.decode(refreshToken).sub,
+      this.jwtService.decode(refreshToken).firstName,
+      this.jwtService.decode(refreshToken).lastName,
+      this.jwtService.decode(refreshToken).role,
+      '',
+      ''
+    );
+
     return {
-      accessToken: await this.generateAccessToken(userId),
+      accessToken: await this.generateAccessToken(user),
     };
   }
 
   /**
    * Method to generate a short-lived access-token
-   * @param userId the user's ID for whom the token is generated
+   * @param user the user for whom the token is generated
    * @returns {string} The generated access-token
    */
-  private async generateAccessToken(userId: string): Promise<string> {
-    const payload = { sub: userId };
+  private async generateAccessToken(user: User): Promise<string> {
+    const payload = {
+      sub: user.userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    } satisfies JwtTokenInformation;
     return this.jwtService.signAsync(payload);
   }
 
   /**
    * Method to generate a long-lived refresh-token
-   * @param userId the user's ID for whom the token is generated   * @returns {string} The generated refresh-token
+   * @param user the user for whom the token is generated   * @returns {string} The generated refresh-token
    */
-  private async generateRefreshToken(userId: string): Promise<string> {
-    const payload = { sub: userId };
+  private async generateRefreshToken(user: User): Promise<string> {
+    const payload = {
+      sub: user.userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    } satisfies JwtTokenInformation;
+
     return this.jwtService.signAsync(payload, { expiresIn: '7d' });
   }
 

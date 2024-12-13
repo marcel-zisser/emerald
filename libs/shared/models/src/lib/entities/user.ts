@@ -1,8 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Roles } from '../backend';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   userId: string;
 
   @Column('varchar', { length: 100 })
@@ -11,21 +12,27 @@ export class User {
   @Column('varchar', { length: 100 })
   lastName: string;
 
-  @Column('varchar', { length: 50 })
-  username: string;
-
   @Column('varchar', { length: 100 })
   email: string;
 
   @Column('varchar', { length: 100 })
   password: string;
 
+  @Column('varchar', { length: 20 })
+  role: Roles;
 
-  constructor(userId: string, firstName: string, lastName: string, username: string, email: string, password: string) {
+  constructor(
+    userId: string,
+    firstName: string,
+    lastName: string,
+    role: Roles,
+    email: string,
+    password: string
+  ) {
     this.userId = userId;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.username = username;
+    this.role = role;
     this.email = email;
     this.password = password;
   }

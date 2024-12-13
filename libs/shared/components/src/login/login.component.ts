@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthenticationService } from '@emerald/services';
-import { first} from 'rxjs';
+import { first } from 'rxjs';
 import { Router } from '@angular/router';
-import { Feature, FeatureRoutes } from '@emerald/models';
 import {
   MatCard,
   MatCardActions,
@@ -22,6 +20,7 @@ import {
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthenticationService } from '@emerald/authentication';
 
 @Component({
   selector: 'em-login',
@@ -71,7 +70,7 @@ export class LoginComponent {
             this.authenticationService.saveToken(response.accessToken);
             this.authenticationService.authenticate();
             this.snackbarService.dismiss();
-            this.router.navigate([FeatureRoutes.get(Feature.Admin)]);
+            this.router.navigate(['']);
           },
           error: () => {
             this.snackbarService.open(
