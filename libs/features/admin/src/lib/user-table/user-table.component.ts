@@ -46,10 +46,16 @@ export class UserTableComponent implements OnInit {
 
   protected users: WritableSignal<User[]> = signal([]);
 
+  protected displayedColumns: string[] = ['lastName', 'firstName', 'email', 'actions'];
+
+
   ngOnInit(): void {
     this.initUsers();
   }
 
+  trackByUserId(index: number, user: User): string {
+    return user.userId;
+  }
   /**
    * Opens a dialog to add a new user to the club
    */
