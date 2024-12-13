@@ -1,4 +1,5 @@
 @if(isAuthenticated()) {
   <em-sidebar></em-sidebar>
+} @else {
+  <router-outlet></router-outlet>
 }
-<router-outlet></router-outlet>

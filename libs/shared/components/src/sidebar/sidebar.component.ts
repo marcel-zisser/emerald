@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { isMobile } from '@emerald/services';
+import { AuthenticationService, isMobile } from '@emerald/services';
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
-import { MatListItem, MatNavList } from '@angular/material/list';
+import { MatListItem, MatListItemMeta, MatNavList } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { SidebarService } from './sidebar.service';
+import { MatLine } from '@angular/material/core';
+import { Feature, FeatureRoutes, MenuItem } from '@emerald/models';
 
 @Component({
   selector: 'em-sidebar',
@@ -18,7 +21,10 @@ import { RouterOutlet } from '@angular/router';
     MatIcon,
     MatIconButton,
     NgOptimizedImage,
-    RouterOutlet
+    RouterOutlet,
+    MatListItemMeta,
+    RouterLink,
+    MatLine
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
@@ -27,7 +33,16 @@ import { RouterOutlet } from '@angular/router';
 })
 export class SidebarComponent {
   private readonly cdr = inject(ChangeDetectorRef);
-  isExpanded = true;
+  private readonly sidebarService = inject(SidebarService);
+  private readonly authService = inject(AuthenticationService);
+
+  protected isExpanded = true;
+  protected menuItems = this.sidebarService.menuItems;
+  protected logoutItem: MenuItem = {
+    icon: 'logout',
+    label: Feature.Logout,
+    route: FeatureRoutes.get(Feature.Logout) ?? ''
+  }
 
   constructor() {
     effect(() => {
@@ -40,7 +55,11 @@ export class SidebarComponent {
     });
   }
 
-  toggleSidebar() {
+  toggleSidebar(): void {
     this.isExpanded = !this.isExpanded;
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

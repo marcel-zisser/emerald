@@ -2,7 +2,7 @@
   "name": "reviewer",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/features/reviewer/src",
-  "prefix": "project",
+  "prefix": "review",
   "projectType": "library",
   "tags": [],
   "targets": {

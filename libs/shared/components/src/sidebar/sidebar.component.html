@@ -1,7 +1,6 @@
 <!-- sidebar.component.html -->
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
-    #sidenav
     mode="side"
     [opened]="isExpanded"
     [class.collapsed]="!isExpanded"
@@ -9,7 +8,7 @@
   >
     <div class="sidenav-header">
       <div class="logo-container">
-        <img src="/assets/emerald.svg" alt="Logo" class="logo" />
+        <img ngSrc="/assets/emerald.svg" width="40" height="42" alt="Logo" class="logo" />
         <h3>Emerald</h3>
       </div>
       <button mat-icon-button (click)="toggleSidebar()">
@@ -17,13 +16,26 @@
       </button>
     </div>
     <hr class="header-separator" />
-    <mat-nav-list>
-      <a mat-list-item href="#">User Management</a>
-    </mat-nav-list>
+      <mat-nav-list>
+        @for (menuItem of menuItems(); track menuItem.label) {
+          <mat-list-item [routerLink]="menuItem.route">
+            <div class="menu-item">
+              <mat-icon mat-list-icon>{{ menuItem.icon }}</mat-icon>
+              <span mat-line>{{ menuItem.label }}</span>
+            </div>
+          </mat-list-item>
+        }
+        <mat-list-item class="logout-item" (click)="logout()">
+          <div class="menu-item">
+            <mat-icon mat-list-icon>{{ logoutItem.icon }}</mat-icon>
+            <span mat-line>{{ logoutItem.label }}</span>
+          </div>
+        </mat-list-item>
+      </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
-      @if(!isExpanded) {
+      @if (!isExpanded) {
         <button mat-icon-button (click)="toggleSidebar()">
           <mat-icon>{{ 'menu' }}</mat-icon>
         </button>

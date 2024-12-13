@@ -11,6 +11,16 @@ export class UserService {
   ) {}
 
   /**
+   * Gets all users from the database
+   */
+  async getUsers(): Promise<User[]> {
+    const users = await this.userRepository.find();
+    users.forEach(user => user.password = null);
+
+    return users;
+  }
+
+  /**
    * Gets a specific user from the database
    * @param uuid the uuid of the user
    */
