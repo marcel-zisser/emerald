@@ -1,0 +1,50 @@
+<form [formGroup]="userForm" class="mat-form-layout">
+  <div class="grid">
+    <div class="md:col-6 flex flex-column gap-2">
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput id="firstName" formControlName="firstName" />
+        <mat-error *ngIf="userForm.get('firstName')?.invalid">
+          First name is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="md:col-6 flex flex-column gap-2">
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput id="lastName" formControlName="lastName" />
+        <mat-error *ngIf="userForm.get('lastName')?.invalid">
+          Last name is required.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="md:col-6 flex flex-column gap-2">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput id="email" formControlName="email" />
+        <mat-error *ngIf="userForm.get('email')?.invalid">
+          Enter a valid email address.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="md:col-6 flex flex-column gap-2">
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput id="password" formControlName="password" />
+        <mat-error *ngIf="userForm.get('password')?.invalid">
+          Enter a password.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+  </div>
+
+  <div class="button-bar">
+    <button mat-raised-button color="primary" (click)="saveUser()">Save</button>
+    <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+  </div>
+</form>

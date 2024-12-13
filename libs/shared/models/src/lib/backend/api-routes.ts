@@ -7,5 +7,5 @@ export const ApiRoutes = new Map<ApiEndpoint, string>([
   [ApiEndpoint.RefreshJWT, 'auth/refresh'],
 
 
-  [ApiEndpoint.GetUser, 'user']
+  [ApiEndpoint.User, 'user']
 ]);

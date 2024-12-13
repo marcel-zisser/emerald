@@ -37,4 +37,14 @@ export class BackendService {
   doDelete(url: string | undefined): Observable<DeleteResult> {
     return this.httpClient.delete<never>(this.apiUrl + url);
   }
+
+  /**
+   * Executes a PUT request to the backend API to a specific endpoint
+   * @param url the endpoint to be targeted
+   * @param body the body to add to PUT request
+   * @returns {Observable<never>} Observable with the result of the request
+   */
+  doPut<T, K>(url: string | undefined, body: K): Observable<T> {
+    return this.httpClient.put<T>(this.apiUrl + url, body, { withCredentials: true });
+  }
 }
