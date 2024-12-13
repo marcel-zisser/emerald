@@ -1,0 +1,47 @@
+/* sidebar.component.css */
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 250px;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.sidenav.collapsed {
+  width: 60px;
+}
+
+.sidenav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+  width: 42px;
+  margin-right: 8px;
+}
+
+.header-separator {
+  margin: 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.mat-nav-list a {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidenav-container .content {
+  padding: 16px;
+}
