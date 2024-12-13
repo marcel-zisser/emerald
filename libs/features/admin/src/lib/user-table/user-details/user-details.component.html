@@ -4,9 +4,12 @@
       <mat-form-field appearance="fill">
         <mat-label>First Name</mat-label>
         <input matInput id="firstName" formControlName="firstName" />
-        <mat-error *ngIf="userForm.get('firstName')?.invalid">
-          First name is required.
-        </mat-error>
+        @if(userForm.get('firstName')?.invalid) {
+          <mat-error>
+            First name is required.
+          </mat-error>
+        }
+
       </mat-form-field>
     </div>
 
@@ -14,9 +17,11 @@
       <mat-form-field appearance="fill">
         <mat-label>Last Name</mat-label>
         <input matInput id="lastName" formControlName="lastName" />
-        <mat-error *ngIf="userForm.get('lastName')?.invalid">
-          Last name is required.
-        </mat-error>
+        @if(userForm.get('lastName')?.invalid) {
+          <mat-error>
+            Last name is required.
+          </mat-error>
+        }
       </mat-form-field>
     </div>
 
@@ -24,9 +29,12 @@
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input matInput id="email" formControlName="email" />
-        <mat-error *ngIf="userForm.get('email')?.invalid">
-          Enter a valid email address.
-        </mat-error>
+        @if(userForm.get('email')?.invalid) {
+          <mat-error>
+            Enter a valid email address.
+          </mat-error>
+        }
+
       </mat-form-field>
     </div>
 
@@ -34,9 +42,11 @@
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
         <input matInput id="password" formControlName="password" />
-        <mat-error *ngIf="userForm.get('password')?.invalid">
+        @if(userForm.get('password')?.invalid) {
+          <mat-error>
           Enter a password.
         </mat-error>
+        }
       </mat-form-field>
     </div>
 
