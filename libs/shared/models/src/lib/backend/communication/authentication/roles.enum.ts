@@ -1,5 +1,5 @@
 export enum Roles {
-  Admin = 'admin',
-  ProjectOwner = 'project-owner',
-  Reviewer = 'reviewer',
+  Admin = 'Admin',
+  ProjectOwner = 'Project-Owner',
+  Reviewer = 'Reviewer',
 }

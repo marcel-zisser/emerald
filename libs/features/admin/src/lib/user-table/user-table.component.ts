@@ -17,6 +17,7 @@ import { UserDetailsComponent } from './user-details';
 import { UserTableService } from './user-table.service';
 import { User } from '@emerald/models';
 import { first, filter, switchMap, take } from 'rxjs';
+import { WarningDialogComponent } from '@emerald/components';
 
 @Component({
   selector: 'admin-user-table',
@@ -46,6 +47,7 @@ export class UserTableComponent implements OnInit {
     'lastName',
     'firstName',
     'email',
+    'role',
     'actions',
   ];
 
@@ -123,29 +125,35 @@ export class UserTableComponent implements OnInit {
    * Confirms and deletes a user
    */
   onDeleteUserClicked(user: User): void {
-    const confirmation = confirm(
-      `Are you sure you want to delete ${user.firstName} ${user.lastName}?`
-    );
+    const dialogRef = this.dialog.open(WarningDialogComponent, {
+      data: {
+        message: `Are you sure you want to delete ${user.firstName} ${user.lastName}?`,
+      },
+    });
 
-    if (confirmation) {
-      this.userService
-        .deleteUser(user)
-        .pipe(take(1))
-        .subscribe((deleteResult) => {
-          if (deleteResult.affected !== 0) {
-            this.users.set(
-              this.users().filter((u) => u.userId !== user.userId)
-            );
-            this.snackBar.open('User deleted successfully!', 'Close', {
-              duration: 3000,
-            });
-          } else {
-            this.snackBar.open('Error deleting user.', 'Close', {
-              duration: 3000,
-            });
-          }
-        });
-    }
+    dialogRef
+      .afterClosed()
+      .pipe(
+        first(),
+        filter((result) => !!result),
+        switchMap(() => {
+          return this.userService.deleteUser(user);
+        })
+      )
+      .subscribe((deleteResult) => {
+        if (deleteResult.affected !== 0) {
+          this.users.set(this.users().filter((u) => u.userId !== user.userId));
+          this.snackBar.open('Successfully deleted user!', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+          });
+        } else {
+          this.snackBar.open('Error deleting user.', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top',
+          });
+        }
+      });
   }
 
   /**
