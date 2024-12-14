@@ -1,58 +1,77 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '@emerald/models';
-import { Repository } from 'typeorm';
+import { Prisma, User } from '@prisma/client';
+import { PrismaService } from '../../prisma.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   /**
    * Gets all users from the database
    */
-  async getUsers(): Promise<User[]> {
-    const users = await this.userRepository.find();
-    users.forEach((user) => (user.password = null));
-
-    return users;
+  async users(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.UserWhereUniqueInput;
+    where?: Prisma.UserWhereInput;
+    orderBy?: Prisma.UserOrderByWithRelationInput;
+  }): Promise<User[]> {
+    const { skip, take, cursor, where, orderBy } = params;
+    return this.prisma.user.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+    });
   }
 
   /**
    * Gets a specific user from the database
-   * @param uuid the uuid of the user
+   * @param userWhereUniqueInput criteria to find user
    */
-  async getUser(uuid: string): Promise<User> {
-    const user = await this.userRepository.findOneBy({ userId: uuid });
-    user.password = null;
-
-    return user;
+  async user(
+    userWhereUniqueInput: Prisma.UserWhereUniqueInput
+  ): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: userWhereUniqueInput,
+    });
   }
 
   /**
    * Creates a new user
-   * @param user the user to be created
+   * @param data the user to be created
    */
-  createUser(user: User): Promise<User> {
-    return Promise.resolve(undefined);
+  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+    data.password = await bcrypt.hash(data.password, 10);
+    return this.prisma.user.create({
+      data,
+    });
   }
 
   /**
    * Edits an already existing user
-   * @param uuid the uuid of the user
-   * @param user the new data of the user
+   * @param params update params of the user
    */
-  editUser(uuid: string, user: User) {
-    return Promise.resolve(undefined);
+  async updateUser(params: {
+    where: Prisma.UserWhereUniqueInput;
+    data: Prisma.UserUpdateInput;
+  }): Promise<User> {
+    const { where, data } = params;
+    return this.prisma.user.update({
+      data,
+      where,
+    });
   }
 
   /**
    * Deletes an already existing user
-   * @param uuid the uuid of the user
+   * @param where delete criteria
    */
-  deleteUser(uuid: string) {
-    return Promise.resolve(undefined);
+  async deleteUser(where: Prisma.UserWhereUniqueInput): Promise<User> {
+    return this.prisma.user.delete({
+      where,
+    });
   }
 }

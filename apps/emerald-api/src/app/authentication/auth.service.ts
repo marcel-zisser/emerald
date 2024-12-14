@@ -1,35 +1,23 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import {
   JwtTokenInformation,
   LoginRequest,
   LoginResponse,
   RefreshTokenResponse,
-  User,
+  Roles,
 } from '@emerald/models';
-import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
+import { UserService } from '../user/user.service';
+import * as bcrypt from 'bcrypt';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly userService: UserService
   ) {}
-
-  /**
-   * Registers a user
-   * @param user the user to register
-   */
-  async createUser(user: User): Promise<void> {
-    user.password = await bcrypt.hash(user.password, 10);
-    console.log(user);
-    const createdUser = this.userRepository.create(user);
-    await this.userRepository.save(createdUser);
-  }
 
   /**
    * Checks if the credentials of the user are correct and returns a JWT token
@@ -42,15 +30,12 @@ export class AuthService {
     request: LoginRequest,
     response: Response
   ): Promise<LoginResponse> {
-    const user = await this.userRepository.findOneBy({ email: request.email });
+    const user = await this.userService.user({ email: request.email });
     if (!user) {
       throw new UnauthorizedException();
     }
 
-    const passwordCorrect = await bcrypt.compare(
-      request.password,
-      user.password
-    );
+    const passwordCorrect = bcrypt.compare(request.password, user.password);
     if (!passwordCorrect) {
       throw new UnauthorizedException();
     }
@@ -85,14 +70,14 @@ export class AuthService {
       throw new UnauthorizedException('Invalid refresh token');
     }
 
-    const user = new User(
-      this.jwtService.decode(refreshToken).sub,
-      this.jwtService.decode(refreshToken).firstName,
-      this.jwtService.decode(refreshToken).lastName,
-      this.jwtService.decode(refreshToken).role,
-      '',
-      ''
-    );
+    const user = {
+      uuid: this.jwtService.decode(refreshToken).sub,
+      firstName: this.jwtService.decode(refreshToken).firstName,
+      lastName: this.jwtService.decode(refreshToken).lastName,
+      role: this.jwtService.decode(refreshToken).role,
+      email: '',
+      password: '',
+    } satisfies User;
 
     return {
       accessToken: await this.generateAccessToken(user),
@@ -106,10 +91,10 @@ export class AuthService {
    */
   private async generateAccessToken(user: User): Promise<string> {
     const payload = {
-      sub: user.userId,
+      sub: user.uuid,
       firstName: user.firstName,
       lastName: user.lastName,
-      role: user.role,
+      role: user.role as Roles,
     } satisfies JwtTokenInformation;
     return this.jwtService.signAsync(payload);
   }
@@ -120,10 +105,10 @@ export class AuthService {
    */
   private async generateRefreshToken(user: User): Promise<string> {
     const payload = {
-      sub: user.userId,
+      sub: user.uuid,
       firstName: user.firstName,
       lastName: user.lastName,
-      role: user.role,
+      role: user.role as Roles,
     } satisfies JwtTokenInformation;
 
     return this.jwtService.signAsync(payload, { expiresIn: '7d' });

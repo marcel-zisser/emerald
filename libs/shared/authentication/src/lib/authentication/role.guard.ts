@@ -9,7 +9,7 @@ import {
 } from '@emerald/models';
 import { jwtDecode } from 'jwt-decode';
 
-export const roleGuard: CanActivateFn = (route, state) => {
+export const roleGuard: CanActivateFn = (route) => {
   const authService = inject(AuthenticationService);
 
   const token = authService.getToken();
@@ -30,8 +30,6 @@ export const roleGuard: CanActivateFn = (route, state) => {
         break;
     }
   }
-
-  console.log(state);
 
   return allowed;
 };

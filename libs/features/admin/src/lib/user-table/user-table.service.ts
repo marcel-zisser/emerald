@@ -5,7 +5,7 @@ import { ApiEndpoint, ApiRoutes, User } from '@emerald/models';
 import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserTableService {
   private readonly backendService = inject(BackendService);
@@ -21,8 +21,10 @@ export class UserTableService {
    * Creates a new user
    */
   createUser(user: User): Observable<User> {
-    return this.backendService
-      .doPost<User, User>(ApiRoutes.get(ApiEndpoint.User), user);
+    return this.backendService.doPost<User, User>(
+      ApiRoutes.get(ApiEndpoint.User),
+      user
+    );
   }
 
   /**
@@ -30,7 +32,8 @@ export class UserTableService {
    */
   updateUser(user: User): Observable<UpdateResult> {
     return this.backendService.doPut<UpdateResult, User>(
-      ApiRoutes.get(ApiEndpoint.User), user
+      ApiRoutes.get(ApiEndpoint.User),
+      user
     );
   }
 
@@ -39,6 +42,8 @@ export class UserTableService {
    * @param user the user to delete
    */
   deleteUser(user: User): Observable<DeleteResult> {
-    return this.backendService.doDelete(ApiRoutes.get(ApiEndpoint.User) + user.userId);
+    return this.backendService.doDelete(
+      ApiRoutes.get(ApiEndpoint.User) + user.uuid
+    );
   }
 }

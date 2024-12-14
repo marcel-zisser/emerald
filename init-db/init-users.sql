@@ -1,7 +1,7 @@
 -- Create the table
-CREATE TABLE Users
+CREATE TABLE "User"
 (
-  "userId"    UUID PRIMARY KEY,
+  "uuid"      UUID PRIMARY KEY,
   "firstName" VARCHAR(100) NOT NULL,
   "lastName"  VARCHAR(100) NOT NULL,
   "role"      VARCHAR(20)  NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE Users
 );
 
 -- Insert dummy data
-INSERT INTO Users ("userId", "firstName", "lastName", "role", "email", "password")
+INSERT INTO "User" ("uuid", "firstName", "lastName", "role", "email", "password")
 VALUES ('dacdfcb2-b9f9-4bb1-a61c-9f41637d96c8',
         'Admin',
         'Istrator',

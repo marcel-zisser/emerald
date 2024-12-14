@@ -6,11 +6,9 @@ import {
   Param,
   Post,
   Put,
-  Req,
 } from '@nestjs/common';
-import { User } from '@emerald/models';
 import { UserService } from './user.service';
-import { Request } from 'express';
+import { User } from '@prisma/client';
 
 @Controller('users')
 export class UserController {
@@ -18,12 +16,12 @@ export class UserController {
 
   @Get()
   getAllUsers(): Promise<User[]> {
-    return this.userService.getUsers();
+    return this.userService.users({});
   }
 
   @Get(':uuid')
   getUser(@Param('uuid') uuid: string): Promise<User> {
-    return this.userService.getUser(uuid);
+    return this.userService.user({ uuid: uuid });
   }
 
   @Post('')
@@ -33,11 +31,14 @@ export class UserController {
 
   @Put(':uuid')
   editUser(@Param('uuid') uuid: string, @Body() user: User): Promise<User> {
-    return this.userService.editUser(uuid, user);
+    return this.userService.updateUser({
+      where: { uuid: uuid },
+      data: user,
+    });
   }
 
   @Delete(':uuid')
   deleteUser(@Param('uuid') uuid: string): Promise<User> {
-    return this.userService.deleteUser(uuid);
+    return this.userService.deleteUser({ uuid: uuid });
   }
 }

@@ -56,7 +56,7 @@ export class UserTableComponent implements OnInit {
   }
 
   trackByUserId(index: number, user: User): string {
-    return user.userId;
+    return user.uuid;
   }
   /**
    * Opens a dialog to add a new user to the club
@@ -108,7 +108,7 @@ export class UserTableComponent implements OnInit {
       .subscribe((updateResult) => {
         if (updateResult.affected !== 0) {
           this.users.update((users) =>
-            users.map((u) => (u.userId === updated.userId ? updated : u))
+            users.map((u) => (u.uuid === updated.uuid ? updated : u))
           );
           this.snackBar.open('User updated successfully!', 'Close', {
             duration: 3000,
@@ -142,7 +142,7 @@ export class UserTableComponent implements OnInit {
       )
       .subscribe((deleteResult) => {
         if (deleteResult.affected !== 0) {
-          this.users.set(this.users().filter((u) => u.userId !== user.userId));
+          this.users.set(this.users().filter((u) => u.uuid !== user.uuid));
           this.snackBar.open('Successfully deleted user!', 'Close', {
             duration: 3000,
             verticalPosition: 'top',

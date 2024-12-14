@@ -1,17 +1,26 @@
 import { Body, Controller, HttpCode, Post, Req, Res } from '@nestjs/common';
-import { LoginRequest, LoginResponse, RefreshTokenResponse, User } from '@emerald/models';
+import {
+  LoginRequest,
+  LoginResponse,
+  RefreshTokenResponse,
+} from '@emerald/models';
 import { AuthService } from './auth.service';
 import { Public } from './auth.guard';
 import { Request, Response } from 'express';
+import { User } from '@prisma/client';
+import { UserService } from '../user/user.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authenticationService: AuthService) {}
+  constructor(
+    private readonly authenticationService: AuthService,
+    private readonly userService: UserService
+  ) {}
 
   @Public()
   @Post('/register')
   async register(@Body() user: User): Promise<void> {
-    await this.authenticationService.createUser(user);
+    await this.userService.createUser(user);
   }
 
   @Public()
@@ -20,7 +29,7 @@ export class AuthController {
     @Body() request: LoginRequest,
     @Res({ passthrough: true }) response: Response
   ): Promise<LoginResponse> {
-    return  this.authenticationService.login(request, response);
+    return this.authenticationService.login(request, response);
   }
 
   @Public()
