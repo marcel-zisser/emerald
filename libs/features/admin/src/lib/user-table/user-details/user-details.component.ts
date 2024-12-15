@@ -46,6 +46,7 @@ export class UserDetailsComponent {
   private readonly dialogData = inject(MAT_DIALOG_DATA);
   private readonly usersService = inject(UserTableService);
 
+  protected readonly Roles = Roles;
   protected userForm: FormGroup;
   protected userToEdit: User | null = null;
 
@@ -96,6 +97,4 @@ export class UserDetailsComponent {
       control?.markAsDirty();
     });
   }
-
-  protected readonly Roles = Roles;
 }

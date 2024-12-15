@@ -18,7 +18,7 @@ import {
   RegisterRequest,
   User,
 } from '@emerald/models';
-import { BackendService } from '../../../../services/src/lib/backend';
+import { BackendService } from '@emerald/services';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
