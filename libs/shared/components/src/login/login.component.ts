@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
 import {
@@ -42,6 +42,7 @@ import { JwtTokenInformation } from '@emerald/models';
     MatError,
     MatCardHeader,
     MatCardSubtitle,
+    NgOptimizedImage
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
