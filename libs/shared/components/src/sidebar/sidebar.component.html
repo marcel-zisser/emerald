@@ -16,30 +16,34 @@
       </button>
     </div>
     <hr class="header-separator" />
-      <mat-nav-list>
-        @for (menuItem of menuItems(); track menuItem.label) {
-          <mat-list-item [routerLink]="menuItem.route">
-            <div class="menu-item">
-              <mat-icon mat-list-icon>{{ menuItem.icon }}</mat-icon>
-              <span mat-line>{{ menuItem.label }}</span>
-            </div>
-          </mat-list-item>
-        }
-        <mat-list-item class="logout-item" (click)="logout()">
+    <mat-nav-list>
+      @for (menuItem of menuItems(); track menuItem.label) {
+        <mat-list-item [routerLink]="menuItem.route">
           <div class="menu-item">
-            <mat-icon mat-list-icon>{{ logoutItem.icon }}</mat-icon>
-            <span mat-line>{{ logoutItem.label }}</span>
+            <mat-icon mat-list-icon>{{ menuItem.icon }}</mat-icon>
+            <span mat-line>{{ menuItem.label }}</span>
           </div>
         </mat-list-item>
-      </mat-nav-list>
+      }
+      <mat-list-item class="logout-item" (click)="logout()">
+        <div class="menu-item">
+          <mat-icon mat-list-icon>{{ logoutItem.icon }}</mat-icon>
+          <span mat-line>{{ logoutItem.label }}</span>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <div class="content">
-      @if (!isExpanded) {
-        <button mat-icon-button (click)="toggleSidebar()">
-          <mat-icon>{{ 'menu' }}</mat-icon>
-        </button>
-      }
+      <div class="page-header">
+        @if (!isExpanded) {
+          <button class="menu-button" mat-icon-button (click)="toggleSidebar()">
+            <mat-icon>{{ 'menu' }}</mat-icon>
+          </button>
+        }
+        <h1 class="page-title">{{ pageTitle | page }}</h1>
+      </div>
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

@@ -1,8 +1,8 @@
-<div class="text-right">
+<div class="add-container">
   <button mat-raised-button color="primary" (click)="openAddUserDialog()">Add User</button>
 </div>
 
-<mat-table [dataSource]="users()" matSort class="mat-elevation-z8" [trackBy]="trackByUserId">
+<mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" [trackBy]="trackByUserId">
   <!-- Last Name Column -->
   <ng-container matColumnDef="lastName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>

@@ -5,11 +5,13 @@ import {
   OnInit,
   WritableSignal,
   signal,
+  effect,
+  ViewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,7 +19,7 @@ import { UserDetailsComponent } from './user-details';
 import { UserTableService } from './user-table.service';
 import { User } from '@emerald/models';
 import { first, filter, switchMap, take } from 'rxjs';
-import { WarningDialogComponent } from '@emerald/components';
+import { WarningDialogComponent } from '@emerald/dialog';
 
 @Component({
   selector: 'admin-user-table',
@@ -41,7 +43,10 @@ export class UserTableComponent implements OnInit {
   private readonly userService = inject(UserTableService);
   private readonly snackBar = inject(MatSnackBar);
 
-  protected users: WritableSignal<User[]> = signal([]);
+  private users: WritableSignal<User[]> = signal([]);
+
+  @ViewChild(MatSort) sort!: MatSort;
+  protected dataSource = new MatTableDataSource<User>([]);
 
   protected displayedColumns: string[] = [
     'lastName',
@@ -51,8 +56,15 @@ export class UserTableComponent implements OnInit {
     'actions',
   ];
 
+  constructor() {
+    effect(() => {
+      this.dataSource.data = this.users();
+    });
+  }
+
   ngOnInit(): void {
     this.initUsers();
+    this.dataSource.sort = this.sort;
   }
 
   trackByUserId(index: number, user: User): string {
@@ -63,8 +75,6 @@ export class UserTableComponent implements OnInit {
    */
   openAddUserDialog(): void {
     const dialogRef = this.dialog.open(UserDetailsComponent, {
-      width: '75%',
-      height: '80%',
       data: null,
     });
 
@@ -72,13 +82,14 @@ export class UserTableComponent implements OnInit {
       .afterClosed()
       .pipe(
         first(),
-        filter((result) => result !== null),
+        filter((result) => result !== ''),
         switchMap((newUser) => this.userService.createUser(newUser))
       )
       .subscribe((createdUser) => {
         this.users.update((users) => [...users, createdUser]);
         this.snackBar.open('User added successfully!', 'Close', {
           duration: 3000,
+          verticalPosition: 'top',
         });
       });
   }
@@ -112,10 +123,12 @@ export class UserTableComponent implements OnInit {
           );
           this.snackBar.open('User updated successfully!', 'Close', {
             duration: 3000,
+            verticalPosition: 'top',
           });
         } else {
           this.snackBar.open('Error updating user.', 'Close', {
             duration: 3000,
+            verticalPosition: 'top',
           });
         }
       });

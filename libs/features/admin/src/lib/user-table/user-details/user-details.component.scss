@@ -1,5 +1,12 @@
-.button-bar {
+.form-container {
+  width: 50vh;
+  height: 50vh;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.button-container {
   display: flex;
-  flex-direction: row-reverse;
-  gap: 1rem;
+  justify-content: end;
+  margin-top: 16px;
 }

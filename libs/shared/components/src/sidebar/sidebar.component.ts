@@ -20,6 +20,8 @@ import { SidebarService } from './sidebar.service';
 import { MatLine } from '@angular/material/core';
 import { Feature, FeatureRoutes, MenuItem } from '@emerald/models';
 import { AuthenticationService } from '@emerald/authentication';
+import { Title } from '@angular/platform-browser';
+import { PagePipe } from './page.pipe';
 
 @Component({
   selector: 'em-sidebar',
@@ -35,6 +37,7 @@ import { AuthenticationService } from '@emerald/authentication';
     RouterOutlet,
     RouterLink,
     MatLine,
+    PagePipe,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
@@ -45,7 +48,9 @@ export class SidebarComponent {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly sidebarService = inject(SidebarService);
   private readonly authService = inject(AuthenticationService);
+  private readonly titleService = inject(Title);
 
+  protected pageTitle = this.titleService.getTitle();
   protected isExpanded = true;
   protected menuItems = this.sidebarService.menuItems;
   protected logoutItem: MenuItem = {

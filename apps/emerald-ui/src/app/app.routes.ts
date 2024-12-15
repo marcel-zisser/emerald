@@ -26,35 +26,38 @@ export const appRoutes: Route[] = [
   {
     path: FeatureRoutes.get(Feature.Login),
     component: LoginComponent,
-    title: Feature.Login,
+    title: getPageTitle(Feature.Login),
   },
   {
     path: FeatureRoutes.get(Feature.Admin),
     component: AdminComponent,
-    title: Feature.Admin,
+    title: getPageTitle(Feature.Admin),
     canActivate: [authenticationGuard, roleGuard],
     children: [
       {
         path: FeatureRoutes.get(Feature.UserManagement),
         component: UserTableComponent,
-        title: Feature.UserManagement,
+        title: getPageTitle(Feature.UserManagement),
       },
     ],
   },
   {
     path: FeatureRoutes.get(Feature.ProjectOwner),
     component: ProjectOwnerComponent,
-    title: Feature.ProjectOwner,
+    title: getPageTitle(Feature.ProjectOwner),
     canActivate: [authenticationGuard, roleGuard],
   },
   {
     path: FeatureRoutes.get(Feature.Reviewer),
     component: ReviewerComponent,
-    title: Feature.Reviewer,
+    title: getPageTitle(Feature.Reviewer),
     canActivate: [authenticationGuard, roleGuard],
   },
 ];
 
+/**
+ * Redirects the default route based on the user role
+ */
 function roleBasedRedirect(): string {
   const authService = inject(AuthenticationService);
   const token = authService.getToken();
@@ -73,4 +76,12 @@ function roleBasedRedirect(): string {
   }
 
   return FeatureRoutes.get(Feature.Login) ?? '';
+}
+
+/**
+ * Combines the page title with the Emerald ending
+ * @param title The title of the specific page
+ */
+function getPageTitle(title: string): string {
+  return `${title} | Emerald`;
 }

@@ -32,7 +32,7 @@ export class UserTableService {
    */
   updateUser(user: User): Observable<UpdateResult> {
     return this.backendService.doPut<UpdateResult, User>(
-      ApiRoutes.get(ApiEndpoint.User),
+      ApiRoutes.get(ApiEndpoint.User) + user.uuid,
       user
     );
   }

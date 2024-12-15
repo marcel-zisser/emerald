@@ -1,8 +1,8 @@
 export enum Feature {
   Admin = 'Admin',
-  UserManagement = 'UserManagement',
+  UserManagement = 'User Management',
 
-  ProjectOwner = 'ProjectOwner',
+  ProjectOwner = 'Project Owner',
 
   Reviewer = 'Reviewer',
 

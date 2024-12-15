@@ -5,17 +5,22 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core';
-import { User } from '@emerald/models';
+import { Roles, User } from '@emerald/models';
 import { v4 as uuid } from 'uuid';
 import { UserTableService } from '../user-table.service';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'admin-user-details',
@@ -24,11 +29,13 @@ import { UserTableService } from '../user-table.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatSelectModule,
     MatButtonModule,
-    MatNativeDateModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
   ],
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.scss'],
@@ -48,15 +55,15 @@ export class UserDetailsComponent {
     this.userForm = this.formBuilder.group({
       firstName: [this.userToEdit?.firstName ?? '', Validators.required],
       lastName: [this.userToEdit?.lastName ?? '', Validators.required],
-      password: [this.userToEdit?.password ?? '', Validators.required],
       email: [
         this.userToEdit?.email ?? '',
         [Validators.required, Validators.email],
       ],
+      role: ['', Validators.required],
     });
   }
 
-  protected saveUser(): void {
+  protected onSubmit(): void {
     if (this.userForm.valid) {
       let user: User;
 
@@ -89,4 +96,6 @@ export class UserDetailsComponent {
       control?.markAsDirty();
     });
   }
+
+  protected readonly Roles = Roles;
 }

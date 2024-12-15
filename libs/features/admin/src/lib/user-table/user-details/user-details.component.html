@@ -1,60 +1,66 @@
-<form [formGroup]="userForm" class="mat-form-layout">
-  <div class="grid">
-    <div class="md:col-6 flex flex-column gap-2">
+@if (userToEdit) {
+  <h2 mat-dialog-title>Edit User</h2>
+} @else {
+  <h2 mat-dialog-title>Create User</h2>
+
+}
+
+<form mat-dialog-content [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form-container">
+  <mat-grid-list cols="2" rowHeight="5rem" gutterSize="1rem" >
+    <!-- First Name -->
+    <mat-grid-tile>
       <mat-form-field appearance="fill">
         <mat-label>First Name</mat-label>
-        <input matInput id="firstName" formControlName="firstName" />
-        @if(userForm.get('firstName')?.invalid) {
-          <mat-error>
-            First name is required.
-          </mat-error>
+        <input matInput formControlName="firstName" required>
+        @if (userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched) {
+          <mat-error>First name is required.</mat-error>
         }
-
       </mat-form-field>
-    </div>
+    </mat-grid-tile>
 
-    <div class="md:col-6 flex flex-column gap-2">
+    <!-- Last Name -->
+    <mat-grid-tile>
       <mat-form-field appearance="fill">
         <mat-label>Last Name</mat-label>
-        <input matInput id="lastName" formControlName="lastName" />
-        @if(userForm.get('lastName')?.invalid) {
-          <mat-error>
-            Last name is required.
-          </mat-error>
+        <input matInput formControlName="lastName" required>
+        @if (userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched) {
+          <mat-error>Last name is required.</mat-error>
         }
       </mat-form-field>
-    </div>
+    </mat-grid-tile>
 
-    <div class="md:col-6 flex flex-column gap-2">
+    <!-- Email -->
+    <mat-grid-tile>
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput id="email" formControlName="email" />
-        @if(userForm.get('email')?.invalid) {
-          <mat-error>
-            Enter a valid email address.
-          </mat-error>
+        <input matInput formControlName="email" type="email" required>
+        @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+          <mat-error>Email is invalid or required.</mat-error>
         }
-
       </mat-form-field>
-    </div>
+    </mat-grid-tile>
 
-    <div class="md:col-6 flex flex-column gap-2">
+    <!-- Role -->
+    <mat-grid-tile>
       <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput id="password" formControlName="password" />
-        @if(userForm.get('password')?.invalid) {
-          <mat-error>
-          Enter a password.
-        </mat-error>
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role" required>
+          <mat-option value="{{ Roles.Admin }}">{{ Roles.Admin }}</mat-option>
+          <mat-option value="{{ Roles.ProjectOwner }}">{{ Roles.ProjectOwner }}</mat-option>
+          <mat-option value="{{ Roles.Reviewer }}">{{ Roles.Reviewer }}</mat-option>
+        </mat-select>
+        @if (userForm.get('role')?.invalid && userForm.get('role')?.touched) {
+          <mat-error>Role is required.</mat-error>
         }
       </mat-form-field>
-    </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 
-
-  </div>
-
-  <div class="button-bar">
-    <button mat-raised-button color="primary" (click)="saveUser()">Save</button>
-    <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-  </div>
+  <!-- Submit Button -->
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
+      Submit
+    </button>
+  </mat-dialog-actions>
 </form>

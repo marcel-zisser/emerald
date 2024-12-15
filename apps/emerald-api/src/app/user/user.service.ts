@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from '../../prisma.service';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'node:crypto';
 
 @Injectable()
 export class UserService {
@@ -44,7 +45,7 @@ export class UserService {
    * @param data the user to be created
    */
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
-    data.password = await bcrypt.hash(data.password, 10);
+    data.password = await bcrypt.hash(this.generatePassword(), 10);
     return this.prisma.user.create({
       data,
     });
@@ -73,5 +74,19 @@ export class UserService {
     return this.prisma.user.delete({
       where,
     });
+  }
+
+  /**
+   * Generates an initial password
+   * @private
+   */
+  private generatePassword(): string {
+    const length = crypto.randomInt(10, 20);
+    const chars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
+
+    return Array.from(crypto.randomFillSync(new Uint32Array(length)))
+      .map((value) => chars[value % chars.length])
+      .join('');
   }
 }

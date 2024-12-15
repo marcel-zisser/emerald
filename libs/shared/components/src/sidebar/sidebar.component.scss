@@ -30,11 +30,6 @@
   border-top: 1px solid #ccc;
 }
 
-.mat-draw-inner-container {
-  display: flex;
-  flex-direction: column;
-}
-
 mat-nav-list {
   flex: 1 1 auto;
   a {
@@ -43,11 +38,9 @@ mat-nav-list {
   }
 }
 
-.sidenav-container .content {
-  padding: 16px;
+.content {
+  padding: 1rem;
 }
-
-
 
 .menu-item {
   width: 100%;
@@ -58,4 +51,16 @@ mat-nav-list {
   flex-direction: row;
   align-items: center;
   gap: 1rem;
+}
+
+.page-title {
+  display: inline;
+}
+
+.menu-button {
+  margin-right: 1rem;
+}
+
+.page-header {
+  padding-bottom: 1rem;
 }
