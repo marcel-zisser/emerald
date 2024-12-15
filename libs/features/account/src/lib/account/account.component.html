@@ -1,1 +1,52 @@
-<p>account works!</p>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form-container">
+  <mat-grid-list cols="2" rowHeight="5rem" gutterSize="1rem" >
+    <!-- First Name -->
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" required>
+        @if (userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched) {
+          <mat-error>First name is required.</mat-error>
+        }
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <!-- Last Name -->
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" required>
+        @if (userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched) {
+          <mat-error>Last name is required.</mat-error>
+        }
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <!-- Email -->
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required>
+        @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+          <mat-error>Email is invalid or required.</mat-error>
+        }
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <!-- Role -->
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Role</mat-label>
+        <input matInput formControlName="role" [readonly]="true">
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <!-- Submit Button -->
+  <div class="button-container">
+    <button mat-button>Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
+      Submit
+    </button>
+  </div>
+</form>
