@@ -1,13 +1,13 @@
 <div class="login-container">
   <mat-card class="login-card">
-    <mat-card-header>
+    <mat-card-header class="card-header">
       <mat-card-title>
-        <h1>Welcome Back</h1>
+        <img ngSrc="/assets/emerald.svg" priority="true" width="100" height="108" alt="Logo" class="logo" />
+        <h1>Emerald</h1>
       </mat-card-title>
-      <mat-card-subtitle>
-        Please login to continue
-      </mat-card-subtitle>
+
     </mat-card-header>
+
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" class="full-width">

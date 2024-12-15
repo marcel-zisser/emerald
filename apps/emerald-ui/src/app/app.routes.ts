@@ -44,7 +44,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: FeatureRoutes.get(Feature.ProjectOwner),
-    component: AdminComponent,
+    component: ProjectOwnerComponent,
     title: getPageTitle(Feature.ProjectOwner),
     canActivate: [authenticationGuard, roleGuard],
     children: [
@@ -62,7 +62,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: FeatureRoutes.get(Feature.Reviewer),
-    component: AdminComponent,
+    component: ReviewerComponent,
     title: getPageTitle(Feature.Reviewer),
     canActivate: [authenticationGuard, roleGuard],
     children: [

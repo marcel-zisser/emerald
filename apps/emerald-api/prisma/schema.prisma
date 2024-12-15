@@ -7,11 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  userId    String @id @db.Uuid
+model User {
+  uuid    String @id @db.Uuid
   firstName String @db.VarChar(100)
   lastName  String @db.VarChar(100)
   role      String @db.VarChar(20)
-  email     String @db.VarChar(100)
+  email     String @db.VarChar(100) @unique
   password  String @db.VarChar(100)
 }
