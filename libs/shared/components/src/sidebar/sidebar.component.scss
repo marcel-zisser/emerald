@@ -1,3 +1,17 @@
+mat-nav-list {
+  flex: 1 1 auto;
+
+  a {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .sidenav-container {
   height: 100%;
 }
@@ -12,7 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px;
+  padding: 1rem;
 }
 
 .logo-container {
@@ -30,27 +44,50 @@
   border-top: 1px solid #ccc;
 }
 
-mat-nav-list {
-  flex: 1 1 auto;
-  a {
-    white-space: nowrap;
-    overflow: hidden;
-  }
+.group-separator {
+  margin: .5rem .5rem;
+  border: none;
+  border-top: 1px solid #ccc;
 }
 
 .content {
   padding: 1rem;
 }
 
-.menu-item {
-  width: 100%;
-  padding: 1rem;
-  cursor: pointer;
-
+.menu-item-container {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  height: 100%;
+  margin-top: .5rem;
+
+  mat-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    mat-list-item {
+      height: 2.5rem;
+    }
+  }
+
+  .upper-menu-items {
+    flex: 1 1 auto;
+  }
+
+  .lower-menu-items {
+    flex: 0 1 auto;
+  }
+
+  .menu-item {
+    width: 100%;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
 }
 
 .page-title {

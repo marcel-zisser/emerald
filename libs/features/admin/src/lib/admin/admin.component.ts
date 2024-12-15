@@ -14,19 +14,5 @@ import { RouterOutlet } from '@angular/router';
 export class AdminComponent {
   private readonly sidebarService = inject(SidebarService);
 
-  private adminMenuItems: MenuItem[] = [
-    {
-      icon: 'group',
-      label: Feature.UserManagement,
-      route:
-        FeatureRoutes.get(Feature.Admin) +
-        '/' +
-        FeatureRoutes.get(Feature.UserManagement),
-    },
-  ];
-
-  constructor() {
-    this.sidebarService.setMenuItems(this.adminMenuItems);
-    this.sidebarService.openRoute(this.adminMenuItems[0].route);
-  }
+  constructor() {}
 }

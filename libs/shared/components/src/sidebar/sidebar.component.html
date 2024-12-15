@@ -16,22 +16,42 @@
       </button>
     </div>
     <hr class="header-separator" />
-    <mat-nav-list>
-      @for (menuItem of menuItems(); track menuItem.label) {
-        <mat-list-item [routerLink]="menuItem.route">
+    <div class="menu-item-container">
+      <div class="upper-menu-items">
+        @for (feature of upperMenuItems().keys(); track feature) {
+          <mat-nav-list>
+            @for (menuItem of upperMenuItems().get(feature); track menuItem.label) {
+              <mat-list-item [routerLink]="menuItem.route">
+                <div class="menu-item">
+                  <mat-icon mat-list-icon>{{ menuItem.icon }}</mat-icon>
+                  <span mat-line>{{ menuItem.label }}</span>
+                </div>
+              </mat-list-item>
+            }
+          </mat-nav-list>
+          <hr class="group-separator" />
+
+        }
+      </div>
+
+
+      <mat-nav-list class="lower-menu-items">
+        @for (menuItem of lowerMenuItems; track menuItem.label) {
+          <mat-list-item [routerLink]="menuItem.route">
+            <div class="menu-item">
+              <mat-icon mat-list-icon>{{ menuItem.icon }}</mat-icon>
+              <span mat-line>{{ menuItem.label }}</span>
+            </div>
+          </mat-list-item>
+        }
+        <mat-list-item (click)="logout()">
           <div class="menu-item">
-            <mat-icon mat-list-icon>{{ menuItem.icon }}</mat-icon>
-            <span mat-line>{{ menuItem.label }}</span>
+            <mat-icon mat-list-icon>{{ logoutItem.icon }}</mat-icon>
+            <span mat-line>{{ logoutItem.label }}</span>
           </div>
         </mat-list-item>
-      }
-      <mat-list-item class="logout-item" (click)="logout()">
-        <div class="menu-item">
-          <mat-icon mat-list-icon>{{ logoutItem.icon }}</mat-icon>
-          <span mat-line>{{ logoutItem.label }}</span>
-        </div>
-      </mat-list-item>
-    </mat-nav-list>
+      </mat-nav-list>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -42,7 +62,7 @@
             <mat-icon>{{ 'menu' }}</mat-icon>
           </button>
         }
-        <h1 class="page-title">{{ pageTitle | page }}</h1>
+        <h1 class="page-title">{{ pageTitle() | page }}</h1>
       </div>
       <router-outlet></router-outlet>
     </div>

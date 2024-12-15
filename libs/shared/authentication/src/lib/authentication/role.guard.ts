@@ -25,10 +25,10 @@ export const roleGuard: CanActivateFn = (route) => {
 
     switch (userRole) {
       case Roles.Admin:
-        allowed = route.url[0].path === FeatureRoutes.get(Feature.Admin);
+        allowed = true;
         break;
       case Roles.ProjectOwner:
-        allowed = route.url[0].path === FeatureRoutes.get(Feature.ProjectOwner);
+        allowed = route.url[0].path !== FeatureRoutes.get(Feature.Admin);
         break;
       case Roles.Reviewer:
         allowed = route.url[0].path === FeatureRoutes.get(Feature.Reviewer);

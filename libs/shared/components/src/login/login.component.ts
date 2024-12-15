@@ -21,6 +21,9 @@ import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '@emerald/authentication';
+import { SidebarService } from '../sidebar';
+import { jwtDecode } from 'jwt-decode';
+import { JwtTokenInformation } from '@emerald/models';
 
 @Component({
   selector: 'em-login',
@@ -48,6 +51,7 @@ export class LoginComponent {
   loginForm: FormGroup;
 
   private readonly authenticationService = inject(AuthenticationService);
+  private readonly sidebarService = inject(SidebarService);
   private readonly router = inject(Router);
   private readonly snackbarService = inject(MatSnackBar);
 
@@ -69,6 +73,7 @@ export class LoginComponent {
           next: (response) => {
             this.authenticationService.saveToken(response.accessToken);
             this.authenticationService.authenticate();
+
             this.snackbarService.dismiss();
             this.router.navigate(['']);
           },

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@emerald/account": ["libs/features/account/src/index.ts"],
       "@emerald/admin": ["libs/features/admin/src/index.ts"],
       "@emerald/authentication": ["libs/shared/authentication/src/index.ts"],
       "@emerald/components": ["libs/shared/components/src/index.ts"],

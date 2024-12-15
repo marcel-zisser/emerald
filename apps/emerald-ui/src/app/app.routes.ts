@@ -16,6 +16,7 @@ import { inject } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { ProjectOwnerComponent } from '@emerald/project-owner';
 import { ReviewerComponent } from '@emerald/reviewer';
+import { AccountComponent } from '@emerald/account';
 
 export const appRoutes: Route[] = [
   {
@@ -43,15 +44,40 @@ export const appRoutes: Route[] = [
   },
   {
     path: FeatureRoutes.get(Feature.ProjectOwner),
-    component: ProjectOwnerComponent,
+    component: AdminComponent,
     title: getPageTitle(Feature.ProjectOwner),
     canActivate: [authenticationGuard, roleGuard],
+    children: [
+      {
+        path: FeatureRoutes.get(Feature.MyProjects),
+        component: UserTableComponent,
+        title: getPageTitle(Feature.MyProjects),
+      },
+      {
+        path: FeatureRoutes.get(Feature.CreateProject),
+        component: UserTableComponent,
+        title: getPageTitle(Feature.CreateProject),
+      },
+    ],
   },
   {
     path: FeatureRoutes.get(Feature.Reviewer),
-    component: ReviewerComponent,
+    component: AdminComponent,
     title: getPageTitle(Feature.Reviewer),
     canActivate: [authenticationGuard, roleGuard],
+    children: [
+      {
+        path: FeatureRoutes.get(Feature.AssignedProjects),
+        component: UserTableComponent,
+        title: getPageTitle(Feature.AssignedProjects),
+      },
+    ],
+  },
+  {
+    path: FeatureRoutes.get(Feature.Account),
+    component: AccountComponent,
+    title: getPageTitle(Feature.Account),
+    canActivate: [authenticationGuard],
   },
 ];
 
