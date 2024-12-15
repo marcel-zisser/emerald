@@ -52,7 +52,6 @@ export class LoginComponent {
   loginForm: FormGroup;
 
   private readonly authenticationService = inject(AuthenticationService);
-  private readonly sidebarService = inject(SidebarService);
   private readonly router = inject(Router);
   private readonly snackbarService = inject(MatSnackBar);
 
@@ -79,6 +78,7 @@ export class LoginComponent {
             this.router.navigate(['']);
           },
           error: () => {
+            this.markFormAsInvalid();
             this.snackbarService.open(
               'Login failed. Please try again!',
               'Dismiss',
@@ -95,5 +95,14 @@ export class LoginComponent {
   onForgotPassword() {
     console.log('Forgot Password clicked');
     // Add your forgot password logic here
+  }
+
+  private markFormAsInvalid() {
+    Object.keys(this.loginForm.controls).forEach((field) => {
+      const control = this.loginForm.get(field);
+      control?.markAsTouched({ onlySelf: true });
+      control?.markAsDirty();
+      control?.setErrors({ wrongCredentials: true })
+    });
   }
 }
