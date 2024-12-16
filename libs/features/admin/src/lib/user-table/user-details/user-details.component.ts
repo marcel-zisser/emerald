@@ -86,10 +86,6 @@ export class UserDetailsComponent {
     }
   }
 
-  protected onCancel(): void {
-    this.dialogRef.close();
-  }
-
   private markFormAsInvalid() {
     Object.keys(this.userForm.controls).forEach((field) => {
       const control = this.userForm.get(field);

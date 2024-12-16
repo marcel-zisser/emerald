@@ -1,9 +1,5 @@
-.form-container {
-  width: 100%;
-}
-
-.button-container {
+.account-container {
   display: flex;
-  justify-content: end;
-  margin-top: 16px;
+  flex-direction: column;
+  gap: 2rem;
 }

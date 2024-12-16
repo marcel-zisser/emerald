@@ -17,7 +17,7 @@ mat-nav-list {
 }
 
 .sidenav {
-  width: 250px;
+  width: 300px;
   transition: width 0.3s ease-in-out;
   overflow: hidden;
 }
@@ -51,7 +51,8 @@ mat-nav-list {
 }
 
 .content {
-  padding: 1rem;
+  padding: 2rem;
+  overflow: hidden;
 }
 
 .menu-item-container {

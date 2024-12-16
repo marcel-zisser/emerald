@@ -21,9 +21,6 @@ import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '@emerald/authentication';
-import { SidebarService } from '../sidebar';
-import { jwtDecode } from 'jwt-decode';
-import { JwtTokenInformation } from '@emerald/models';
 
 @Component({
   selector: 'em-login',

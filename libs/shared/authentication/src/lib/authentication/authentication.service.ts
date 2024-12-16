@@ -11,16 +11,17 @@ import {
   ApiEndpoint,
   ApiRoutes,
   Feature,
-  FeatureRoutes,
+  FeatureRoutes, JwtTokenInformation,
   LoginRequest,
   LoginResponse,
   RefreshTokenResponse,
   RegisterRequest,
-  User,
+  User
 } from '@emerald/models';
 import { BackendService } from '@emerald/services';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -93,6 +94,15 @@ export class AuthenticationService {
    */
   getToken(): string | null {
     return localStorage.getItem('auth_token');
+  }
+
+  getDecodedToken(): JwtTokenInformation | undefined {
+    const token = this.getToken();
+    if (token) {
+      return jwtDecode<JwtTokenInformation>(token);
+    }
+
+    return undefined;
   }
 
   /**
