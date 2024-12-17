@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["omitApi"]
 }
 
 datasource db {
@@ -8,9 +9,10 @@ datasource db {
 }
 
 model User {
-  uuid    String @id @db.Uuid
-  firstName String @db.VarChar(100)
-  lastName  String @db.VarChar(100)
+  uuid      String @id @db.Uuid
+  firstName String @db.VarChar(50)
+  lastName  String @db.VarChar(50)
+  username  String @db.VarChar(50) @unique
   role      String @db.VarChar(20)
   email     String @db.VarChar(100) @unique
   password  String @db.VarChar(100)

@@ -7,7 +7,6 @@ import {
   MatCardActions,
   MatCardContent,
   MatCardHeader,
-  MatCardSubtitle,
   MatCardTitle,
 } from '@angular/material/card';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
@@ -38,7 +37,6 @@ import { AuthenticationService } from '@emerald/authentication';
     MatLabel,
     MatError,
     MatCardHeader,
-    MatCardSubtitle,
     NgOptimizedImage
   ],
   templateUrl: './login.component.html',
@@ -54,17 +52,17 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
+      const { username, password } = this.loginForm.value;
 
       this.authenticationService
-        .login(email, password)
+        .login(username, password)
         .pipe(first())
         .subscribe({
           next: (response) => {

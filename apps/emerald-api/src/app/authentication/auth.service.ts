@@ -11,12 +11,13 @@ import { Request, Response } from 'express';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
+import { PrismaService } from '../../prisma.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userService: UserService
+    private readonly prisma: PrismaService
   ) {}
 
   /**
@@ -30,7 +31,11 @@ export class AuthService {
     request: LoginRequest,
     response: Response
   ): Promise<LoginResponse> {
-    const user = await this.userService.user({ email: request.email });
+    const user = await this.prisma.user.findUnique({
+      where: { username: request.username },
+      omit: { password: false },
+    });
+
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -75,6 +80,7 @@ export class AuthService {
       firstName: this.jwtService.decode(refreshToken).firstName,
       lastName: this.jwtService.decode(refreshToken).lastName,
       role: this.jwtService.decode(refreshToken).role,
+      username: '',
       email: '',
       password: '',
     } satisfies User;

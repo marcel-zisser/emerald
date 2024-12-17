@@ -29,10 +29,10 @@ export class UserController {
     return this.userService.createUser(user);
   }
 
-  @Put(':uuid')
-  editUser(@Param('uuid') uuid: string, @Body() user: User): Promise<User> {
+  @Put('')
+  editUser(@Body() user: User): Promise<User> {
     return this.userService.updateUser({
-      where: { uuid: uuid },
+      where: { uuid: user.uuid },
       data: user,
     });
   }
