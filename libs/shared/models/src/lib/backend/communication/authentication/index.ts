@@ -3,4 +3,4 @@ export { LoginRequest } from './login.request';
 export { LoginResponse } from './login.response';
 export { RefreshTokenResponse } from './refreshToken.response';
 export { JwtTokenInformation } from './jwt-token-information';
-export { Roles } from './roles.enum';
+export { Role } from './roles.enum';

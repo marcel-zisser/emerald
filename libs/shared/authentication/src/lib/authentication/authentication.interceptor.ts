@@ -21,6 +21,10 @@ export function authenticationInterceptor(req: HttpRequest<unknown>, next: HttpH
       if (error.status === 401 && !req.url.includes('/auth')) {
         return authService.refreshToken().pipe(
           switchMap((response) => {
+            if (response?.accessToken) {
+              authService.saveToken(response?.accessToken);
+            }
+
             const clonedReq = req.clone(
               {
                 setHeaders: {

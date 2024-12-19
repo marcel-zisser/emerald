@@ -11,16 +11,17 @@ import {
   ApiEndpoint,
   ApiRoutes,
   Feature,
-  FeatureRoutes,
+  FeatureRoutes, JwtTokenInformation,
   LoginRequest,
   LoginResponse,
   RefreshTokenResponse,
   RegisterRequest,
-  User,
+  User
 } from '@emerald/models';
 import { BackendService } from '@emerald/services';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -53,12 +54,12 @@ export class AuthenticationService {
 
   /**
    * Logs in a user with the provided credentials
-   * @param email the provided email
+   * @param username the provided username
    * @param password the provided password
    * @returns {Observable<LoginResponse>} Observable with information about the success of the login
    */
-  login(email: string, password: string): Observable<LoginResponse> {
-    const body: LoginRequest = { email: email, password: password };
+  login(username: string, password: string): Observable<LoginResponse> {
+    const body: LoginRequest = { username: username, password: password };
 
     return this.backendService.doPost<LoginResponse, LoginRequest>(
       `${ApiRoutes.get(ApiEndpoint.Login)}`,
@@ -93,6 +94,15 @@ export class AuthenticationService {
    */
   getToken(): string | null {
     return localStorage.getItem('auth_token');
+  }
+
+  getDecodedToken(): JwtTokenInformation | undefined {
+    const token = this.getToken();
+    if (token) {
+      return jwtDecode<JwtTokenInformation>(token);
+    }
+
+    return undefined;
   }
 
   /**

@@ -9,7 +9,7 @@ export enum Feature {
   Reviewer = 'Reviewer',
   AssignedProjects = 'Assigned Projects',
 
-  Account = 'Account',
+  Account = 'Account Settings',
 
   Login = 'Login',
   Logout = 'Logout',

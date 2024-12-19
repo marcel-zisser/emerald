@@ -19,7 +19,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   app.enableCors({
     origin: 'http://localhost:4200', // Replace with your Angular app URL
-    methods: 'GET,POST,PUT,DELETE',
+    methods: 'GET,POST,PUT,PATCH,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
     credentials: true,
   });

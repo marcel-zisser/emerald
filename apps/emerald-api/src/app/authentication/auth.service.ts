@@ -4,19 +4,19 @@ import {
   LoginRequest,
   LoginResponse,
   RefreshTokenResponse,
-  Roles,
+  Role,
 } from '@emerald/models';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
-import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
+import { PrismaService } from '../../prisma.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userService: UserService
+    private readonly prisma: PrismaService
   ) {}
 
   /**
@@ -30,7 +30,11 @@ export class AuthService {
     request: LoginRequest,
     response: Response
   ): Promise<LoginResponse> {
-    const user = await this.userService.user({ email: request.email });
+    const user = await this.prisma.user.findUnique({
+      where: { username: request.username },
+      omit: { password: false },
+    });
+
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -75,6 +79,7 @@ export class AuthService {
       firstName: this.jwtService.decode(refreshToken).firstName,
       lastName: this.jwtService.decode(refreshToken).lastName,
       role: this.jwtService.decode(refreshToken).role,
+      username: '',
       email: '',
       password: '',
     } satisfies User;
@@ -82,6 +87,11 @@ export class AuthService {
     return {
       accessToken: await this.generateAccessToken(user),
     };
+  }
+
+  extractTokenFromHeader(request: Request): string | undefined {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 
   /**
@@ -94,7 +104,7 @@ export class AuthService {
       sub: user.uuid,
       firstName: user.firstName,
       lastName: user.lastName,
-      role: user.role as Roles,
+      role: user.role as Role,
     } satisfies JwtTokenInformation;
     return this.jwtService.signAsync(payload);
   }
@@ -108,7 +118,7 @@ export class AuthService {
       sub: user.uuid,
       firstName: user.firstName,
       lastName: user.lastName,
-      role: user.role as Roles,
+      role: user.role as Role,
     } satisfies JwtTokenInformation;
 
     return this.jwtService.signAsync(payload, { expiresIn: '7d' });

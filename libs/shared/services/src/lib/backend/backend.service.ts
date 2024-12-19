@@ -47,4 +47,14 @@ export class BackendService {
   doPut<T, K>(url: string | undefined, body: K): Observable<T> {
     return this.httpClient.put<T>(this.apiUrl + url, body, { withCredentials: true });
   }
+
+  /**
+   * Executes a PATCH request to the backend API to a specific endpoint
+   * @param url the endpoint to be targeted
+   * @param body the body to add to PUT request
+   * @returns {Observable<never>} Observable with the result of the request
+   */
+  doPatch<T, K>(url: string | undefined, body: K): Observable<T> {
+    return this.httpClient.patch<T>(this.apiUrl + url, body, { withCredentials: true });
+  }
 }

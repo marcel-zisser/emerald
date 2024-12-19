@@ -17,7 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { Roles, User } from '@emerald/models';
+import { Role, User } from '@emerald/models';
 import { v4 as uuid } from 'uuid';
 import { UserTableService } from '../user-table.service';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -44,9 +44,8 @@ export class UserDetailsComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly dialogRef = inject(MatDialogRef<UserDetailsComponent>);
   private readonly dialogData = inject(MAT_DIALOG_DATA);
-  private readonly usersService = inject(UserTableService);
 
-  protected readonly Roles = Roles;
+  protected readonly Roles = Role;
   protected userForm: FormGroup;
   protected userToEdit: User | null = null;
 
@@ -84,10 +83,6 @@ export class UserDetailsComponent {
     } else {
       this.markFormAsInvalid();
     }
-  }
-
-  protected onCancel(): void {
-    this.dialogRef.close();
   }
 
   private markFormAsInvalid() {

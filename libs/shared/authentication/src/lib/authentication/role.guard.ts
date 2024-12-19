@@ -5,7 +5,7 @@ import {
   Feature,
   FeatureRoutes,
   JwtTokenInformation,
-  Roles,
+  Role,
 } from '@emerald/models';
 import { jwtDecode } from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,13 +24,13 @@ export const roleGuard: CanActivateFn = (route) => {
     const userRole = jwtDecode<JwtTokenInformation>(token).role;
 
     switch (userRole) {
-      case Roles.Admin:
+      case Role.Admin:
         allowed = true;
         break;
-      case Roles.ProjectOwner:
+      case Role.ProjectOwner:
         allowed = route.url[0].path !== FeatureRoutes.get(Feature.Admin);
         break;
-      case Roles.Reviewer:
+      case Role.Reviewer:
         allowed = route.url[0].path === FeatureRoutes.get(Feature.Reviewer);
         break;
     }

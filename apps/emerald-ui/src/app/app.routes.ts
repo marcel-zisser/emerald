@@ -4,7 +4,7 @@ import {
   Feature,
   FeatureRoutes,
   JwtTokenInformation,
-  Roles,
+  Role,
 } from '@emerald/models';
 import {
   authenticationGuard,
@@ -92,11 +92,11 @@ function roleBasedRedirect(): string {
     const userRole = jwtDecode<JwtTokenInformation>(token).role;
 
     switch (userRole) {
-      case Roles.Admin:
+      case Role.Admin:
         return FeatureRoutes.get(Feature.Admin) ?? '';
-      case Roles.ProjectOwner:
+      case Role.ProjectOwner:
         return FeatureRoutes.get(Feature.ProjectOwner) ?? '';
-      case Roles.Reviewer:
+      case Role.Reviewer:
         return FeatureRoutes.get(Feature.Reviewer) ?? '';
     }
   }

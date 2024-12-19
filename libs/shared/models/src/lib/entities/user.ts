@@ -1,24 +1,27 @@
-import { Roles } from '../backend';
+import { Role } from '../backend';
 
 export class User {
   uuid: string;
   firstName: string;
   lastName: string;
+  username: string;
   email: string;
   password: string;
-  role: Roles;
+  role: Role;
 
   constructor(
     userId: string,
     firstName: string,
     lastName: string,
-    role: Roles,
+    username: string,
+    role: Role,
     email: string,
     password: string
   ) {
     this.uuid = userId;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.username = username;
     this.role = role;
     this.email = email;
     this.password = password;

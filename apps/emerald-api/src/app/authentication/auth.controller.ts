@@ -5,10 +5,10 @@ import {
   RefreshTokenResponse,
 } from '@emerald/models';
 import { AuthService } from './auth.service';
-import { Public } from './auth.guard';
 import { Request, Response } from 'express';
 import { User } from '@prisma/client';
 import { UserService } from '../user/user.service';
+import { Public } from './decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {

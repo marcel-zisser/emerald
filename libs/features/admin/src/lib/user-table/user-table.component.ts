@@ -99,8 +99,7 @@ export class UserTableComponent implements OnInit {
    */
   onEditUserClicked(user: User): void {
     const dialogRef = this.dialog.open(UserDetailsComponent, {
-      width: '75%',
-      height: '80%',
+      width: '20%',
       data: user,
     });
 
@@ -110,7 +109,7 @@ export class UserTableComponent implements OnInit {
       .afterClosed()
       .pipe(
         first(),
-        filter((result) => result !== null),
+        filter((result) => result !== ''),
         switchMap((updatedUser) => {
           updated = updatedUser;
           return this.userService.updateUser(updatedUser);

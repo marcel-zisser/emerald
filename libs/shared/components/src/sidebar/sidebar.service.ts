@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Feature, FeatureRoutes, MenuItem, Roles } from '@emerald/models';
+import { Feature, FeatureRoutes, MenuItem, Role } from '@emerald/models';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -59,20 +59,20 @@ export class SidebarService {
    * Sets the menu items of based on the user role
    * @param role the role of the user
    */
-  setMenuItems(role: Roles): void {
+  setMenuItems(role: Role): void {
     const menuItems = new Map<string, MenuItem[]>();
 
     switch (role) {
-      case Roles.Admin:
+      case Role.Admin:
         menuItems.set(Feature.Admin, this.adminMenuItems);
         menuItems.set(Feature.ProjectOwner, this.projectOwnerMenuItems);
         menuItems.set(Feature.Reviewer, this.reviewerMenuItems);
         break;
-      case Roles.ProjectOwner:
+      case Role.ProjectOwner:
         menuItems.set(Feature.ProjectOwner, this.projectOwnerMenuItems);
         menuItems.set(Feature.Reviewer, this.reviewerMenuItems);
         break;
-      case Roles.Reviewer:
+      case Role.Reviewer:
         menuItems.set(Feature.Reviewer, this.reviewerMenuItems);
         break;
     }
