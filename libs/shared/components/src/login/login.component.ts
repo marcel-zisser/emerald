@@ -73,6 +73,7 @@ export class LoginComponent {
             this.router.navigate(['']);
           },
           error: () => {
+            this.loginForm.reset();
             this.markFormAsInvalid();
             this.snackbarService.open(
               'Login failed. Please try again!',
