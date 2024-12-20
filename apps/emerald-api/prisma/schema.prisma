@@ -9,11 +9,54 @@ datasource db {
 }
 
 model User {
-  uuid      String @id @db.Uuid
-  firstName String @db.VarChar(50)
-  lastName  String @db.VarChar(50)
-  username  String @db.VarChar(50) @unique
-  role      String @db.VarChar(20)
-  email     String @db.VarChar(100) @unique
-  password  String @db.VarChar(100)
+  uuid        String @id @db.Uuid @default(uuid())
+  firstName   String @db.VarChar(50)
+  lastName    String @db.VarChar(50)
+  username    String @db.VarChar(50) @unique
+  role        String @db.VarChar(20)
+  email       String @db.VarChar(100) @unique
+  password    String @db.VarChar(100)
+
+  checklists  Checklist[]
+  reviews     Review[]
+}
+
+model Criterion {
+  uuid        String        @id @db.Uuid @default(uuid())
+  description String        @db.VarChar(256)
+  status      String        @db.VarChar(16)
+  comments    String        @db.VarChar(256)
+  group       CriteriaGroup @relation(fields: [groupId], references: [uuid])
+  groupId     String        @db.Uuid
+}
+
+model CriteriaGroup {
+  uuid        String      @id @db.Uuid @default(uuid())
+  description String      @db.VarChar(256)
+  criteria    Criterion[]
+  checklist   Checklist   @relation(fields: [checklistId], references: [uuid])
+  checklistId String      @db.Uuid
+}
+
+model Checklist {
+  uuid        String          @id @db.Uuid @default(uuid())
+  title       String          @db.VarChar(128)
+  description String          @db.VarChar(256)
+  groups      CriteriaGroup[]
+
+  owner       User            @relation(fields: [ownerId], references: [uuid])
+  ownerId     String          @db.Uuid
+
+  reviews     Review[]
+}
+
+model Review {
+  userId      String    @db.Uuid
+  checklistId String    @db.Uuid
+  User        User      @relation(fields: [userId], references: [uuid])
+  CheckList   Checklist @relation(fields: [checklistId], references: [uuid])
+
+  status      String    @db.VarChar(16)
+
+  @@id([userId, checklistId])
 }
