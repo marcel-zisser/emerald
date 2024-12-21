@@ -5,12 +5,19 @@
   "projectType": "application",
   "tags": [],
   "targets": {
-    "pre-build": {
+    "migrate-db": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "prisma generate",
-        "args": ["--schema=apps/emerald-api/prisma/schema.prisma"]
+        "command": "prisma migrate reset",
+        "args": ["--force --schema=apps/emerald-api/prisma/schema.prisma"]
       }
+    },
+    "init-db": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx ts-node init-db/init-db"
+      },
+      "dependsOn": ["migrate-db"]
     },
     "build": {
       "executor": "nx:run-commands",
@@ -18,7 +25,7 @@
         "command": "webpack-cli build",
         "args": ["node-env=production"]
       },
-      "dependsOn": ["pre-build"],
+      "dependsOn": ["init-db"],
       "configurations": {
         "development": {
           "args": ["node-env=development"]

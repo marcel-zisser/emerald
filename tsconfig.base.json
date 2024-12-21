@@ -26,5 +26,6 @@
       "@emerald/services": ["libs/shared/services/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp"],
+  "include": ["init-db/init-db.ts"]
 }
