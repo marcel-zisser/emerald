@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { BackendService } from '@emerald/services';
 import { Observable } from 'rxjs';
 import { ApiEndpoint, ApiRoutes, User } from '@emerald/models';
-import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +29,8 @@ export class UserTableService {
   /**
    * Updates an existing user
    */
-  updateUser(user: User): Observable<UpdateResult> {
-    return this.backendService.doPut<UpdateResult, User>(
+  updateUser(user: User): Observable<User> {
+    return this.backendService.doPut<User, User>(
       ApiRoutes.get(ApiEndpoint.User) + user.uuid,
       user
     );
@@ -41,7 +40,7 @@ export class UserTableService {
    * Deletes the given user
    * @param user the user to delete
    */
-  deleteUser(user: User): Observable<DeleteResult> {
+  deleteUser(user: User): Observable<User> {
     return this.backendService.doDelete(
       ApiRoutes.get(ApiEndpoint.User) + user.uuid
     );

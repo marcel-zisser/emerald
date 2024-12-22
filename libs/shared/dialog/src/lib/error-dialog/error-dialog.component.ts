@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -12,7 +11,6 @@ import { MatButton } from '@angular/material/button';
 @Component({
   selector: 'em-error-dialog',
   imports: [
-    CommonModule,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,

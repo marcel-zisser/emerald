@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { LoginComponent } from '@emerald/components';
+import { DashboardComponent, LoginComponent } from '@emerald/components';
 import {
   Feature,
   FeatureRoutes,
@@ -35,6 +35,11 @@ export const appRoutes: Route[] = [
     title: getPageTitle(Feature.Admin),
     canActivate: [authenticationGuard, roleGuard],
     children: [
+      {
+        path: '',
+        component: DashboardComponent,
+        title: getPageTitle(Feature.Admin),
+      },
       {
         path: FeatureRoutes.get(Feature.UserManagement),
         component: UserTableComponent,

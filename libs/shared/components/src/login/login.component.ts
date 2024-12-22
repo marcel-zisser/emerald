@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
 import {
@@ -25,7 +25,6 @@ import { AuthenticationService } from '@emerald/authentication';
   selector: 'em-login',
   standalone: true,
   imports: [
-    CommonModule,
     MatCard,
     MatCardTitle,
     MatCardContent,

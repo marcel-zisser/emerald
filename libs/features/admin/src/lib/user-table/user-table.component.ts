@@ -116,7 +116,7 @@ export class UserTableComponent implements OnInit {
         })
       )
       .subscribe((updateResult) => {
-        if (updateResult.affected !== 0) {
+        if (updateResult) {
           this.users.update((users) =>
             users.map((u) => (u.uuid === updated.uuid ? updated : u))
           );
@@ -153,7 +153,7 @@ export class UserTableComponent implements OnInit {
         })
       )
       .subscribe((deleteResult) => {
-        if (deleteResult.affected !== 0) {
+        if (deleteResult) {
           this.users.set(this.users().filter((u) => u.uuid !== user.uuid));
           this.snackBar.open('Successfully deleted user!', 'Close', {
             duration: 3000,

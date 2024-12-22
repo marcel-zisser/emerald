@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DeleteResult } from 'typeorm';
+import { User } from '@emerald/models';
 
 @Injectable({
   providedIn: 'root',
@@ -32,9 +32,9 @@ export class BackendService {
   /**
    * Executes a DELETE request to the backend API to a specific endpoint
    * @param url the endpoint to be targeted
-   * @returns {Observable<DeleteResult>} Observable with the result of the request
+   * @returns {Observable<User>} Observable with the result of the request
    */
-  doDelete(url: string | undefined): Observable<DeleteResult> {
+  doDelete(url: string | undefined): Observable<User> {
     return this.httpClient.delete<never>(this.apiUrl + url);
   }
 
