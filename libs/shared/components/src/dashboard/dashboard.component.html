@@ -1,8 +1,6 @@
 <div class="dashboard-container">
-@if (token.role === Role.Admin || token.role === Role.ProjectOwner) {
-  <em-projects-overview
-    [projects]="ownedProjects"
-  ></em-projects-overview>
+@if (token?.role === Role.Admin || token?.role === Role.ProjectOwner) {
+  <em-checklist-overview></em-checklist-overview>
 }
 <em-review-overview></em-review-overview>
 </div>

@@ -6,9 +6,11 @@ import { AuthGuard } from './authentication/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { UserModule } from './user/user.module';
 import { RolesGuard } from './authentication/roles.guard';
+import { ChecklistModule } from './checklist/checklist.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
-  imports: [AuthModule, UserModule],
+  imports: [AuthModule, UserModule, ChecklistModule, ReviewModule],
   controllers: [AppController],
   providers: [
     AppService,

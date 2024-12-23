@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AccountDetailsComponent } from './account-details/account-details.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AuthenticationService } from '@emerald/authentication';
@@ -7,13 +7,9 @@ import { BackendService } from '@emerald/services';
 import { first } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-
 @Component({
   selector: 'account-account',
-  imports: [
-    AccountDetailsComponent,
-    ChangePasswordComponent
-  ],
+  imports: [AccountDetailsComponent, ChangePasswordComponent],
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss',
   standalone: true,
@@ -27,12 +23,15 @@ export class AccountComponent {
   constructor() {
     const jwtInformation = this.authenticationService.getDecodedToken();
 
-    if(jwtInformation) {
+    if (jwtInformation) {
       this.currentUser = toSignal<User>(
-        this.backendService.doGet<User>(ApiRoutes.get(ApiEndpoint.User) + jwtInformation.sub).pipe(first())
+        this.backendService
+          .doGet<User>(ApiRoutes.get(ApiEndpoint.User) + jwtInformation.sub)
+          .pipe(first()),
+        { initialValue: undefined }
       );
     } else {
-      this.currentUser = signal(undefined)
+      this.currentUser = signal(undefined);
     }
   }
 }

@@ -7,4 +7,8 @@ export const ApiRoutes = new Map<ApiEndpoint, string>([
   [ApiEndpoint.RefreshJWT, 'auth/refresh/'],
 
   [ApiEndpoint.User, 'users/'],
+
+  [ApiEndpoint.Checklist, 'checklist/'],
+
+  [ApiEndpoint.Review, 'review/'],
 ]);

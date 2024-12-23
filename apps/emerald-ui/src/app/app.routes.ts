@@ -54,6 +54,11 @@ export const appRoutes: Route[] = [
     canActivate: [authenticationGuard, roleGuard],
     children: [
       {
+        path: '',
+        component: DashboardComponent,
+        title: getPageTitle(Feature.ProjectOwner),
+      },
+      {
         path: FeatureRoutes.get(Feature.MyProjects),
         component: UserTableComponent,
         title: getPageTitle(Feature.MyProjects),
@@ -71,6 +76,11 @@ export const appRoutes: Route[] = [
     title: getPageTitle(Feature.Reviewer),
     canActivate: [authenticationGuard, roleGuard],
     children: [
+      {
+        path: '',
+        component: DashboardComponent,
+        title: getPageTitle(Feature.Reviewer),
+      },
       {
         path: FeatureRoutes.get(Feature.AssignedProjects),
         component: UserTableComponent,

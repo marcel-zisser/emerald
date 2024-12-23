@@ -1,25 +1,18 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import { MatError } from '@angular/material/form-field';
-import { ProjectsOverviewComponent } from './projects-overview/projects-overview.component';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Signal,
+} from '@angular/core';
+import { ChecklistOverviewComponent } from './checklist-overview/checklist-overview.component';
 import { ReviewOverviewComponent } from './review-overview/review-overview.component';
-import { Role } from '@emerald/models';
+import { Checklist, JwtTokenInformation, Role } from '@emerald/models';
 import { AuthenticationService } from '@emerald/authentication';
+import { ChecklistService } from '@emerald/services';
 
 @Component({
   selector: 'em-dashboard',
-  imports: [
-    FormsModule,
-    MatButton,
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatError,
-    ProjectsOverviewComponent,
-    ReviewOverviewComponent,
-  ],
+  imports: [ChecklistOverviewComponent, ReviewOverviewComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,9 +22,5 @@ export class DashboardComponent {
   private readonly authenticationService = inject(AuthenticationService);
 
   protected readonly Role = Role;
-  protected token;
-
-  constructor() {
-    this.token = this.authenticationService.getDecodedToken();
-  }
+  protected readonly token = this.authenticationService.getDecodedToken();
 }

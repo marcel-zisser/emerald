@@ -4,5 +4,9 @@ export enum ApiEndpoint {
   Register = 'Register',
   RefreshJWT = 'RefreshJWT',
 
-  User = "User",
+  User = 'User',
+
+  Checklist = 'Checklist',
+
+  Review = 'Review',
 }

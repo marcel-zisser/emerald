@@ -1,0 +1,12 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>My Checklists</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @for(checklist of checklists(); track checklist.uuid) {
+      <p>{{ checklist.title }}</p>
+    }
+  </mat-card-content>
+
+</mat-card>

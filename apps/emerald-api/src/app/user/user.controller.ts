@@ -1,14 +1,15 @@
 import {
   BadRequestException,
   Body,
-  Controller, Delete,
+  Controller,
+  Delete,
   Get,
   Param,
   Patch,
   Post,
   Put,
   Req,
-  UnauthorizedException
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
@@ -17,13 +18,13 @@ import { Roles } from '../authentication/decorators/roles.decorator';
 import { Request } from 'express';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../../prisma.service';
-import * as console from 'node:console';
 
 @Controller('users')
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly prisma: PrismaService) {}
+    private readonly prisma: PrismaService
+  ) {}
 
   @Get()
   getAllUsers(): Promise<User[]> {
@@ -54,7 +55,10 @@ export class UserController {
   }
 
   @Patch('')
-  async changePassword(@Req() request: Request, @Body() body: ChangePasswordRequest): Promise<User> {
+  async changePassword(
+    @Req() request: Request,
+    @Body() body: ChangePasswordRequest
+  ): Promise<User> {
     if (body.password !== body.confirmPassword) {
       throw new BadRequestException();
     }
@@ -68,7 +72,10 @@ export class UserController {
       throw new BadRequestException();
     }
 
-    const passwordCorrect = await bcrypt.compare(body.currentPassword, user.password);
+    const passwordCorrect = await bcrypt.compare(
+      body.currentPassword,
+      user.password
+    );
     if (!passwordCorrect) {
       throw new UnauthorizedException();
     }

@@ -19,7 +19,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Role, User } from '@emerald/models';
 import { v4 as uuid } from 'uuid';
-import { UserTableService } from '../user-table.service';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
