@@ -42,7 +42,7 @@ export class ChecklistController {
 
   @Roles(Role.Admin, Role.ProjectOwner)
   @Put('')
-  editUser(
+  editChecklist(
     @Req() request: Request,
     @Body() checklist: Checklist
   ): Promise<Checklist> {
@@ -61,7 +61,7 @@ export class ChecklistController {
 
   @Roles(Role.Admin, Role.ProjectOwner)
   @Delete(':uuid')
-  deleteUser(@Param('uuid') uuid: string): Promise<Checklist> {
+  deleteChecklist(@Param('uuid') uuid: string): Promise<Checklist> {
     return this.checklistService.deleteChecklist({ uuid: uuid });
   }
 }

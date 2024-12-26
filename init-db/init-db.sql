@@ -32,14 +32,18 @@ VALUES ('2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3',
         'Criteria Group 1',
         '5e85eea3-7cea-416d-85ee-a37cea516d78');
 
-INSERT INTO "Criterion" ("uuid", "description", "status", "comments", "groupId")
+INSERT INTO "Criterion" ("uuid", "description", "groupId")
 VALUES ('d568a98e-4a1d-43d2-a8a9-8e4a1db3d269',
         'Criteria 1',
-        'Done',
-        '',
         '2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3');
 
-INSERT INTO "Review" ("userId", "checklistId", "status")
-VALUES ('715d2bf3-a1f4-4332-8804-2f313e3dc1a9',
-        '5e85eea3-7cea-416d-85ee-a37cea516d78',
-        'Done');
+INSERT INTO "Review" ("uuid", "userId", "checklistId")
+VALUES ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
+        '715d2bf3-a1f4-4332-8804-2f313e3dc1a9',
+        '5e85eea3-7cea-416d-85ee-a37cea516d78');
+
+INSERT INTO "ReviewResult" ("reviewId", "criterionId", "status", "comments")
+VALUES ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
+        'd568a98e-4a1d-43d2-a8a9-8e4a1db3d269',
+        'Done',
+        'This is a comment by the user');

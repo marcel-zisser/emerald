@@ -15,6 +15,7 @@ export class ChecklistService {
     cursor?: Prisma.ChecklistWhereUniqueInput;
     where?: Prisma.ChecklistWhereInput;
     orderBy?: Prisma.ChecklistOrderByWithRelationInput;
+    include?: Prisma.ChecklistInclude;
   }): Promise<Checklist[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.checklist.findMany({
@@ -23,13 +24,6 @@ export class ChecklistService {
       cursor,
       where,
       orderBy,
-      include: {
-        groups: {
-          include: {
-            criteria: true,
-          },
-        },
-      },
     });
   }
 

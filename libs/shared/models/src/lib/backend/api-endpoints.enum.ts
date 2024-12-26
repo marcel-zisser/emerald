@@ -9,4 +9,6 @@ export enum ApiEndpoint {
   Checklist = 'Checklist',
 
   Review = 'Review',
+
+  Dashboard = 'Dashboard',
 }

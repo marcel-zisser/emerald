@@ -22,12 +22,12 @@ model User {
 }
 
 model Criterion {
-  uuid        String        @id @db.Uuid @default(uuid())
-  description String        @db.VarChar(256)
-  status      String        @db.VarChar(16)
-  comments    String        @db.VarChar(256)
-  group       CriteriaGroup @relation(fields: [groupId], references: [uuid])
-  groupId     String        @db.Uuid
+  uuid          String        @id @db.Uuid @default(uuid())
+  description   String        @db.VarChar(256)
+  group         CriteriaGroup @relation(fields: [groupId], references: [uuid])
+  groupId       String        @db.Uuid
+
+  reviewResults ReviewResult[]
 }
 
 model CriteriaGroup {
@@ -51,12 +51,26 @@ model Checklist {
 }
 
 model Review {
-  userId      String    @db.Uuid
-  checklistId String    @db.Uuid
-  User        User      @relation(fields: [userId], references: [uuid])
-  CheckList   Checklist @relation(fields: [checklistId], references: [uuid])
+  uuid        String    @id @db.Uuid  @default(uuid())
+
+  userId        String    @db.Uuid
+  checklistId   String    @db.Uuid
+  User          User      @relation(fields: [userId], references: [uuid])
+  CheckList     Checklist @relation(fields: [checklistId], references: [uuid])
+
+  reviewResults ReviewResult[]
+
+  @@unique([userId, checklistId])
+}
+
+model ReviewResult {
+  reviewId    String    @db.Uuid  @default(uuid())
+  criterionId String    @db.Uuid
+  Review      Review    @relation(fields: [reviewId], references: [uuid])
+  Criterion   Criterion @relation(fields: [criterionId], references: [uuid])
 
   status      String    @db.VarChar(16)
+  comments    String    @db.VarChar(256)
 
-  @@id([userId, checklistId])
+  @@id([reviewId, criterionId])
 }

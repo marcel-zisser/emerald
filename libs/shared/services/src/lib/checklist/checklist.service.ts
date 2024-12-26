@@ -19,7 +19,7 @@ export class ChecklistService {
   constructor() {
     this._checklists = toSignal(
       this.backendService
-        .doGet<Checklist[]>(ApiRoutes.get(ApiEndpoint.Checklist))
+        .doGet<Checklist[]>(ApiRoutes.get(ApiEndpoint.Dashboard))
         .pipe(first()),
       { initialValue: [] }
     );

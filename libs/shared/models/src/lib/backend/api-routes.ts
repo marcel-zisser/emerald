@@ -8,7 +8,9 @@ export const ApiRoutes = new Map<ApiEndpoint, string>([
 
   [ApiEndpoint.User, 'users/'],
 
-  [ApiEndpoint.Checklist, 'checklist/'],
+  [ApiEndpoint.Checklist, 'checklist'],
 
-  [ApiEndpoint.Review, 'review/'],
+  [ApiEndpoint.Review, 'review'],
+
+  [ApiEndpoint.Dashboard, 'dashboard'],
 ]);

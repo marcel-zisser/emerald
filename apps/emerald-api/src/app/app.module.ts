@@ -8,9 +8,16 @@ import { UserModule } from './user/user.module';
 import { RolesGuard } from './authentication/roles.guard';
 import { ChecklistModule } from './checklist/checklist.module';
 import { ReviewModule } from './review/review.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
-  imports: [AuthModule, UserModule, ChecklistModule, ReviewModule],
+  imports: [
+    AuthModule,
+    UserModule,
+    ChecklistModule,
+    ReviewModule,
+    DashboardModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,

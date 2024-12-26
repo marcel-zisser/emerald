@@ -1,6 +1,7 @@
 export { User } from './user';
 export { Criterion } from './criterion';
-export { CriteriaGroup } from './criteriaGroup';
+export { CriteriaGroup } from './criteria-group';
 export { Checklist } from './checklist';
-export { ReviewStatus } from './reviewStatus.enum';
+export { ReviewStatus } from './review-status.enum';
 export { Review } from './review';
+export { CriterionStatus } from './criterion-status.enum';
