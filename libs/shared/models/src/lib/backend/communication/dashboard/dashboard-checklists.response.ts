@@ -1,5 +1,5 @@
-export interface DashboardChecklistsResponse {
-  checklistId: string;
-  checklistTitle: string;
-  checklistDescription: string;
+import { DashboardChecklist } from '../../../entities';
+
+export interface DashboardChecklistResponse {
+  checklists: DashboardChecklist[];
 }

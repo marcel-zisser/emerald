@@ -45,5 +45,5 @@ VALUES ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
 INSERT INTO "ReviewResult" ("reviewId", "criterionId", "status", "comments")
 VALUES ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
         'd568a98e-4a1d-43d2-a8a9-8e4a1db3d269',
-        'Done',
+        'PASS',
         'This is a comment by the user');

@@ -12,8 +12,9 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { AuthenticationService } from '@emerald/authentication';
-import { Checklist } from '@emerald/models';
+import { Checklist, DashboardChecklist } from '@emerald/models';
 import { ChecklistService } from '@emerald/services';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'em-checklist-overview',
@@ -25,12 +26,12 @@ import { ChecklistService } from '@emerald/services';
 })
 export class ChecklistOverviewComponent {
   private readonly authenticationService = inject(AuthenticationService);
-  private readonly checklistService = inject(ChecklistService);
+  private readonly dashboardService = inject(DashboardService);
 
   private readonly token = this.authenticationService.getDecodedToken();
 
-  protected checklists = computed<Checklist[]>(() =>
-    this.checklistService
+  protected checklists = computed<DashboardChecklist[]>(() =>
+    this.dashboardService
       .checklists()
       .filter((checklist) => checklist.ownerId === this.token?.sub)
   );

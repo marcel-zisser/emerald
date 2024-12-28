@@ -5,7 +5,12 @@
 
   <mat-card-content>
     @for(checklist of checklists(); track checklist.uuid) {
-      <p>{{ checklist.title }}</p>
+      <p>Title: {{ checklist.title }}</p>
+      <p>Description: {{ checklist.description }}</p>
+      <p>Pass: {{ checklist.criterionAggregates.pass}}</p>
+      <p>Fail: {{ checklist.criterionAggregates.fail}}</p>
+      <p>Completed: {{ checklist.reviewAggregates.completed }}</p>
+      <p>Uncompleted: {{ checklist.reviewAggregates.uncompleted }}</p>
     }
   </mat-card-content>
 

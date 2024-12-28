@@ -11,7 +11,7 @@ import {
 import { Request } from 'express';
 import { Checklist } from '@prisma/client';
 import { Roles } from '../authentication/decorators/roles.decorator';
-import { Role } from '@emerald/models';
+import { DashboardChecklist, DashboardChecklistResponse, Role } from '@emerald/models';
 import { DashboardService } from './dashboard.service';
 
 @Controller('dashboard')
@@ -20,7 +20,7 @@ export class DashboardController {
 
   @Roles(Role.ProjectOwner, Role.Admin)
   @Get()
-  getChecklists(@Req() request: Request): Promise<Checklist[]> {
+  getChecklists(@Req() request: Request): Promise<DashboardChecklist[]> {
     const ownerId = request['jwt'].sub;
     return this.dashboardService.checklists({
       take: 5,

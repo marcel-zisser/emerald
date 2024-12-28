@@ -2,13 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  Signal,
 } from '@angular/core';
 import { ChecklistOverviewComponent } from './checklist-overview/checklist-overview.component';
 import { ReviewOverviewComponent } from './review-overview/review-overview.component';
-import { Checklist, JwtTokenInformation, Role } from '@emerald/models';
+import { Role } from '@emerald/models';
 import { AuthenticationService } from '@emerald/authentication';
-import { ChecklistService } from '@emerald/services';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'em-dashboard',
@@ -17,6 +16,7 @@ import { ChecklistService } from '@emerald/services';
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
+  providers: [DashboardService]
 })
 export class DashboardComponent {
   private readonly authenticationService = inject(AuthenticationService);
