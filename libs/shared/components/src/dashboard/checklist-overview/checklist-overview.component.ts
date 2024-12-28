@@ -11,16 +11,15 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { AuthenticationService } from '@emerald/authentication';
-import { CriteriaSummary, DashboardChecklist } from '@emerald/models';
+import { DashboardChecklist } from '@emerald/models';
 import { DashboardService } from '../dashboard.service';
-import { StatusBarComponent } from '../../status-bar';
-import { CriteriaSummaryChartPipe } from '@emerald/services';
 import {
-  MatExpansionPanel,
+  MatExpansionPanel, MatExpansionPanelContent,
   MatExpansionPanelDescription,
   MatExpansionPanelHeader,
-  MatExpansionPanelTitle,
+  MatExpansionPanelTitle
 } from '@angular/material/expansion';
+import { ReviewListComponent } from '../../review-list/review-list.component';
 
 @Component({
   selector: 'em-checklist-overview',
@@ -29,12 +28,12 @@ import {
     MatCardHeader,
     MatCardTitle,
     MatCardContent,
-    StatusBarComponent,
-    CriteriaSummaryChartPipe,
     MatExpansionPanel,
     MatExpansionPanelTitle,
     MatExpansionPanelHeader,
     MatExpansionPanelDescription,
+    MatExpansionPanelContent,
+    ReviewListComponent
   ],
   templateUrl: './checklist-overview.component.html',
   styleUrl: './checklist-overview.component.scss',

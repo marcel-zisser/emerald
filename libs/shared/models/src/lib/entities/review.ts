@@ -1,13 +1,10 @@
 import { ReviewStatus } from './review-status.enum';
+import { User } from './user';
+import { ReviewResult } from './review-result';
 
-export class Review {
-  userId: string;
-  checklistId: string;
+export interface Review {
+  uuid: string;
   status: ReviewStatus;
-
-  constructor(userId: string, checklistId: string, status: ReviewStatus) {
-    this.userId = userId;
-    this.checklistId = checklistId;
-    this.status = status;
-  }
+  user: User;
+  results: ReviewResult[];
 }

@@ -1,0 +1,12 @@
+.review-container {
+  height: 4rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-bar {
+  width: 50%;
+}

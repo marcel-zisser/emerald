@@ -9,6 +9,7 @@ import { RolesGuard } from './authentication/roles.guard';
 import { ChecklistModule } from './checklist/checklist.module';
 import { ReviewModule } from './review/review.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { ResultModule } from './result/result.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     ChecklistModule,
     ReviewModule,
     DashboardModule,
+    ResultModule,
   ],
   controllers: [AppController],
   providers: [

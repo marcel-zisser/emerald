@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import { Prisma } from '@prisma/client';
-import { CriterionStatus, DashboardChecklist } from '@emerald/models';
+import { CriteriaSummary, DashboardChecklist, ReviewSummary } from '@emerald/models';
+import { ResultService } from '../result/result.service';
 
 @Injectable()
 export class DashboardService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private resultService: ResultService) {}
 
   /**
    * Gets all checklists from the database
@@ -28,49 +29,30 @@ export class DashboardService {
       include: {
         reviews: {
           include: {
-            reviewResults: {
-              select: {
-                status: true,
-              },
-            },
+            reviewResults: true,
           },
         },
       },
     });
 
     return checklists.map((checklist) => {
-      let passed = 0;
-      let failed = 0;
-      let tbd = 0;
+      const criteriaSummary: CriteriaSummary = { passed: 0, failed: 0, TBD: 0 };
 
       checklist.reviews.forEach((review) => {
-        review.reviewResults.forEach((criterion) => {
-          switch (criterion.status) {
-            case CriterionStatus.Pass:
-              passed += 1;
-              break;
-            case CriterionStatus.Fail:
-              failed += 1;
-              break;
-            default:
-              tbd += 1;
-          }
-        });
+        const summary = this.resultService.getCriterionSummary(review.reviewResults)
+
+        criteriaSummary.passed += summary.passed;
+        criteriaSummary.failed += summary.failed;
+        criteriaSummary.TBD += summary.TBD;
       });
 
-      let completed = 0;
-      let uncompleted = 0;
+      const reviewSummary: ReviewSummary = { completed: 0, uncompleted: 0 };
 
       checklist.reviews.forEach((review) => {
-        const complete = review.reviewResults.every((reviewResult) => {
-          return reviewResult.status !== CriterionStatus.TBD;
-        });
+        const summary = this.resultService.getReviewSummary(review.reviewResults);
 
-        if (complete) {
-          completed += 1;
-        } else {
-          uncompleted += 1;
-        }
+        reviewSummary.completed += summary.completed;
+        reviewSummary.uncompleted += summary.uncompleted;
       });
 
       return {
@@ -78,15 +60,8 @@ export class DashboardService {
         title: checklist.title,
         description: checklist.description,
         ownerId: checklist.ownerId,
-        criteriaSummary: {
-          passed: passed,
-          failed: failed,
-          TBD: tbd,
-        },
-        reviewSummary: {
-          completed: completed,
-          uncompleted: uncompleted,
-        },
+        criteriaSummary: criteriaSummary,
+        reviewSummary: reviewSummary,
       } satisfies DashboardChecklist;
     });
   }

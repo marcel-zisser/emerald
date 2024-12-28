@@ -40,19 +40,6 @@ export class AuthenticationService {
   }
 
   /**
-   * Sends the backend request to register a given user
-   * @param user the user to be registered
-   */
-  register(user: User): Observable<void> {
-    const body: RegisterRequest = { user: user };
-
-    return this.backendService.doPost<void, RegisterRequest>(
-      `${ApiRoutes.get(ApiEndpoint.Register)}`,
-      body
-    );
-  }
-
-  /**
    * Logs in a user with the provided credentials
    * @param username the provided username
    * @param password the provided password

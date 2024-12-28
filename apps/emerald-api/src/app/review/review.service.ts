@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
-import { Review, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import { CriterionStatus, Review, ReviewResult, ReviewStatus } from '@emerald/models';
 
 @Injectable()
 export class ReviewService {
@@ -17,13 +18,36 @@ export class ReviewService {
     orderBy?: Prisma.ReviewOrderByWithRelationInput;
   }): Promise<Review[]> {
     const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.review.findMany({
+    const reviews = await this.prisma.review.findMany({
       skip,
       take,
       cursor,
       where,
       orderBy,
+      include: {
+        reviewResults: true,
+        User: true
+      }
     });
+
+    return reviews.map(review => {
+      return {
+        uuid: review.uuid,
+        status: ReviewStatus.Done,
+        user: {
+          uuid: review.userId,
+          firstName: review.User.firstName,
+          lastName: review.User.lastName,
+        },
+        results: review.reviewResults.map(result => {
+          return {
+            status: result.status as CriterionStatus,
+            comments: result.comments
+          } satisfies ReviewResult;
+        }),
+      } satisfies Review;
+    }
+    );
   }
 
   /**
@@ -33,18 +57,28 @@ export class ReviewService {
   async review(
     reviewWhereUniqueInput: Prisma.ReviewWhereUniqueInput
   ): Promise<Review | null> {
-    return this.prisma.review.findUnique({
+    const review = await this.prisma.review.findUnique({
       where: reviewWhereUniqueInput,
+      include: {
+        reviewResults: true,
+        User: true
+      }
     });
-  }
 
-  /**
-   * Creates a new review
-   * @param data the review to be created
-   */
-  async createReview(data: Prisma.ReviewCreateInput): Promise<Review> {
-    return this.prisma.review.create({
-      data,
-    });
+    return {
+      uuid: review.uuid,
+      status: ReviewStatus.Done,
+      user: {
+        uuid: review.userId,
+        firstName: review.User.firstName,
+        lastName: review.User.lastName,
+      },
+      results: review.reviewResults.map(result => {
+        return {
+          status: result.status as CriterionStatus,
+          comments: result.comments
+        } satisfies ReviewResult;
+      }),
+    } satisfies Review;
   }
 }

@@ -1,0 +1,9 @@
+@for(review of reviews(); track review.uuid) {
+  <div class="review-container">
+    <span>{{ review.user.firstName }} {{ review.user.lastName }}</span>
+    <em-status-bar
+      class="status-bar"
+      [segments]="getCriterionSummary(review.results) | criteriaSummaryChart">
+    </em-status-bar>
+  </div>
+}

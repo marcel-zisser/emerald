@@ -4,6 +4,7 @@ export { CriteriaGroup } from './criteria-group';
 export { Checklist } from './checklist';
 export { ReviewStatus } from './review-status.enum';
 export { Review } from './review';
+export { ReviewResult } from './review-result';
 export { CriterionStatus } from './criterion-status.enum';
 export { DashboardChecklist } from './dashboard-checklist';
 export { CriteriaSummary } from './criteria-summary';
