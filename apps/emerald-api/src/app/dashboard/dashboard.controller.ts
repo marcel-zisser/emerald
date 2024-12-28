@@ -9,9 +9,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { Checklist } from '@prisma/client';
 import { Roles } from '../authentication/decorators/roles.decorator';
-import { DashboardChecklist, DashboardChecklistResponse, Role } from '@emerald/models';
+import { DashboardChecklist, Role } from '@emerald/models';
 import { DashboardService } from './dashboard.service';
 
 @Controller('dashboard')

@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   inject,
 } from '@angular/core';
 import {
@@ -12,13 +11,31 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { AuthenticationService } from '@emerald/authentication';
-import { Checklist, DashboardChecklist } from '@emerald/models';
-import { ChecklistService } from '@emerald/services';
+import { CriteriaSummary, DashboardChecklist } from '@emerald/models';
 import { DashboardService } from '../dashboard.service';
+import { StatusBarComponent } from '../../status-bar';
+import { CriteriaSummaryChartPipe } from '@emerald/services';
+import {
+  MatExpansionPanel,
+  MatExpansionPanelDescription,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+} from '@angular/material/expansion';
 
 @Component({
   selector: 'em-checklist-overview',
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent],
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    StatusBarComponent,
+    CriteriaSummaryChartPipe,
+    MatExpansionPanel,
+    MatExpansionPanelTitle,
+    MatExpansionPanelHeader,
+    MatExpansionPanelDescription,
+  ],
   templateUrl: './checklist-overview.component.html',
   styleUrl: './checklist-overview.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

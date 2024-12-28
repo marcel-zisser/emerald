@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
-import { Checklist, Prisma } from '@prisma/client';
-import {
-  CriterionStatus,
-  DashboardChecklist,
-} from '@emerald/models';
+import { Prisma } from '@prisma/client';
+import { CriterionStatus, DashboardChecklist } from '@emerald/models';
 
 @Injectable()
 export class DashboardService {
@@ -46,22 +43,20 @@ export class DashboardService {
       let failed = 0;
       let tbd = 0;
 
-      checklist.reviews.forEach(
-        (review) => {
-          review.reviewResults.forEach((criterion) => {
-            switch (criterion.status) {
-              case CriterionStatus.Pass:
-                passed += 1;
-                break;
-              case CriterionStatus.Fail:
-                failed += 1;
-                break;
-              default:
-                tbd += 1;
-            }
-          });
-        }
-      );
+      checklist.reviews.forEach((review) => {
+        review.reviewResults.forEach((criterion) => {
+          switch (criterion.status) {
+            case CriterionStatus.Pass:
+              passed += 1;
+              break;
+            case CriterionStatus.Fail:
+              failed += 1;
+              break;
+            default:
+              tbd += 1;
+          }
+        });
+      });
 
       let completed = 0;
       let uncompleted = 0;
@@ -83,12 +78,12 @@ export class DashboardService {
         title: checklist.title,
         description: checklist.description,
         ownerId: checklist.ownerId,
-        criterionAggregates: {
-          pass: passed,
-          fail:failed,
+        criteriaSummary: {
+          passed: passed,
+          failed: failed,
           TBD: tbd,
         },
-        reviewAggregates: {
+        reviewSummary: {
           completed: completed,
           uncompleted: uncompleted,
         },

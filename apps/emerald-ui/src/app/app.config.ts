@@ -9,6 +9,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authenticationInterceptor } from '@emerald/authentication';
 import { JwtModule } from '@auth0/angular-jwt';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export function tokenGetter() {
   return localStorage.getItem('auth_token');
@@ -27,6 +28,6 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
-    provideAnimationsAsync(),
+    provideAnimationsAsync(), provideCharts(withDefaultRegisterables()),
   ],
 };

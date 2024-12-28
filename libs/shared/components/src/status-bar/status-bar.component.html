@@ -1,0 +1,21 @@
+<div class="status-bar">
+  @for (segment of segments(); track segment.label) {
+    @if (segment.count > 0) {
+      <div
+        class="status-segment"
+        [style.width.%]="segment.width"
+        [style.background-color]="segment.color"
+      ></div>
+    }
+  }
+
+</div>
+<div class="status-labels">
+  @for (segment of segments(); track segment.label) {
+    @if (segment.count > 0) {
+      <span class="status-label" [style.width.%]="segment.width">
+        {{ segment.count }}
+      </span>
+    }
+  }
+</div>

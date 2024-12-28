@@ -1,8 +1,11 @@
+import { CriteriaSummary } from './criteria-summary';
+import { ReviewSummary } from './review-summary';
+
 export interface DashboardChecklist {
   uuid: string;
   title: string;
   description: string;
   ownerId: string;
-  criterionAggregates: { pass: number, fail: number, TBD: number };
-  reviewAggregates: { completed: number, uncompleted: number };
+  criteriaSummary: CriteriaSummary;
+  reviewSummary: ReviewSummary;
 }
