@@ -30,12 +30,24 @@ VALUES ('5e85eea3-7cea-416d-85ee-a37cea516d78',
 INSERT INTO "CriteriaGroup" ("uuid", "description", "checklistId")
 VALUES ('2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3',
         'Criteria Group 1',
+        '5e85eea3-7cea-416d-85ee-a37cea516d78'),
+       ('981b7203-b24a-4b53-bf8d-b33ee5c259f1',
+        'Criteria Group 2',
         '5e85eea3-7cea-416d-85ee-a37cea516d78');
 
 INSERT INTO "Criterion" ("uuid", "description", "groupId")
 VALUES ('d568a98e-4a1d-43d2-a8a9-8e4a1db3d269',
         'Criteria 1',
-        '2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3');
+        '2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3'),
+       ('8fe9420e-bcc8-4742-9c31-fb79494bc2de',
+        'Criteria 2',
+        '2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3'),
+       ('7f519504-1b38-48f8-a717-f033dadb39bf',
+        'Criteria 3',
+        '981b7203-b24a-4b53-bf8d-b33ee5c259f1'),
+       ('2e2b429b-b79e-4856-9ac4-b1558fbccaf0',
+        'Criteria 4',
+        '981b7203-b24a-4b53-bf8d-b33ee5c259f1');
 
 INSERT INTO "Review" ("uuid", "userId", "checklistId")
 VALUES ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
@@ -46,4 +58,16 @@ INSERT INTO "ReviewResult" ("reviewId", "criterionId", "status", "comments")
 VALUES ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
         'd568a98e-4a1d-43d2-a8a9-8e4a1db3d269',
         'PASS',
+        'This is a comment by the user'),
+       ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
+        '8fe9420e-bcc8-4742-9c31-fb79494bc2de',
+        'PASS',
+        'This is a comment by the user'),
+       ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
+        '7f519504-1b38-48f8-a717-f033dadb39bf',
+        'FAIL',
+        'This is a comment by the user'),
+       ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
+        '2e2b429b-b79e-4856-9ac4-b1558fbccaf0',
+        'TBD',
         'This is a comment by the user');

@@ -10,10 +10,10 @@ export class CriteriaSummaryChartPipe implements PipeTransform {
     const total = segments.TBD + segments.failed + segments.passed;
     return [
       {
-        label: 'TBD',
-        count: segments.TBD,
-        width: (segments.TBD / total) * 100,
-        color: 'gray',
+        label: 'Pass',
+        count: segments.passed,
+        width: (segments.passed / total) * 100,
+        color: 'green',
       },
       {
         label: 'Fail',
@@ -22,11 +22,11 @@ export class CriteriaSummaryChartPipe implements PipeTransform {
         color: 'red',
       },
       {
-        label: 'Pass',
-        count: segments.passed,
-        width: (segments.passed / total) * 100,
-        color: 'green',
-      },
+        label: 'TBD',
+        count: segments.TBD,
+        width: (segments.TBD / total) * 100,
+        color: 'gray',
+      }
     ];
   }
 }
