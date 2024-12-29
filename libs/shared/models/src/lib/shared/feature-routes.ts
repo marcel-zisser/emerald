@@ -8,11 +8,11 @@ export const FeatureRoutes = new Map<Feature, string>([
   [Feature.UserManagement, 'user-management'],
 
   [Feature.ProjectOwner, 'project-owner'],
-  [Feature.MyProjects, 'projects'],
-  [Feature.CreateProject, 'create-project'],
+  [Feature.Checklists, 'checklists'],
+  [Feature.CreateChecklist, 'create-checklist'],
 
   [Feature.Reviewer, 'reviewer'],
-  [Feature.AssignedProjects, 'projects'],
+  [Feature.Reviews, 'reviews'],
 
   [Feature.Account, 'account'],
 ]);

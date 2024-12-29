@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
-import { CriteriaSummary, CriterionStatus, ReviewSummary } from '@emerald/models';
+import { CriteriaSummary, CriterionStatus, ReviewStatus, ReviewSummary } from '@emerald/models';
 import { ReviewResult } from '@prisma/client';
 
 @Injectable()
@@ -33,23 +33,21 @@ export class ResultService {
     } satisfies CriteriaSummary;
   }
 
-  getReviewSummary(results: ReviewResult[]): ReviewSummary {
+  getReviewStatus(results: ReviewResult[]): ReviewStatus {
     let completed = 0;
-    let uncompleted = 0;
 
-      const complete = results.every((reviewResult) => {
-        return reviewResult.status !== CriterionStatus.TBD;
-      });
-
-      if (complete) {
-        completed += 1;
-      } else {
-        uncompleted += 1;
+    results.forEach((reviewResult) => {
+      if (reviewResult.status !== CriterionStatus.TBD) {
+        completed++;
       }
+    });
 
-      return {
-        completed: completed,
-        uncompleted: uncompleted,
-      } satisfies ReviewSummary;
+    if (completed === 0) {
+      return ReviewStatus.NotStarted
+    } else if (completed === results.length) {
+      return ReviewStatus.Complete;
+    } else {
+      return ReviewStatus.InProgress;
+    }
   }
 }

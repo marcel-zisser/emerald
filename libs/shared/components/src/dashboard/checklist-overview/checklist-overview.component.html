@@ -4,24 +4,33 @@
   </mat-card-header>
 
   <mat-card-content class="content">
-    @for(checklist of checklists(); track checklist.uuid) {
+    @for (checklist of checklists(); track checklist.uuid) {
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title> {{ checklist.title }} </mat-panel-title>
+          <mat-panel-title class="panel-title"> {{ checklist.title }}</mat-panel-title>
           <mat-panel-description class="panel-description">
-            {{ checklist.reviewSummary.completed }} out of {{ checklist.reviewSummary.completed + checklist.reviewSummary.uncompleted}} reviews completed
+            {{ checklist.reviewSummary.completed }} out
+            of {{ checklist.reviewSummary.completed + checklist.reviewSummary.uncompleted }} reviews completed
           </mat-panel-description>
         </mat-expansion-panel-header>
 
         <ng-template matExpansionPanelContent>
-          <p>{{ checklist.description }}</p>
-
-          <strong> Reviews </strong>
-          <em-review-list [checklistId]="checklist.uuid"></em-review-list>
+          <div>
+            {{ checklist.description }}
+          </div>
+          <hr class="panel-divider">
+          <div class="review-container">
+            <strong> Reviews </strong>
+            <div>
+              <em-review-list [checklistId]="checklist.uuid"></em-review-list>
+            </div>
+          </div>
         </ng-template>
       </mat-expansion-panel>
 
 
+    } @empty {
+      Currently there are no checklists to show.
     }
   </mat-card-content>
 

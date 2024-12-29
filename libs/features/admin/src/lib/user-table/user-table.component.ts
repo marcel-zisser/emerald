@@ -70,11 +70,13 @@ export class UserTableComponent implements OnInit {
   trackByUserId(index: number, user: User): string {
     return user.uuid;
   }
+
   /**
    * Opens a dialog to add a new user to the club
    */
   openAddUserDialog(): void {
     const dialogRef = this.dialog.open(UserDetailsComponent, {
+      width: '75%',
       data: null,
     });
 
@@ -99,7 +101,7 @@ export class UserTableComponent implements OnInit {
    */
   onEditUserClicked(user: User): void {
     const dialogRef = this.dialog.open(UserDetailsComponent, {
-      width: '20%',
+      width: '75%',
       data: user,
     });
 

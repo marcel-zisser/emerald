@@ -3,11 +3,11 @@ export enum Feature {
   UserManagement = 'User Management',
 
   ProjectOwner = 'Project Owner',
-  MyProjects = 'My Projects',
-  CreateProject = 'Create Project',
+  Checklists = 'Checklists',
+  CreateChecklist = 'Create Checklist',
 
   Reviewer = 'Reviewer',
-  AssignedProjects = 'Assigned Projects',
+  Reviews = 'Reviews',
 
   Account = 'Account Settings',
 

@@ -2,10 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import { Prisma } from '@prisma/client';
 import { CriterionStatus, Review, ReviewResult, ReviewStatus } from '@emerald/models';
+import { ResultService } from '../result/result.service';
 
 @Injectable()
 export class ReviewService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private resultService: ResultService) {}
 
   /**
    * Gets all reviews from the database
@@ -33,7 +34,7 @@ export class ReviewService {
     return reviews.map(review => {
       return {
         uuid: review.uuid,
-        status: ReviewStatus.Done,
+        status: this.resultService.getReviewStatus(review.reviewResults),
         user: {
           uuid: review.userId,
           firstName: review.User.firstName,
@@ -67,7 +68,7 @@ export class ReviewService {
 
     return {
       uuid: review.uuid,
-      status: ReviewStatus.Done,
+      status: this.resultService.getReviewStatus(review.reviewResults),
       user: {
         uuid: review.userId,
         firstName: review.User.firstName,

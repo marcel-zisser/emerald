@@ -19,13 +19,13 @@ export class CriteriaSummaryChartPipe implements PipeTransform {
         label: 'Fail',
         count: segments.failed,
         width: (segments.failed / total) * 100,
-        color: 'red',
+        color: 'firebrick',
       },
       {
         label: 'TBD',
         count: segments.TBD,
         width: (segments.TBD / total) * 100,
-        color: 'gray',
+        color: 'grey',
       }
     ];
   }

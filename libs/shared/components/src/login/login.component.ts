@@ -60,6 +60,8 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
 
+      this.loginForm.disable();
+
       this.authenticationService
         .login(username, password)
         .pipe(first())
@@ -74,6 +76,7 @@ export class LoginComponent {
           error: () => {
             this.loginForm.reset();
             this.markFormAsInvalid();
+            this.loginForm.enable();
             this.snackbarService.open(
               'Login failed. Please try again!',
               'Dismiss',

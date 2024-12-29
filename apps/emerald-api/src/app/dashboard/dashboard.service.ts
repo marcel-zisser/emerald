@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import { Prisma } from '@prisma/client';
-import { CriteriaSummary, DashboardChecklist, ReviewSummary } from '@emerald/models';
+import { CriteriaSummary, DashboardChecklist, ReviewStatus, ReviewSummary } from '@emerald/models';
 import { ResultService } from '../result/result.service';
 
 @Injectable()
@@ -49,10 +49,14 @@ export class DashboardService {
       const reviewSummary: ReviewSummary = { completed: 0, uncompleted: 0 };
 
       checklist.reviews.forEach((review) => {
-        const summary = this.resultService.getReviewSummary(review.reviewResults);
+        const status = this.resultService.getReviewStatus(review.reviewResults);
 
-        reviewSummary.completed += summary.completed;
-        reviewSummary.uncompleted += summary.uncompleted;
+        if (status === ReviewStatus.InProgress || status === ReviewStatus.NotStarted) {
+          reviewSummary.uncompleted++;
+
+        } else {
+          reviewSummary.completed++;
+        }
       });
 
       return {

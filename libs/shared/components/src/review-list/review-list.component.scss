@@ -7,6 +7,55 @@
   align-items: center;
 }
 
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.review-table {
+  width: 100%;
+  table-layout: fixed;
+  display: table;
+}
+
 .status-bar {
   width: 50%;
 }
+
+.legend {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: firebrick;
+}
+
+.grey {
+  background-color: grey;
+}
+
+.legend-text {
+  font-size: 14px;
+  color: #333;
+}
+

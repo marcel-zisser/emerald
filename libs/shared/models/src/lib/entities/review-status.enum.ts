@@ -1,5 +1,5 @@
 export enum ReviewStatus {
-  NotStarted,
-  InProgress,
-  Done
+  NotStarted = 'Not Started',
+  InProgress = 'In Progress',
+  Complete = 'Complete',
 }

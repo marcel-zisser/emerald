@@ -1,5 +1,7 @@
 .user-table {
   overflow: auto;
+  table-layout: fixed;
+  display: table;
 }
 
 .add-container {

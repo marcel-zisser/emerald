@@ -24,30 +24,30 @@ export class SidebarService {
   private readonly projectOwnerMenuItems: MenuItem[] = [
     {
       icon: 'lists',
-      label: Feature.MyProjects,
+      label: Feature.Checklists,
       route:
         FeatureRoutes.get(Feature.ProjectOwner) +
         '/' +
-        FeatureRoutes.get(Feature.MyProjects),
+        FeatureRoutes.get(Feature.Checklists),
     },
     {
       icon: 'edit',
-      label: Feature.CreateProject,
+      label: Feature.CreateChecklist,
       route:
         FeatureRoutes.get(Feature.ProjectOwner) +
         '/' +
-        FeatureRoutes.get(Feature.CreateProject),
+        FeatureRoutes.get(Feature.CreateChecklist),
     },
   ];
 
   private readonly reviewerMenuItems: MenuItem[] = [
     {
       icon: 'tasks',
-      label: Feature.AssignedProjects,
+      label: Feature.Reviews,
       route:
         FeatureRoutes.get(Feature.Reviewer) +
         '/' +
-        FeatureRoutes.get(Feature.AssignedProjects),
+        FeatureRoutes.get(Feature.Reviews),
     },
   ];
 
