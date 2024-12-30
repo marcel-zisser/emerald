@@ -143,9 +143,6 @@ export class AuthenticationService {
    * Logs the current user out, by removing the JWT token
    */
   logout(): void {
-    this._isAuthenticated.set(false);
-    localStorage.removeItem('auth_token');
-
     this.backendService
       .doPost<never, Record<string, never>>(
         `${ApiRoutes.get(ApiEndpoint.Logout)}`,
@@ -153,6 +150,8 @@ export class AuthenticationService {
       )
       .pipe(first())
       .subscribe(() => {
+        this._isAuthenticated.set(false);
+        localStorage.removeItem('auth_token');
         this.router.navigate([FeatureRoutes.get(Feature.Login)]);
       });
   }

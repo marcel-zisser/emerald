@@ -19,10 +19,9 @@
       "@emerald/admin": ["libs/features/admin/src/index.ts"],
       "@emerald/authentication": ["libs/shared/authentication/src/index.ts"],
       "@emerald/components": ["libs/shared/components/src/index.ts"],
+      "@emerald/dashboard": ["libs/features/dashboard/src/index.ts"],
       "@emerald/dialog": ["libs/shared/dialog/src/index.ts"],
       "@emerald/models": ["libs/shared/models/src/index.ts"],
-      "@emerald/project-owner": ["libs/features/project-owner/src/index.ts"],
-      "@emerald/reviewer": ["libs/features/reviewer/src/index.ts"],
       "@emerald/services": ["libs/shared/services/src/index.ts"]
     }
   },

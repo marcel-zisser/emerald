@@ -19,10 +19,10 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import { ReviewListComponent } from '../../review-list/review-list.component';
+import { ReviewListComponent } from '@emerald/components';
 
 @Component({
-  selector: 'em-checklist-overview',
+  selector: 'dashboard-checklist-overview',
   imports: [
     MatCard,
     MatCardHeader,

@@ -14,10 +14,7 @@ export class SidebarService {
     {
       icon: 'group',
       label: Feature.UserManagement,
-      route:
-        FeatureRoutes.get(Feature.Admin) +
-        '/' +
-        FeatureRoutes.get(Feature.UserManagement),
+      route: FeatureRoutes.get(Feature.UserManagement) ?? '',
     },
   ];
 
@@ -25,18 +22,12 @@ export class SidebarService {
     {
       icon: 'lists',
       label: Feature.Checklists,
-      route:
-        FeatureRoutes.get(Feature.ProjectOwner) +
-        '/' +
-        FeatureRoutes.get(Feature.Checklists),
+      route: FeatureRoutes.get(Feature.Checklists)  ?? '',
     },
     {
       icon: 'edit',
       label: Feature.CreateChecklist,
-      route:
-        FeatureRoutes.get(Feature.ProjectOwner) +
-        '/' +
-        FeatureRoutes.get(Feature.CreateChecklist),
+      route:  FeatureRoutes.get(Feature.CreateChecklist)  ?? '',
     },
   ];
 
@@ -44,10 +35,7 @@ export class SidebarService {
     {
       icon: 'tasks',
       label: Feature.Reviews,
-      route:
-        FeatureRoutes.get(Feature.Reviewer) +
-        '/' +
-        FeatureRoutes.get(Feature.Reviews),
+      route: FeatureRoutes.get(Feature.Reviews)  ?? '',
     },
   ];
 

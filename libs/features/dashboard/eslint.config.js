@@ -12,7 +12,7 @@ module.exports = [
         'error',
         {
           type: 'attribute',
-          prefix: 'project',
+          prefix: 'dashboard',
           style: 'camelCase',
         },
       ],
@@ -20,7 +20,7 @@ module.exports = [
         'error',
         {
           type: 'element',
-          prefix: 'project',
+          prefix: 'dashboard',
           style: 'kebab-case',
         },
       ],

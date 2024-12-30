@@ -1,8 +1,8 @@
 export default {
-  displayName: 'project-owner',
+  displayName: 'dashboard',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/features/project-owner',
+  coverageDirectory: '../../../coverage/libs/features/dashboard',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

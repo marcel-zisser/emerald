@@ -10,7 +10,7 @@ import { AuthenticationService } from '@emerald/authentication';
 import { DashboardService } from './dashboard.service';
 
 @Component({
-  selector: 'em-dashboard',
+  selector: 'dashboard-root',
   imports: [ChecklistOverviewComponent, ReviewOverviewComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

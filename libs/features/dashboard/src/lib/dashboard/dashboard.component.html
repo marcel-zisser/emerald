@@ -1,0 +1,6 @@
+<div class="dashboard-container">
+@if (token?.role === Role.Admin || token?.role === Role.ProjectOwner) {
+  <dashboard-checklist-overview></dashboard-checklist-overview>
+}
+<dashboard-review-overview></dashboard-review-overview>
+</div>

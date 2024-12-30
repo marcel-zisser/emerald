@@ -1,4 +1,6 @@
 export enum Feature {
+  Dashboard = 'Dashboard',
+
   Admin = 'Admin',
   UserManagement = 'User Management',
 

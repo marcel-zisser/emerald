@@ -11,6 +11,7 @@ import { jwtDecode } from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '@emerald/dialog';
 import { first } from 'rxjs';
+import { checklistOwnerRoutes, reviewerRoutes } from './route-permission';
 
 export const roleGuard: CanActivateFn = (route) => {
   const authService = inject(AuthenticationService);
@@ -28,10 +29,10 @@ export const roleGuard: CanActivateFn = (route) => {
         allowed = true;
         break;
       case Role.ProjectOwner:
-        allowed = route.url[0].path !== FeatureRoutes.get(Feature.Admin);
+        allowed = checklistOwnerRoutes.some( allowedRoute => allowedRoute === route.url.toString());
         break;
       case Role.Reviewer:
-        allowed = route.url[0].path === FeatureRoutes.get(Feature.Reviewer);
+        allowed = reviewerRoutes.some( allowedRoute => allowedRoute === route.url.toString());
         break;
     }
   }
