@@ -21,8 +21,14 @@ export const roleGuard: CanActivateFn = (route) => {
   const token = authService.getToken();
   let allowed = false;
 
+  if (route.url.toString() === '') {
+    return true;
+  }
+
   if (token) {
     const userRole = jwtDecode<JwtTokenInformation>(token).role;
+
+
 
     switch (userRole) {
       case Role.Admin:
