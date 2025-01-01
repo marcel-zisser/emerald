@@ -11,6 +11,7 @@ import {
 import { UserTableComponent } from '@emerald/admin';
 import { AccountComponent } from '@emerald/account';
 import { DashboardComponent } from '@emerald/dashboard';
+import { CreateChecklistComponent } from '@emerald/checklist';
 
 export const appRoutes: Route[] = [
   {
@@ -25,25 +26,25 @@ export const appRoutes: Route[] = [
     canActivate: [authenticationGuard, roleGuard],
   },
   {
-    path: `${FeatureRoutes.get(Feature.UserManagement)}`,
+    path: FeatureRoutes.get(Feature.UserManagement),
     component: UserTableComponent,
     title: getPageTitle(Feature.UserManagement),
     canActivate: [authenticationGuard, roleGuard],
   },
   {
-    path: `${FeatureRoutes.get(Feature.Checklists)}`,
+    path: FeatureRoutes.get(Feature.Checklists),
     component: UserTableComponent,
     title: getPageTitle(Feature.Checklists),
     canActivate: [authenticationGuard, roleGuard],
   },
   {
-    path: `${FeatureRoutes.get(Feature.CreateChecklist)}`,
-    component: UserTableComponent,
+    path: FeatureRoutes.get(Feature.CreateChecklist),
+    component: CreateChecklistComponent,
     title: getPageTitle(Feature.CreateChecklist),
     canActivate: [authenticationGuard, roleGuard],
   },
   {
-    path: `${FeatureRoutes.get(Feature.Reviews)}`,
+    path: FeatureRoutes.get(Feature.Reviews),
     component: UserTableComponent,
     title: getPageTitle(Feature.Reviews),
   },

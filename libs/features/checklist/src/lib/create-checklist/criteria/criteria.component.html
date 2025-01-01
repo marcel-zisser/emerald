@@ -1,0 +1,63 @@
+<form [formGroup]="criteriaForm">
+  <mat-accordion>
+    <mat-expansion-panel
+      *ngFor="let group of criteriaGroups.controls; let groupIndex = index"
+      [formGroupName]="groupIndex"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ group.get('groupName')?.value || 'New Criteria Group' }}
+        </mat-panel-title>
+        <mat-panel-description>
+          Click to expand
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <ng-template matExpansionPanelContent>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Group Name</mat-label>
+          <input matInput formControlName="groupName" placeholder="Enter group name" />
+        </mat-form-field>
+        <button mat-icon-button color="warn" (click)="removeCriteriaGroup(groupIndex)">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+        <div formArrayName="criteria">
+          <div
+            *ngFor="let criterion of getCriteria(groupIndex).controls; let criterionIndex = index"
+            [formGroupName]="criterionIndex"
+          >
+            <mat-form-field appearance="outline" class="criteria-field">
+              <mat-label>Criterion Name</mat-label>
+              <input matInput formControlName="name" placeholder="Enter criterion name" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="criteria-field">
+              <mat-label>Criterion Value</mat-label>
+              <input matInput formControlName="value" placeholder="Enter criterion value" />
+            </mat-form-field>
+
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="removeCriterion(groupIndex, criterionIndex)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="addCriterion(groupIndex)">
+          Add Criterion
+        </button>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <div class="actions">
+    <button mat-raised-button color="accent" (click)="addCriteriaGroup()">
+      Add Criteria Group
+    </button>
+  </div>
+</form>

@@ -1,0 +1,37 @@
+<mat-stepper orientation="horizontal">
+  <mat-step [stepControl]="basicData" label="Basic Checklist configuration">
+    <div class="step-container">
+      <checklist-basic-data></checklist-basic-data>
+      <div class="button-container">
+        <button mat-flat-button matStepperNext>Next</button>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="basicData" label="Define Criteria">
+    <div class="step-container">
+      <checklist-criteria></checklist-criteria>
+      <div class="button-container">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-flat-button matStepperNext>Next</button>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="basicData" label="Add Reviewers">
+    <div class="step-container">
+      <checklist-add-reviewer></checklist-add-reviewer>
+      <div class="button-container">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-flat-button matStepperNext>Next</button>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="basicData" label="Finish Checklist">
+    <div class="step-container">
+      <checklist-finish-checklist></checklist-finish-checklist>
+      <div class="button-container">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-flat-button matStepperNext>Next</button>
+      </div>
+    </div>
+  </mat-step>
+</mat-stepper>

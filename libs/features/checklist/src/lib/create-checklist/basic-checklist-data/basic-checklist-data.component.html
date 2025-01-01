@@ -1,0 +1,19 @@
+<form [formGroup]="basicData">
+  <div class="form-field">
+    <mat-label class="outside-label">Title</mat-label>
+    <mat-form-field>
+      <input matNativeControl formControlName="title" required>
+      @if (basicData.get('title')?.invalid && basicData.get('title')?.touched) {
+        <mat-error>Title is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-label class="outside-label">Description</mat-label>
+    <mat-form-field>
+      <textarea matNativeControl formControlName="description" required></textarea>
+      @if (basicData.get('description')?.invalid && basicData.get('description')?.touched) {
+        <mat-error>Description is required.</mat-error>
+      }
+    </mat-form-field>
+  </div>
+</form>
