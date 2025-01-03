@@ -1,9 +1,14 @@
-<form [formGroup]="basicData">
+<h2>Basic Data</h2>
+<p>
+  Enter the basic information of the checklist here.
+</p>
+
+<form [formGroup]="form()">
   <div class="form-field">
     <mat-label class="outside-label">Title</mat-label>
     <mat-form-field>
       <input matNativeControl formControlName="title" required>
-      @if (basicData.get('title')?.invalid && basicData.get('title')?.touched) {
+      @if (form().get('title')?.invalid && form().get('title')?.touched) {
         <mat-error>Title is required.</mat-error>
       }
     </mat-form-field>
@@ -11,7 +16,7 @@
     <mat-label class="outside-label">Description</mat-label>
     <mat-form-field>
       <textarea matNativeControl formControlName="description" required></textarea>
-      @if (basicData.get('description')?.invalid && basicData.get('description')?.touched) {
+      @if (form().get('description')?.invalid && form().get('description')?.touched) {
         <mat-error>Description is required.</mat-error>
       }
     </mat-form-field>

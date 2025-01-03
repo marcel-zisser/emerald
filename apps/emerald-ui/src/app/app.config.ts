@@ -10,6 +10,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authenticationInterceptor } from '@emerald/authentication';
 import { JwtModule } from '@auth0/angular-jwt';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 export function tokenGetter() {
   return localStorage.getItem('auth_token');
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
-    provideAnimationsAsync(), provideCharts(withDefaultRegisterables()),
+    provideAnimationsAsync(),
+    provideCharts(withDefaultRegisterables()),
   ],
 };

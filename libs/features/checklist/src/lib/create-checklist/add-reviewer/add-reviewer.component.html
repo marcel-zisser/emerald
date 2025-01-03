@@ -1,1 +1,34 @@
-<p>add-reviewer works!</p>
+<h2>Add Reviewers</h2>
+<p>
+  Add users to review the checklist. Users can also be added after checklist creation.
+</p>
+<form [formGroup]="form()">
+  <div class="card-container">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Available Users</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="card-content">
+        <checklist-reviewer-list
+          [users]="users()"
+          [filterable]="true"
+          (remove)="addSelectedUser($event)"
+        ></checklist-reviewer-list>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Selected Users</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="content">
+        <checklist-reviewer-list
+          [users]="selectedUsers()"
+          [icon]="'delete'"
+          (remove)="removeSelectedUser($event)"
+        ></checklist-reviewer-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</form>

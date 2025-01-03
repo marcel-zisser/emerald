@@ -1,0 +1,32 @@
+
+@if(filterable()) {
+  <mat-form-field class="search-field" appearance="outline" subscriptSizing="dynamic">
+    <input matNativeControl
+           type="text"
+           placeholder="Filter users..."
+           [value]="this.filterString()"
+           (input)="updateQuery($event)"
+    >
+  </mat-form-field>
+}
+
+<mat-list class="user-list">
+  @for (user of filteredUsers(); track user.uuid) {
+    <mat-list-item class="list-item">
+      <div class="user-container">
+        <div>
+          <div class="user-name">{{ user.firstName }} {{ user.lastName }}</div>
+          <div class="subscript">
+            Username: {{ user.username }} <br />
+            Email: {{ user.email }} <br />
+          </div>
+        </div>
+        <button mat-icon-button (click)="removeUser(user)">
+          <mat-icon>{{ icon() }}</mat-icon>
+        </button>
+      </div>
+    </mat-list-item>
+  } @empty {
+    <p>No users to show.</p>
+  }
+</mat-list>

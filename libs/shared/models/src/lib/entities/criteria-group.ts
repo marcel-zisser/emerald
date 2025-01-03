@@ -1,12 +1,9 @@
-export class CriteriaGroup {
-  uuid: string;
+import { Criterion } from './criterion';
+
+export interface CriteriaGroup {
+  uuid?: string;
+  title: string;
   description: string;
-  checklistId: string;
-
-
-  constructor(uuid: string, description: string, checklistId: string) {
-    this.uuid = uuid;
-    this.description = description;
-    this.checklistId = checklistId;
-  }
+  checklistId?: string;
+  criteria?: Criterion[];
 }

@@ -1,16 +1,9 @@
-export class Criterion {
-  uuid: string;
+export interface Criterion {
+  uuid?: string;
+  title: string;
   description: string;
-  status: string;
-  comments: string;
-  groupId: string;
-
-
-  constructor(uuid: string, description: string, status: string, comments: string, groupId: string) {
-    this.uuid = uuid;
-    this.description = description;
-    this.status = status;
-    this.comments = comments;
-    this.groupId = groupId;
-  }
+  status?: string;
+  comments?: string;
+  maxPoints?: number;
+  groupId?: string;
 }

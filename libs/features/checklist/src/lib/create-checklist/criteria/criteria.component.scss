@@ -1,10 +1,27 @@
-.criteria-field {
-  margin-right: 10px;
-  width: calc(50% - 10px);
+.form-container {
+  display: flex;
+  flex-direction: column;
 }
 
-.actions {
-  margin-top: 20px;
+.criteria-title {
+  font-size: large;
+  margin-bottom: 1rem;
+}
+
+.delete-button {
+  color: var(--mat-sys-error)
+}
+
+.criterion-actions {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.group-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
   justify-content: space-between;
+  margin-top: 1rem;
 }

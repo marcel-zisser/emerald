@@ -1,0 +1,39 @@
+.search-field {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.user-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.list-item {
+  padding: 1rem;
+  height: auto;
+  border-radius: 0.5rem;
+  background-color: var(--mat-sys-background);
+  box-shadow: 1px 1px 3px var(--mat-sys-shadow);
+
+  &:hover {
+    background-color: var(--mat-sys-hover-state-layer-opacity);
+  }
+}
+
+.user-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .subscript {
+    font-size: small;
+  }
+}
+
+.user-name {
+  font-size: large;
+  font-weight: bold;
+}

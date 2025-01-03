@@ -1,37 +1,52 @@
 <mat-stepper orientation="horizontal">
-  <mat-step [stepControl]="basicData" label="Basic Checklist configuration">
+  <mat-step [stepControl]="basicData"
+            label="Basic Checklist configuration"
+            state="description">
     <div class="step-container">
-      <checklist-basic-data></checklist-basic-data>
+      <checklist-basic-data [form]="basicData"></checklist-basic-data>
       <div class="button-container">
         <button mat-flat-button matStepperNext>Next</button>
       </div>
     </div>
   </mat-step>
-  <mat-step [stepControl]="basicData" label="Define Criteria">
+  <mat-step [stepControl]="criteriaForm" label="Define Criteria" state="criteria">
     <div class="step-container">
-      <checklist-criteria></checklist-criteria>
-      <div class="button-container">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-flat-button matStepperNext>Next</button>
-      </div>
-    </div>
-  </mat-step>
-  <mat-step [stepControl]="basicData" label="Add Reviewers">
-    <div class="step-container">
-      <checklist-add-reviewer></checklist-add-reviewer>
+      <checklist-criteria [form]="criteriaForm"></checklist-criteria>
       <div class="button-container">
         <button mat-button matStepperPrevious>Back</button>
         <button mat-flat-button matStepperNext>Next</button>
       </div>
     </div>
   </mat-step>
-  <mat-step [stepControl]="basicData" label="Finish Checklist">
+  <mat-step [stepControl]="reviewerForm" label="Add Reviewers" state="reviewers">
+    <div class="step-container">
+      <checklist-add-reviewer [form]="reviewerForm"></checklist-add-reviewer>
+      <div class="button-container">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-flat-button matStepperNext>Next</button>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="basicData" label="Finish Checklist" state="finish">
     <div class="step-container">
       <checklist-finish-checklist></checklist-finish-checklist>
       <div class="button-container">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-flat-button matStepperNext>Next</button>
+        <button mat-flat-button (click)="createChecklist()">Create Checklist</button>
       </div>
     </div>
   </mat-step>
+
+  <ng-template matStepperIcon="description">
+    <mat-icon>description</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="criteria">
+    <mat-icon>checklist</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="reviewers">
+    <mat-icon>group</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="finish">
+    <mat-icon>check_circle</mat-icon>
+  </ng-template>
 </mat-stepper>

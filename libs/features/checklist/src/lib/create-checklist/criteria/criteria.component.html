@@ -1,61 +1,88 @@
-<form [formGroup]="criteriaForm">
-  <mat-accordion>
-    <mat-expansion-panel
-      *ngFor="let group of criteriaGroups.controls; let groupIndex = index"
-      [formGroupName]="groupIndex"
-    >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ group.get('groupName')?.value || 'New Criteria Group' }}
-        </mat-panel-title>
-        <mat-panel-description>
-          Click to expand
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+<h2>Define Criteria</h2>
+<p>
+  Define the criteria groups and criteria for the checklist.
+</p>
 
-      <ng-template matExpansionPanelContent>
+<form [formGroup]="form()">
+  <mat-accordion formArrayName="criteriaGroups">
+    @for (group of form().controls.criteriaGroups.controls;
+      track groupIndex;
+      let groupIndex = $index) {
+      <mat-expansion-panel [formGroupName]="groupIndex">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ group.controls.title.value || 'New Criteria Group' }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Group Name</mat-label>
-          <input matInput formControlName="groupName" placeholder="Enter group name" />
-        </mat-form-field>
-        <button mat-icon-button color="warn" (click)="removeCriteriaGroup(groupIndex)">
-          <mat-icon>delete</mat-icon>
-        </button>
+        <div class="form-container">
+          <mat-form-field>
+            <mat-label>Group Name</mat-label>
+            <input matInput formControlName="title" placeholder="Enter group name" required />
+          </mat-form-field>
 
-        <div formArrayName="criteria">
-          <div
-            *ngFor="let criterion of getCriteria(groupIndex).controls; let criterionIndex = index"
-            [formGroupName]="criterionIndex"
-          >
-            <mat-form-field appearance="outline" class="criteria-field">
-              <mat-label>Criterion Name</mat-label>
-              <input matInput formControlName="name" placeholder="Enter criterion name" />
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="criteria-field">
-              <mat-label>Criterion Value</mat-label>
-              <input matInput formControlName="value" placeholder="Enter criterion value" />
-            </mat-form-field>
-
-            <button
-              mat-icon-button
-              color="warn"
-              (click)="removeCriterion(groupIndex, criterionIndex)"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
+          <mat-form-field>
+            <mat-label>Group Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Enter group description"></textarea>
+          </mat-form-field>
         </div>
 
-        <button mat-raised-button color="primary" (click)="addCriterion(groupIndex)">
-          Add Criterion
-        </button>
-      </ng-template>
-    </mat-expansion-panel>
+        <!--        <button mat-icon-button color="warn" (click)="removeCriteriaGroup(groupIndex)">-->
+        <!--          <mat-icon>delete</mat-icon>-->
+        <!--        </button>-->
+
+        <div class="criteria-title">Criteria</div>
+        <mat-accordion formArrayName="criteria">
+          @for (criterion of form().controls.criteriaGroups.at(groupIndex).controls.criteria.controls;
+            track criterionIndex;
+            let criterionIndex = $index) {
+            <mat-expansion-panel [formGroupName]="criterionIndex">
+
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ criterion.controls.title.value || 'New Criterion' }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="form-container">
+                <mat-form-field>
+                  <mat-label>Criterion Title</mat-label>
+                  <input matInput formControlName="title" placeholder="Enter criterion title" required/>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Criterion Description</mat-label>
+                  <input matInput formControlName="description" placeholder="Enter criterion description" />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Max. Points</mat-label>
+                  <input matInput type="number" formControlName="maxPoints" placeholder="Enter the maximum points of the criterion" />
+                </mat-form-field>
+              </div>
+
+              <div class="criterion-actions">
+                <button mat-raised-button class="delete-button" (click)="removeCriterion(groupIndex, criterionIndex)">
+                  Delete Criterion
+                </button>
+              </div>
+            </mat-expansion-panel>
+          }
+        </mat-accordion>
+
+        <div class="group-actions">
+          <button mat-raised-button color="primary" (click)="addCriterion(groupIndex)">
+            Add Criterion
+          </button>
+          <button mat-raised-button class="delete-button" (click)="removeCriteriaGroup(groupIndex)">
+            Delete Criteria Group
+          </button>
+        </div>
+      </mat-expansion-panel>
+    }
   </mat-accordion>
 
-  <div class="actions">
+  <div class="group-actions">
     <button mat-raised-button color="accent" (click)="addCriteriaGroup()">
       Add Criteria Group
     </button>

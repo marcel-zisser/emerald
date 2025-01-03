@@ -1,15 +1,11 @@
+import { CriteriaGroup } from './criteria-group';
+import { User } from './user';
 
-export class Checklist {
-  uuid: string;
+export interface Checklist {
+  uuid?: string;
   title: string;
   description: string;
   ownerId: string;
-
-
-  constructor(uuid: string, title: string, description: string, ownerId: string) {
-    this.uuid = uuid;
-    this.title = title;
-    this.description = description;
-    this.ownerId = ownerId;
-  }
+  criteriaGroups: CriteriaGroup[];
+  reviewers: User[];
 }
