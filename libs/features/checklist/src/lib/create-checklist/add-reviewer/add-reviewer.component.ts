@@ -4,22 +4,12 @@ import {
   inject,
   input,
   signal,
-  Signal,
-  WritableSignal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import {
-  MatAutocomplete,
-  MatAutocompleteTrigger,
-  MatOption,
-} from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
 import {
   MatCard,
   MatCardContent,
@@ -28,34 +18,18 @@ import {
 } from '@angular/material/card';
 import { BackendService } from '@emerald/services';
 import { ApiEndpoint, ApiRoutes, User } from '@emerald/models';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { first } from 'rxjs';
-import { MatList, MatListItem } from '@angular/material/list';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { ReviewerListComponent } from './reviewer-list/reviewer-list.component';
-import { CriteriaForm, FormCriterion } from '../criteria/criteria.form';
 import { ReviewerForm } from './reviewer.form';
 
 @Component({
   selector: 'checklist-add-reviewer',
   imports: [
-    CommonModule,
-    MatFormField,
-    MatAutocomplete,
-    MatOption,
     ReactiveFormsModule,
-    MatAutocompleteTrigger,
-    MatInput,
-    MatLabel,
     MatCard,
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
-    MatList,
-    MatListItem,
-    MatIconButton,
-    MatIcon,
     ReviewerListComponent,
   ],
   templateUrl: './add-reviewer.component.html',

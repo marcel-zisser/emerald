@@ -69,8 +69,8 @@ model ReviewResult {
   Review      Review    @relation(fields: [reviewId], references: [uuid])
   Criterion   Criterion @relation(fields: [criterionId], references: [uuid])
 
-  status   String @db.VarChar(16)
-  comments String @db.Text
+  status   String @db.VarChar(16) @default("TBD")
+  comments String @db.Text        @default("")
 
   @@id([reviewId, criterionId])
 }

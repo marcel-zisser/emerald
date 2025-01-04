@@ -10,8 +10,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Roles } from '../authentication/decorators/roles.decorator';
-import { Checklist } from '@prisma/client';
-import { Role } from '@emerald/models';
+import { Checklist, Prisma } from '@prisma/client';
+import { CreateChecklistRequest, Role } from '@emerald/models';
 import { Request } from 'express';
 import { ChecklistService } from './checklist.service';
 
@@ -34,11 +34,39 @@ export class ChecklistController {
     return this.checklistService.checklist({ uuid: uuid });
   }
 
-  // @Roles(Role.Admin, Role.ProjectOwner)
-  // @Post('')
-  // createChecklist(@Body() checklist: Checklist): Promise<Checklist> {
-  //   return this.checklistService.createChecklist(checklist);
-  // }
+  @Roles(Role.Admin, Role.ProjectOwner)
+  @Post('')
+  createChecklist(
+    @Req() request: Request,
+    @Body() body: CreateChecklistRequest
+  ): Promise<Checklist> {
+    const checklist = {
+      title: body.title,
+      description: body.description,
+      owner: {
+        connect: {
+          uuid: request['jwt'].sub,
+        },
+      },
+      reviews: {
+        createMany: {
+          data: body.reviewerIds.map((reviewerId) => ({ userId: reviewerId })),
+        },
+      },
+      groups: {
+        create: body.criteriaGroups.map((group) => ({
+          description: group.description,
+          criteria: {
+            create: group.criteria.map((criterion) => ({
+              description: criterion.description,
+            })),
+          },
+        })),
+      },
+    } satisfies Prisma.ChecklistCreateInput;
+
+    return this.checklistService.createChecklist(checklist);
+  }
 
   @Roles(Role.Admin, Role.ProjectOwner)
   @Put('')

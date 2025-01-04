@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import { Checklist, Prisma } from '@prisma/client';
+import { ResultService } from '../result/result.service';
 
 @Injectable()
 export class ChecklistService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private resultService: ResultService
+  ) {}
 
   /**
    * Gets all checklists from the database
@@ -44,9 +48,13 @@ export class ChecklistService {
    * @param data the checklist to be created
    */
   async createChecklist(data: Prisma.ChecklistCreateInput): Promise<Checklist> {
-    return this.prisma.checklist.create({
+    const checklist = await this.prisma.checklist.create({
       data,
     });
+
+    await this.resultService.createDefaultResults(checklist);
+
+    return checklist;
   }
 
   /**

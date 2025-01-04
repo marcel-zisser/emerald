@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
-import { CriteriaSummary, CriterionStatus, ReviewStatus, ReviewSummary } from '@emerald/models';
-import { ReviewResult } from '@prisma/client';
+import {
+  CriteriaSummary,
+  CriterionStatus,
+  ReviewStatus,
+  ReviewSummary,
+} from '@emerald/models';
+import { Checklist, ReviewResult } from '@prisma/client';
 
 @Injectable()
 export class ResultService {
-  constructor(private prismaService: PrismaService) {
-  }
+  constructor(private prismaService: PrismaService) {}
 
   getCriterionSummary(results: ReviewResult[]): CriteriaSummary {
     let passed = 0;
@@ -29,7 +33,7 @@ export class ResultService {
     return {
       passed: passed,
       failed: failed,
-      TBD: tbd
+      TBD: tbd,
     } satisfies CriteriaSummary;
   }
 
@@ -43,11 +47,48 @@ export class ResultService {
     });
 
     if (completed === 0) {
-      return ReviewStatus.NotStarted
+      return ReviewStatus.NotStarted;
     } else if (completed === results.length) {
       return ReviewStatus.Complete;
     } else {
       return ReviewStatus.InProgress;
+    }
+  }
+
+  /**
+   * Creates the default entries for all the results of all criteria of a new checklist
+   * @param checklist the checklist to create the default results for
+   */
+  async createDefaultResults(checklist: Checklist) {
+    const criteriaIds = (
+      await this.prismaService.criteriaGroup.findMany({
+        where: { checklistId: checklist.uuid },
+        select: {
+          criteria: {
+            select: {
+              uuid: true,
+            },
+          },
+        },
+      })
+    ).flatMap((group) => group.criteria);
+
+    const reviewIds = await this.prismaService.review.findMany({
+      where: { checklistId: checklist.uuid },
+      select: {
+        uuid: true,
+      },
+    });
+
+    for (const reviewId of reviewIds) {
+      for (const criterionId of criteriaIds) {
+        await this.prismaService.reviewResult.create({
+          data: {
+            reviewId: reviewId.uuid,
+            criterionId: criterionId.uuid,
+          },
+        });
+      }
     }
   }
 }

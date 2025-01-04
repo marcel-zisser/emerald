@@ -14,6 +14,7 @@ import { AuthenticationService } from '@emerald/authentication';
 import { DashboardChecklist } from '@emerald/models';
 import { DashboardService } from '../dashboard.service';
 import {
+  MatAccordion,
   MatExpansionPanel, MatExpansionPanelContent,
   MatExpansionPanelDescription,
   MatExpansionPanelHeader,
@@ -33,7 +34,8 @@ import { ReviewListComponent } from '@emerald/components';
     MatExpansionPanelHeader,
     MatExpansionPanelDescription,
     MatExpansionPanelContent,
-    ReviewListComponent
+    ReviewListComponent,
+    MatAccordion,
   ],
   templateUrl: './checklist-overview.component.html',
   styleUrl: './checklist-overview.component.scss',
