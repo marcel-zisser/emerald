@@ -2,8 +2,6 @@ import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import {
-  Feature,
-  FeatureRoutes,
   JwtTokenInformation,
   Role,
 } from '@emerald/models';
@@ -35,10 +33,10 @@ export const roleGuard: CanActivateFn = (route) => {
         allowed = true;
         break;
       case Role.ProjectOwner:
-        allowed = checklistOwnerRoutes.some( allowedRoute => allowedRoute === route.url.toString());
+        allowed = checklistOwnerRoutes.some( allowedRoute => route.url.toString().startsWith(allowedRoute));
         break;
       case Role.Reviewer:
-        allowed = reviewerRoutes.some( allowedRoute => allowedRoute === route.url.toString());
+        allowed = reviewerRoutes.some( allowedRoute => route.url.toString().startsWith(allowedRoute));
         break;
     }
   }

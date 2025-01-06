@@ -9,7 +9,14 @@ type ReviewWithRelations = Prisma.ReviewGetPayload<{
 }>;
 
 type ChecklistWithReviews = Prisma.ChecklistGetPayload<{
-  include: { reviews: { include: { reviewResults: true } } };
+  include: {
+    owner: true,
+    reviews: {
+      include: {
+        reviewResults: true
+      }
+    }
+  };
 }>;
 
 @Injectable()
@@ -40,6 +47,7 @@ export class ChecklistService {
       where,
       orderBy,
       include: {
+        owner: true,
         reviews: {
           include: {
             reviewResults: true
@@ -63,6 +71,7 @@ export class ChecklistService {
     const checklist = await this.prisma.checklist.findUnique({
       where: checklistWhereUniqueInput,
       include: {
+        owner: true,
         reviews: {
           include: {
             reviewResults: true
@@ -82,6 +91,7 @@ export class ChecklistService {
     const checklist = await this.prisma.checklist.create({
       data,
       include: {
+        owner: true,
         reviews: {
           include: { reviewResults: true }
         }
@@ -106,6 +116,7 @@ export class ChecklistService {
       data,
       where,
       include: {
+        owner: true,
         reviews: {
           include: { reviewResults: true }
         }
@@ -125,6 +136,7 @@ export class ChecklistService {
     const checklist = await this.prisma.checklist.delete({
       where,
       include: {
+        owner: true,
         reviews: {
           include: { reviewResults: true }
         }
@@ -170,7 +182,11 @@ export class ChecklistService {
       uuid: checklist.uuid,
       title: checklist.title,
       description: checklist.description,
-      ownerId: checklist.ownerId,
+      owner: {
+        uuid: checklist.owner.uuid,
+        firstName: checklist.owner.firstName,
+        lastName: checklist.owner.lastName,
+      },
       criteriaSummary: this.getCriterionSummary(checklist.reviews),
       reviewSummary: this.getReviewSummary(checklist.reviews)
     } satisfies Checklist;

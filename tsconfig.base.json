@@ -23,6 +23,7 @@
       "@emerald/dashboard": ["libs/features/dashboard/src/index.ts"],
       "@emerald/dialog": ["libs/shared/dialog/src/index.ts"],
       "@emerald/models": ["libs/shared/models/src/index.ts"],
+      "@emerald/review": ["libs/features/review/src/index.ts"],
       "@emerald/services": ["libs/shared/services/src/index.ts"]
     }
   },

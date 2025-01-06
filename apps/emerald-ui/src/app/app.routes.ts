@@ -12,6 +12,8 @@ import { UserTableComponent } from '@emerald/admin';
 import { AccountComponent } from '@emerald/account';
 import { DashboardComponent } from '@emerald/dashboard';
 import { ChecklistComponent, CreateChecklistComponent } from '@emerald/checklist';
+import { ReviewComponent } from '@emerald/review';
+import { ReviewFormComponent } from '../../../../libs/features/review/src/lib/review/review-form/review-form.component';
 
 export const appRoutes: Route[] = [
   {
@@ -45,8 +47,15 @@ export const appRoutes: Route[] = [
   },
   {
     path: FeatureRoutes.get(Feature.Reviews),
-    component: UserTableComponent,
+    component: ReviewComponent,
     title: getPageTitle(Feature.Reviews),
+    canActivate: [authenticationGuard, roleGuard],
+  },
+  {
+    path: `${FeatureRoutes.get(Feature.Reviews)}/:uuid`,
+    component: ReviewFormComponent,
+    title: getPageTitle(Feature.Reviews),
+    canActivate: [authenticationGuard, roleGuard],
   },
   {
     path: FeatureRoutes.get(Feature.Account),

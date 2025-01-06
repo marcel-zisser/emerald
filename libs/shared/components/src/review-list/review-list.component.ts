@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
-import { CriteriaSummaryChartPipe, ReviewService } from '@emerald/services';
+import { CriteriaSummaryChartPipe, ReviewResultService, ReviewService } from '@emerald/services';
 import { first, Observable } from 'rxjs';
-import { CriteriaSummary, Review, ReviewResult } from '@emerald/models';
+import { CriteriaSummary, Feature, FeatureRoutes, Review, ReviewResult } from '@emerald/models';
 import { StatusBarComponent } from '../status-bar';
-import { ReviewResultService } from '@emerald/services';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -15,6 +14,8 @@ import {
 } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'em-review-list',
@@ -32,7 +33,9 @@ import { MatIconButton } from '@angular/material/button';
     MatHeaderCellDef,
     MatCellDef,
     MatHeaderRowDef,
-    MatRowDef
+    MatRowDef,
+    DatePipe,
+    RouterLink
   ],
   templateUrl: './review-list.component.html',
   styleUrl: './review-list.component.scss',
@@ -50,10 +53,10 @@ export class ReviewListComponent implements OnInit {
   protected dataSource = new MatTableDataSource<Review>([]);
 
   protected displayedColumns: string[] = [
-    'reviewer',
+    'assignedAt',
     'status',
     'summary',
-    'actions',
+    'actions'
   ];
 
   trackByReviewId(index: number, review: Review): string {
@@ -65,8 +68,10 @@ export class ReviewListComponent implements OnInit {
 
     if (checklistId) {
       this.reviews$ = this.reviewService.getReviewsByChecklistId(checklistId);
+      this.displayedColumns.unshift('reviewer');
     } else {
       this.reviews$ = this.reviewService.getReviews();
+      this.displayedColumns.unshift('checklistTitle', 'checklistOwner');
     }
 
     this.reviews$.pipe(
@@ -81,4 +86,6 @@ export class ReviewListComponent implements OnInit {
     return this.reviewResultService.getCriterionSummary(results);
   }
 
+  protected readonly FeatureRoutes = FeatureRoutes;
+  protected readonly Feature = Feature;
 }

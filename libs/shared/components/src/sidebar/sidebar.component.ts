@@ -91,6 +91,12 @@ export class SidebarComponent implements AfterViewInit {
     route: '',
   };
 
+  protected dashboardItem: MenuItem = {
+    icon: 'dashboard',
+    label: Feature.Dashboard,
+    route: '',
+  };
+
   constructor() {
     effect(() => {
       if (this.isExpanded && isMobile()) {

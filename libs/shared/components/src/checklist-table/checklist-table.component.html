@@ -4,8 +4,8 @@
       <mat-expansion-panel-header>
         <mat-panel-title class="panel-title"> {{ checklist.title }}</mat-panel-title>
         <mat-panel-description class="panel-description">
-          {{ checklist.reviewSummary.completed }} out
-          of {{ checklist.reviewSummary.completed + checklist.reviewSummary.uncompleted }} reviews completed
+          {{ checklist.reviewSummary?.completed }} out
+          of {{ (checklist.reviewSummary?.completed ?? 0) + (checklist.reviewSummary?.uncompleted ?? 0) }} reviews completed
         </mat-panel-description>
       </mat-expansion-panel-header>
 

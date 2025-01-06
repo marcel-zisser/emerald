@@ -7,9 +7,9 @@ export interface Checklist {
   uuid?: string;
   title: string;
   description: string;
-  ownerId: string;
+  owner?: User;
   criteriaGroups?: CriteriaGroup[];
   reviewers?: User[];
-  criteriaSummary: CriteriaSummary;
-  reviewSummary: ReviewSummary;
+  criteriaSummary?: CriteriaSummary;
+  reviewSummary?: ReviewSummary;
 }

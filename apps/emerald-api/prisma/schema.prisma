@@ -42,6 +42,7 @@ model Checklist {
   uuid        String          @id @default(uuid()) @db.Uuid
   title       String          @db.VarChar(128)
   description String          @db.Text
+  createdAt   DateTime        @default(now())
   groups      CriteriaGroup[]
 
   owner   User   @relation(fields: [ownerId], references: [uuid])
@@ -51,7 +52,8 @@ model Checklist {
 }
 
 model Review {
-  uuid String @id @default(uuid()) @db.Uuid
+  uuid       String   @id @default(uuid()) @db.Uuid
+  assignedAt DateTime @default(now())
 
   userId      String    @db.Uuid
   checklistId String    @db.Uuid
@@ -69,8 +71,8 @@ model ReviewResult {
   Review      Review    @relation(fields: [reviewId], references: [uuid])
   Criterion   Criterion @relation(fields: [criterionId], references: [uuid])
 
-  status   String @db.VarChar(16) @default("TBD")
-  comments String @db.Text        @default("")
+  status   String @default("TBD") @db.VarChar(16)
+  comments String @default("") @db.Text
 
   @@id([reviewId, criterionId])
 }

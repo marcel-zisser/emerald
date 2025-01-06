@@ -27,7 +27,12 @@ export class ReviewService {
       orderBy,
       include: {
         reviewResults: true,
-        User: true
+        User: true,
+        CheckList: {
+          include: {
+            owner: true
+          }
+        },
       }
     });
 
@@ -35,10 +40,21 @@ export class ReviewService {
       return {
         uuid: review.uuid,
         status: this.resultService.getReviewStatus(review.reviewResults),
+        assignedAt: review.assignedAt,
         user: {
           uuid: review.userId,
           firstName: review.User.firstName,
           lastName: review.User.lastName,
+        },
+        checklist: {
+          uuid: review.CheckList.uuid,
+          title: review.CheckList.title,
+          description: review.CheckList.description,
+          owner: {
+            uuid: review.CheckList.owner.uuid,
+            firstName: review.CheckList.owner.firstName,
+            lastName: review.CheckList.owner.lastName
+          }
         },
         results: review.reviewResults.map(result => {
           return {
@@ -62,17 +78,33 @@ export class ReviewService {
       where: reviewWhereUniqueInput,
       include: {
         reviewResults: true,
-        User: true
+        User: true,
+        CheckList: {
+          include: {
+            owner: true
+          }
+        },
       }
     });
 
     return {
       uuid: review.uuid,
       status: this.resultService.getReviewStatus(review.reviewResults),
+      assignedAt: review.assignedAt,
       user: {
         uuid: review.userId,
         firstName: review.User.firstName,
         lastName: review.User.lastName,
+      },
+      checklist: {
+        uuid: review.CheckList.uuid,
+        title: review.CheckList.title,
+        description: review.CheckList.description,
+        owner: {
+          uuid: review.CheckList.owner.uuid,
+          firstName: review.CheckList.owner.firstName,
+          lastName: review.CheckList.owner.lastName
+        }
       },
       results: review.reviewResults.map(result => {
         return {

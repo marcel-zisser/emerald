@@ -7,7 +7,6 @@ import {
   Post,
   Put,
   Req,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { Roles } from '../authentication/decorators/roles.decorator';
 import { Prisma } from '@prisma/client';
@@ -68,24 +67,24 @@ export class ChecklistController {
     return this.checklistService.createChecklist(checklist);
   }
 
-  @Roles(Role.Admin, Role.ProjectOwner)
-  @Put('')
-  editChecklist(
-    @Req() request: Request,
-    @Body() checklist: Checklist
-  ): Promise<Checklist> {
-    if (
-      request['jwt'].role != Role.Admin &&
-      request['jwt'].sub != checklist.uuid
-    ) {
-      throw new UnauthorizedException();
-    }
-
-    return this.checklistService.updateChecklist({
-      where: { uuid: checklist.uuid },
-      data: checklist,
-    });
-  }
+  // @Roles(Role.Admin, Role.ProjectOwner)
+  // @Put('')
+  // editChecklist(
+  //   @Req() request: Request,
+  //   @Body() checklist: Checklist
+  // ): Promise<Checklist> {
+  //   if (
+  //     request['jwt'].role != Role.Admin &&
+  //     request['jwt'].sub != checklist.uuid
+  //   ) {
+  //     throw new UnauthorizedException();
+  //   }
+  //
+  //   return this.checklistService.updateChecklist({
+  //     where: { uuid: checklist.uuid },
+  //     data: checklist,
+  //   });
+  // }
 
   @Roles(Role.Admin, Role.ProjectOwner)
   @Delete(':uuid')

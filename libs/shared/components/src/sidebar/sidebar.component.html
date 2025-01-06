@@ -18,6 +18,17 @@
     <hr class="header-separator" />
     <div class="menu-item-container">
       <div class="upper-menu-items">
+        <mat-nav-list class="lower-menu-items">
+          <mat-list-item [routerLink]="dashboardItem.route">
+            <div class="menu-item">
+              <mat-icon mat-list-icon>{{ dashboardItem.icon }}</mat-icon>
+              <span mat-line>{{ dashboardItem.label }}</span>
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+
+        <hr class="group-separator" />
+
         @for (feature of upperMenuItems().keys(); track feature) {
           <mat-nav-list>
             @for (menuItem of upperMenuItems().get(feature); track menuItem.label) {
@@ -30,7 +41,6 @@
             }
           </mat-nav-list>
           <hr class="group-separator" />
-
         }
       </div>
 
