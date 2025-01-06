@@ -41,10 +41,10 @@ export class ReviewerListComponent {
     this.users()
       .filter(
         (user) =>
-          user.firstName.includes(this.filterString().toLowerCase()) ||
-          user.lastName.includes(this.filterString().toLowerCase()) ||
-          user.username?.includes(this.filterString().toLowerCase()) ||
-          user.email?.includes(this.filterString().toLowerCase())
+          user.firstName.toLowerCase().includes(this.filterString().toLowerCase()) ||
+          user.lastName.toLowerCase().includes(this.filterString().toLowerCase()) ||
+          user.username?.toLowerCase().includes(this.filterString().toLowerCase()) ||
+          user.email?.toLowerCase().includes(this.filterString().toLowerCase())
       )
       .sort((a, b) => a.lastName.localeCompare(b.lastName))
   );
@@ -55,7 +55,7 @@ export class ReviewerListComponent {
 
   updateQuery(event: Event) {
     this.filterString.set(
-      (event.target as HTMLInputElement).value.toLowerCase()
+      (event.target as HTMLInputElement).value
     );
   }
 }

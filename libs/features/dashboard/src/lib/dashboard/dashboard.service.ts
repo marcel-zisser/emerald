@@ -1,6 +1,6 @@
 import { inject, Injectable, Signal } from '@angular/core';
 import { BackendService } from '@emerald/services';
-import { ApiEndpoint, ApiRoutes, DashboardChecklist } from '@emerald/models';
+import { ApiEndpoint, ApiRoutes, Checklist } from '@emerald/models';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { first } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { first } from 'rxjs';
 export class DashboardService {
   private readonly backendService = inject(BackendService);
 
-  private readonly _checklists: Signal<DashboardChecklist[]>;
+  private readonly _checklists: Signal<Checklist[]>;
 
   get checklists() {
     return this._checklists;
@@ -17,7 +17,7 @@ export class DashboardService {
   constructor() {
     this._checklists = toSignal(
       this.backendService
-        .doGet<DashboardChecklist[]>(ApiRoutes.get(ApiEndpoint.Dashboard))
+        .doGet<Checklist[]>(ApiRoutes.get(ApiEndpoint.Dashboard))
         .pipe(first()),
       { initialValue: [] }
     );

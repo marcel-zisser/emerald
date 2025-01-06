@@ -19,6 +19,7 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { CriteriaForm, FormCriterion } from './criteria.form';
+import { arrayNotEmptyValidator } from '@emerald/services';
 
 @Component({
   selector: 'checklist-criteria',
@@ -48,7 +49,7 @@ export class CriteriaComponent {
       this.fb.group({
         title: ['', Validators.required],
         description: '',
-        criteria: this.fb.array<FormCriterion>([], Validators.required),
+        criteria: this.fb.array<FormCriterion>([], arrayNotEmptyValidator()),
       })
     );
   }

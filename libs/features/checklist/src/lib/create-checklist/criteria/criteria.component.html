@@ -27,10 +27,6 @@
           </mat-form-field>
         </div>
 
-        <!--        <button mat-icon-button color="warn" (click)="removeCriteriaGroup(groupIndex)">-->
-        <!--          <mat-icon>delete</mat-icon>-->
-        <!--        </button>-->
-
         <div class="criteria-title">Criteria</div>
         <mat-accordion formArrayName="criteria">
           @for (criterion of form().controls.criteriaGroups.at(groupIndex).controls.criteria.controls;

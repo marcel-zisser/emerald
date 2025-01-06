@@ -11,16 +11,10 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { AuthenticationService } from '@emerald/authentication';
-import { DashboardChecklist } from '@emerald/models';
 import { DashboardService } from '../dashboard.service';
-import {
-  MatAccordion,
-  MatExpansionPanel, MatExpansionPanelContent,
-  MatExpansionPanelDescription,
-  MatExpansionPanelHeader,
-  MatExpansionPanelTitle
-} from '@angular/material/expansion';
-import { ReviewListComponent } from '@emerald/components';
+import { ChecklistTableComponent } from '@emerald/components';
+import { RouterLink } from '@angular/router';
+import { Feature, FeatureRoutes } from '@emerald/models';
 
 @Component({
   selector: 'dashboard-checklist-overview',
@@ -29,13 +23,8 @@ import { ReviewListComponent } from '@emerald/components';
     MatCardHeader,
     MatCardTitle,
     MatCardContent,
-    MatExpansionPanel,
-    MatExpansionPanelTitle,
-    MatExpansionPanelHeader,
-    MatExpansionPanelDescription,
-    MatExpansionPanelContent,
-    ReviewListComponent,
-    MatAccordion,
+    ChecklistTableComponent,
+    RouterLink
   ],
   templateUrl: './checklist-overview.component.html',
   styleUrl: './checklist-overview.component.scss',
@@ -48,9 +37,7 @@ export class ChecklistOverviewComponent {
 
   private readonly token = this.authenticationService.getDecodedToken();
 
-  protected checklists = computed<DashboardChecklist[]>(() =>
-    this.dashboardService
-      .checklists()
-      .filter((checklist) => checklist.ownerId === this.token?.sub)
-  );
+  protected checklists = this.dashboardService.checklists;
+  protected readonly FeatureRoutes = FeatureRoutes;
+  protected readonly Feature = Feature;
 }

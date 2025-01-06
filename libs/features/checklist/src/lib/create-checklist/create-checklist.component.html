@@ -23,16 +23,7 @@
       <checklist-add-reviewer [form]="reviewerForm"></checklist-add-reviewer>
       <div class="button-container">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-flat-button matStepperNext>Next</button>
-      </div>
-    </div>
-  </mat-step>
-  <mat-step [stepControl]="basicData" label="Finish Checklist" state="finish">
-    <div class="step-container">
-      <checklist-finish-checklist></checklist-finish-checklist>
-      <div class="button-container">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-flat-button (click)="createChecklist()">Create Checklist</button>
+        <button mat-flat-button (click)="createChecklist()">Save Checklist</button>
       </div>
     </div>
   </mat-step>

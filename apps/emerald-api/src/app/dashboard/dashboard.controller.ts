@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Roles } from '../authentication/decorators/roles.decorator';
-import { DashboardChecklist, Role } from '@emerald/models';
+import { Checklist, Role } from '@emerald/models';
 import { DashboardService } from './dashboard.service';
 
 @Controller('dashboard')
@@ -14,7 +14,7 @@ export class DashboardController {
 
   @Roles(Role.ProjectOwner, Role.Admin)
   @Get()
-  getChecklists(@Req() request: Request): Promise<DashboardChecklist[]> {
+  getChecklists(@Req() request: Request): Promise<Checklist[]> {
     const ownerId = request['jwt'].sub;
     return this.dashboardService.checklists({
       take: 5,

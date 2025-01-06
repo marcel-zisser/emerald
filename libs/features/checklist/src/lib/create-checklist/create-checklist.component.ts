@@ -15,7 +15,6 @@ import {
 import { BasicChecklistDataComponent } from './basic-checklist-data/basic-checklist-data.component';
 import { CriteriaComponent } from './criteria/criteria.component';
 import { AddReviewerComponent } from './add-reviewer/add-reviewer.component';
-import { FinishChecklistComponent } from './finish-checklist/finish-checklist.component';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -31,6 +30,7 @@ import {
 import { first } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { arrayNotEmptyValidator } from '@emerald/services';
 
 @Component({
   selector: 'checklist-create-checklist',
@@ -41,7 +41,6 @@ import { Router } from '@angular/router';
     BasicChecklistDataComponent,
     CriteriaComponent,
     AddReviewerComponent,
-    FinishChecklistComponent,
     MatButton,
     MatStepperPrevious,
     MatStepperNext,
@@ -76,7 +75,7 @@ export class CreateChecklistComponent {
     });
 
     this.criteriaForm = this.fb.group({
-      criteriaGroups: this.fb.array<FormCriteriaGroup>([]),
+      criteriaGroups: this.fb.array<FormCriteriaGroup>([], arrayNotEmptyValidator()),
     });
 
     this.reviewerForm = this.fb.group({
@@ -102,12 +101,17 @@ export class CreateChecklistComponent {
         )
         .pipe(first())
         .subscribe(() => {
-          this.snackbar.open('User added successfully!', 'Close', {
+          this.snackbar.open('Successfully saved checklist!', 'Close', {
             duration: 3000,
             verticalPosition: 'top',
           });
           this.router.navigate([FeatureRoutes.get(Feature.Checklists)]);
         });
+    } else {
+      this.snackbar.open('There has been an error saving the checklist. Please check if your data is valid.', 'Close', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
     }
   }
 

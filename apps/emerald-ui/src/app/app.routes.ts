@@ -11,7 +11,7 @@ import {
 import { UserTableComponent } from '@emerald/admin';
 import { AccountComponent } from '@emerald/account';
 import { DashboardComponent } from '@emerald/dashboard';
-import { CreateChecklistComponent } from '@emerald/checklist';
+import { ChecklistComponent, CreateChecklistComponent } from '@emerald/checklist';
 
 export const appRoutes: Route[] = [
   {
@@ -33,7 +33,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: FeatureRoutes.get(Feature.Checklists),
-    component: UserTableComponent,
+    component: ChecklistComponent,
     title: getPageTitle(Feature.Checklists),
     canActivate: [authenticationGuard, roleGuard],
   },

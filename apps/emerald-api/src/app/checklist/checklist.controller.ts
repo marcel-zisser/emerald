@@ -10,8 +10,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Roles } from '../authentication/decorators/roles.decorator';
-import { Checklist, Prisma } from '@prisma/client';
-import { CreateChecklistRequest, Role } from '@emerald/models';
+import { Prisma } from '@prisma/client';
+import { Checklist, CreateChecklistRequest, Role } from '@emerald/models';
 import { Request } from 'express';
 import { ChecklistService } from './checklist.service';
 
