@@ -9,7 +9,7 @@
 
 ## Environment Configuration
 
-For the application to work, you need to create a file called '.env' in the root directory.
+For the application to work, you need to create a file called `.env` in the root directory.
 The following variables MUST be defined:
 - DATABASE_URL 
   - The API will use this URL to connect to the database.
@@ -19,6 +19,24 @@ The following variables MUST be defined:
   - This serves as your JWT encryption key.
   - Make sure this key is long enough and not guessable. (using something like 'secret' is not a good idea)
 
+**Important**
+
+If another database provider than Postgres is used, this needs to be changed in the `schema.prisma`, which can be found in `apps/emerald-api/prisma`.
+Change the `provider` property of the `datasource` object to the appropriate provider.
+
+A sample `.env` file for the provided development setup could look like this:
+``` dotenv
+# Database provider:  postgresql
+# Database user:      iaweb
+# Database passowrd:  iaweb123!
+# Database host:      localhost
+# Database port:      5432
+# Databse name:       emerald
+# Schema:             public
+DATABASE_URL=postgresql://iaweb:iaweb123!@localhost:5432/emerald?schema=public
+
+JWT_SECRET=5f5695668f956d0268a4248b8d1770a64259cf64e128c67bccaa62879b29487d
+```
 
 
 ## Development Setup
