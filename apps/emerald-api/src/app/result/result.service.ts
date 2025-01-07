@@ -56,8 +56,8 @@ export class ResultService {
   }
 
   /**
-   * Creates the default entries for all the results of all criteria of a new checklist
-   * @param checklist the checklist to create the default results for
+   * Creates the default entries for all the results of all criteria of a new project
+   * @param checklist the project to create the default results for
    */
   async createDefaultResults(checklist: Checklist) {
     const criteriaIds = (

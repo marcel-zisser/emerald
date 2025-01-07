@@ -1,0 +1,14 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>My Projects</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="content">
+    <p>Here is an overview of your most recently created projects.
+      To get a all your projects, please <a routerLink="{{FeatureRoutes.get(Feature.Projects)}}">click here</a>
+    </p>
+
+    <em-project-table [checklists]="checklists()"></em-project-table>
+  </mat-card-content>
+
+</mat-card>

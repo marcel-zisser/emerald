@@ -11,9 +11,8 @@ import {
 import { UserTableComponent } from '@emerald/admin';
 import { AccountComponent } from '@emerald/account';
 import { DashboardComponent } from '@emerald/dashboard';
-import { ChecklistComponent, CreateChecklistComponent } from '@emerald/checklist';
-import { ReviewComponent } from '@emerald/review';
-import { ReviewFormComponent } from '../../../../libs/features/review/src/lib/review/review-form/review-form.component';
+import { ProjectComponent, CreateProjectComponent } from '@emerald/project';
+import { ReviewComponent, ReviewFormComponent } from '@emerald/review';
 
 export const appRoutes: Route[] = [
   {
@@ -34,15 +33,15 @@ export const appRoutes: Route[] = [
     canActivate: [authenticationGuard, roleGuard],
   },
   {
-    path: FeatureRoutes.get(Feature.Checklists),
-    component: ChecklistComponent,
-    title: getPageTitle(Feature.Checklists),
+    path: FeatureRoutes.get(Feature.Projects),
+    component: ProjectComponent,
+    title: getPageTitle(Feature.Projects),
     canActivate: [authenticationGuard, roleGuard],
   },
   {
-    path: FeatureRoutes.get(Feature.CreateChecklist),
-    component: CreateChecklistComponent,
-    title: getPageTitle(Feature.CreateChecklist),
+    path: FeatureRoutes.get(Feature.CreateProject),
+    component: CreateProjectComponent,
+    title: getPageTitle(Feature.CreateProject),
     canActivate: [authenticationGuard, roleGuard],
   },
   {

@@ -5,8 +5,8 @@ export enum Feature {
   UserManagement = 'User Management',
 
   ProjectOwner = 'Project Owner',
-  Checklists = 'Checklists',
-  CreateChecklist = 'Create Checklist',
+  Projects = 'Projects',
+  CreateProject = 'Create Project',
 
   Reviewer = 'Reviewer',
   Reviews = 'Reviews',

@@ -1,1 +1,1 @@
-export * from './lib/review/review.component';
+export * from './lib/review';

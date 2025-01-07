@@ -6,8 +6,8 @@ export const FeatureRoutes = new Map<Feature, string>([
 
   [Feature.UserManagement, 'user-management'],
 
-  [Feature.Checklists, 'checklists'],
-  [Feature.CreateChecklist, 'create-checklist'],
+  [Feature.Projects, 'checklists'],
+  [Feature.CreateProject, 'create-project'],
 
   [Feature.Reviews, 'reviews'],
 

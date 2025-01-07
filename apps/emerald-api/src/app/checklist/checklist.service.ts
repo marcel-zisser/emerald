@@ -62,8 +62,8 @@ export class ChecklistService {
   }
 
   /**
-   * Gets a specific checklist from the database
-   * @param checklistWhereUniqueInput criteria to find checklist
+   * Gets a specific project from the database
+   * @param checklistWhereUniqueInput criteria to find project
    */
   async checklist(
     checklistWhereUniqueInput: Prisma.ChecklistWhereUniqueInput
@@ -84,8 +84,8 @@ export class ChecklistService {
   }
 
   /**
-   * Creates a new checklist
-   * @param data the checklist to be created
+   * Creates a new project
+   * @param data the project to be created
    */
   async createChecklist(data: Prisma.ChecklistCreateInput): Promise<Checklist> {
     const checklist = await this.prisma.checklist.create({
@@ -104,8 +104,8 @@ export class ChecklistService {
   }
 
   /**
-   * Edits an already existing checklist
-   * @param params update params of the checklist
+   * Edits an already existing project
+   * @param params update params of the project
    */
   async updateChecklist(params: {
     where: Prisma.ChecklistWhereUniqueInput;
@@ -127,7 +127,7 @@ export class ChecklistService {
   }
 
   /**
-   * Deletes an already existing checklist
+   * Deletes an already existing project
    * @param where delete criteria
    */
   async deleteChecklist(

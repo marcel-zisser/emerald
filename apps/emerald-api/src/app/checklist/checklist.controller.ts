@@ -71,18 +71,18 @@ export class ChecklistController {
   // @Put('')
   // editChecklist(
   //   @Req() request: Request,
-  //   @Body() checklist: Checklist
+  //   @Body() project: Checklist
   // ): Promise<Checklist> {
   //   if (
   //     request['jwt'].role != Role.Admin &&
-  //     request['jwt'].sub != checklist.uuid
+  //     request['jwt'].sub != project.uuid
   //   ) {
   //     throw new UnauthorizedException();
   //   }
   //
   //   return this.checklistService.updateChecklist({
-  //     where: { uuid: checklist.uuid },
-  //     data: checklist,
+  //     where: { uuid: project.uuid },
+  //     data: project,
   //   });
   // }
 

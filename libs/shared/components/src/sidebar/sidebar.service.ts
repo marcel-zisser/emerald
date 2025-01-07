@@ -21,13 +21,13 @@ export class SidebarService {
   private readonly projectOwnerMenuItems: MenuItem[] = [
     {
       icon: 'lists',
-      label: Feature.Checklists,
-      route: FeatureRoutes.get(Feature.Checklists)  ?? '',
+      label: Feature.Projects,
+      route: FeatureRoutes.get(Feature.Projects)  ?? '',
     },
     {
       icon: 'edit',
-      label: Feature.CreateChecklist,
-      route:  FeatureRoutes.get(Feature.CreateChecklist)  ?? '',
+      label: Feature.CreateProject,
+      route:  FeatureRoutes.get(Feature.CreateProject)  ?? '',
     },
   ];
 

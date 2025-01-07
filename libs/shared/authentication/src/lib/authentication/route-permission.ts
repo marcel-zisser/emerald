@@ -10,8 +10,8 @@ export const reviewerRoutes: string[] = [
 
 export const checklistOwnerRoutes: string[] = [
   ...reviewerRoutes,
-  FeatureRoutes.get(Feature.Checklists) ?? '',
-  FeatureRoutes.get(Feature.CreateChecklist) ?? ''
+  FeatureRoutes.get(Feature.Projects) ?? '',
+  FeatureRoutes.get(Feature.CreateProject) ?? ''
 ]
 
 export const adminRoutes: string[] = [

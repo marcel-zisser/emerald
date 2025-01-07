@@ -1,0 +1,34 @@
+<h2>Add Reviewers</h2>
+<p>
+  Add users to review the checklist. Users can also be added after checklist creation.
+</p>
+<form [formGroup]="form()">
+  <div class="card-container">
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Available Users</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="card-content">
+        <project-reviewer-list
+          [users]="users()"
+          [filterable]="true"
+          (remove)="addSelectedUser($event)"
+        ></project-reviewer-list>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Selected Users</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="content">
+        <project-reviewer-list
+          [users]="selectedUsers()"
+          [icon]="'delete'"
+          (remove)="removeSelectedUser($event)"
+        ></project-reviewer-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</form>

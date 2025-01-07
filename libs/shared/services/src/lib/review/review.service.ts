@@ -17,8 +17,8 @@ export class ReviewService {
   }
 
   /**
-   * Retrieves all reviews for a specific checklist
-   * @param checklistId the uuid of the checklist
+   * Retrieves all reviews for a specific project
+   * @param checklistId the uuid of the project
    */
   getReviewsByChecklistId(checklistId: string): Observable<Review[]> {
     return this.backendService.doGet<Review[]>(`${ ApiRoutes.get(ApiEndpoint.Review) }?checklistId=${checklistId}`);
