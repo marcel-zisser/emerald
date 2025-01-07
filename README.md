@@ -1,82 +1,58 @@
-# Emerald
+# Emerald 
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+<img src="libs/shared/assets/emerald.svg" width="50">
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+## Requirements
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+- Node 22.12.0 (Current LTS)
+- Docker
 
-## Finish your CI setup
+## Environment Configuration
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/QN1fM4bSpd)
+For the application to work, you need to create a file called '.env' in the root directory.
+The following variables MUST be defined:
+- DATABASE_URL 
+  - The API will use this URL to connect to the database.
+  - The URL should be formatted according to Prisma specifications.
+  - https://www.prisma.io/docs/orm/reference/connection-urls
+- JWT_SECRET
+  - This serves as your JWT encryption key.
+  - Make sure this key is long enough and not guessable. (using something like 'secret' is not a good idea)
 
 
-## Run tasks
 
-To run the dev server for your app, use:
+## Development Setup
+To have a good development experience use the docker-compose file to set up a temporary database:
+```sh
+docker compose up
+```
 
+### Run tasks
+
+Now we need to start the development-servers for both API and UI project: 
 ```sh
 npx nx serve emerald-ui
 ```
-
-To create a production bundle:
-
 ```sh
-npx nx build emerald-ui
+npx nx serve emerald-api
+```
+Alternatively, you can use the npm script to start both with just one command:
+```sh
+npm run start:emerald
 ```
 
-To see all available targets to run for a project, run:
+### Development Database
+A pre-build script for the API will populate the database with some sample data.
+There will be 3 users for development out of the box:
+- admin
+  - pw: admin
+- project-owner
+  - pw: admin
+- reviewer
+  - pw: admin
 
-```sh
-npx nx show project emerald-ui
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-Use the plugin's generator to create new projects.
-
-To generate a new application, use:
-
-```sh
-npx nx g @nx/angular:app demo
-```
-
-To generate a new library, use:
-
-```sh
-npx nx g @nx/angular:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
+### Install Nx Console
 
 Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
 
 [Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
