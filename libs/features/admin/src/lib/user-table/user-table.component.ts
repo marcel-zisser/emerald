@@ -51,6 +51,7 @@ export class UserTableComponent implements OnInit {
   protected displayedColumns: string[] = [
     'lastName',
     'firstName',
+    'username',
     'email',
     'role',
     'actions',
@@ -120,7 +121,7 @@ export class UserTableComponent implements OnInit {
       .subscribe((updateResult) => {
         if (updateResult) {
           this.users.update((users) =>
-            users.map((u) => (u.uuid === updated.uuid ? updated : u))
+            users.map((user) => (user.uuid === updated.uuid ? updated : user))
           );
           this.snackBar.open('User updated successfully!', 'Close', {
             duration: 3000,

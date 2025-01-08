@@ -48,6 +48,8 @@ export class UserController {
       throw new UnauthorizedException();
     }
 
+    console.log(user);
+
     return this.userService.updateUser({
       where: { uuid: user.uuid },
       data: user,

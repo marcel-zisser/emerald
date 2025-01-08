@@ -19,6 +19,12 @@
   </ng-container>
 
   <!-- Email Column -->
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+    <td mat-cell *matCellDef="let user"> {{ user.username }}</td>
+  </ng-container>
+
+  <!-- Email Column -->
   <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> E-Mail</th>
     <td mat-cell *matCellDef="let user"> {{ user.email }}</td>

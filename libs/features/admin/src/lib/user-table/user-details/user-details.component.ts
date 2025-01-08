@@ -54,11 +54,12 @@ export class UserDetailsComponent {
     this.userForm = this.formBuilder.group({
       firstName: [this.userToEdit?.firstName ?? '', Validators.required],
       lastName: [this.userToEdit?.lastName ?? '', Validators.required],
+      username: [this.userToEdit?.username ?? '', Validators.required],
       email: [
         this.userToEdit?.email ?? '',
         [Validators.required, Validators.email],
       ],
-      role: ['', Validators.required],
+      role: [this.userToEdit?.role ?? '', Validators.required],
     });
   }
 
@@ -68,8 +69,7 @@ export class UserDetailsComponent {
 
       if (!this.userToEdit) {
         user = {
-          ...this.userForm.value,
-          uuid: uuid(),
+          ...this.userForm.value
         } satisfies User;
       } else {
         user = {
