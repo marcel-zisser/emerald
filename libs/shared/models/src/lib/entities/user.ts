@@ -1,7 +1,7 @@
 import { Role } from '../backend';
 
 export interface User {
-  uuid: string;
+  uuid?: string;
   firstName: string;
   lastName: string;
   username?: string;

@@ -122,13 +122,11 @@ export class CreateProjectComponent {
       criteriaGroups?.map((criteriaGroup) => {
         const mappedCriteria = criteriaGroup.criteria?.map((criterion) => {
           return {
-            title: criterion.title ?? '',
             description: criterion.title ?? '',
             maxPoints: criterion.maxPoints,
           } satisfies Criterion;
         });
         return {
-          title: criteriaGroup.title ?? '',
           description: criteriaGroup.description ?? '',
           criteria: mappedCriteria,
         } satisfies CriteriaGroup;

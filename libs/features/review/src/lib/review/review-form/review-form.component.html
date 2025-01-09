@@ -1,0 +1,31 @@
+<div class="review-container">
+  <div class="criteria-container">
+    @for (group of review()?.checklist?.criteriaGroups; track group.uuid) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ group.description }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-accordion>
+          <div class="criteria-container">
+            @for (criterion of group?.criteria; track criterion.uuid) {
+
+              <mat-card>
+                <mat-card-content>
+                  {{ criterion.description }} | {{ criterion?.reviewResults?.[0]?.status }}
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        </mat-accordion>
+      </mat-expansion-panel>
+    } @empty {
+      Nothing to show.
+    }
+  </div>
+  <div class="review-panel">
+
+  </div>
+</div>

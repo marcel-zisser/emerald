@@ -15,4 +15,13 @@ export class ReviewService {
   getReviews(): Observable<Review[]> {
     return this.backendService.doGet<Review[]>(ApiRoutes.get(ApiEndpoint.Review));
   }
+
+  /**
+   * Gets a review by uuid
+   * @param reviewId the uuid of the review
+   * @returns { Review } the review with the specified uuid
+   */
+  getReview(reviewId: string): Observable<Review> {
+    return this.backendService.doGet<Review>(`${ApiRoutes.get(ApiEndpoint.Review)}/${reviewId}`);
+  }
 }

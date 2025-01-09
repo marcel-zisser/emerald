@@ -12,6 +12,4 @@ import { ReviewListComponent } from '@emerald/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })
-export class ReviewComponent {
-
-}
+export class ReviewComponent {}

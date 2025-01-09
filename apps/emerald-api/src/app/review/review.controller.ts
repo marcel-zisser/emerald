@@ -1,11 +1,12 @@
-import { Controller, Get, Query, Req } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { Request } from 'express';
 import { Review } from '@emerald/models';
 
 @Controller('review')
 export class ReviewController {
-  constructor(private reviewService: ReviewService) {}
+  constructor(private reviewService: ReviewService) {
+  }
 
   @Get()
   getReviews(@Req() request: Request, @Query('checklistId') checklistId: string): Promise<Review[]> {
@@ -14,17 +15,22 @@ export class ReviewController {
     if (checklistId) {
       return this.reviewService.reviews({
         where: {
-          checklistId: checklistId,
-        },
+          checklistId: checklistId
+        }
       });
     } else {
       return this.reviewService.reviews({
         where: {
-          userId: userId,
-        },
+          userId: userId
+        }
       });
     }
+  }
 
-
+  @Get(':reviewId')
+  getReview(@Param('reviewId') reviewId: string): Promise<Review> {
+    return this.reviewService.review({
+      uuid: reviewId
+    });
   }
 }

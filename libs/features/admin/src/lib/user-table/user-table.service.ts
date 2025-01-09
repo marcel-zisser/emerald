@@ -42,7 +42,7 @@ export class UserTableService {
    */
   deleteUser(user: User): Observable<User> {
     return this.backendService.doDelete(
-      ApiRoutes.get(ApiEndpoint.User) + user.uuid
+       `${ApiRoutes.get(ApiEndpoint.User)}/${user.uuid}`
     );
   }
 }

@@ -67,7 +67,7 @@ export class AddReviewerComponent {
 
     this.form().controls.reviewers.push(
       this.fb.group({
-        uuid: [movedUser.uuid, Validators.required],
+        uuid: [movedUser.uuid ?? '', Validators.required],
       })
     );
   }

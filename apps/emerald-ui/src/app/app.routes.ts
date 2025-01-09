@@ -51,7 +51,7 @@ export const appRoutes: Route[] = [
     canActivate: [authenticationGuard, roleGuard],
   },
   {
-    path: `${FeatureRoutes.get(Feature.Reviews)}/:uuid`,
+    path: `${FeatureRoutes.get(Feature.Reviews)}/:reviewId`,
     component: ReviewFormComponent,
     title: getPageTitle(Feature.Reviews),
     canActivate: [authenticationGuard, roleGuard],

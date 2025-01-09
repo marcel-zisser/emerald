@@ -69,7 +69,7 @@ export class UserTableComponent implements OnInit {
   }
 
   trackByUserId(index: number, user: User): string {
-    return user.uuid;
+    return user.uuid ?? '';
   }
 
   /**

@@ -22,7 +22,6 @@ import { MatIconButton } from '@angular/material/button';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
-  ActivationEnd,
   NavigationEnd,
   Router,
   RouterLink,
@@ -39,8 +38,7 @@ import {
 import { AuthenticationService } from '@emerald/authentication';
 import { Title } from '@angular/platform-browser';
 import { PagePipe } from './page.pipe';
-import { filter, map, mergeMap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 @Component({
