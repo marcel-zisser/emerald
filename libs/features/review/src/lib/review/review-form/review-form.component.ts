@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, Signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReviewService } from '../review.service';
 import { Review } from '@emerald/models';
@@ -42,9 +42,14 @@ export class ReviewFormComponent {
   private readonly reviewId = this.activatedRoute.snapshot.params['reviewId'];
 
   protected review: Signal<Review | undefined>;
+  protected criterion = signal<string | undefined>(undefined);
 
   constructor() {
     this.review = toSignal(this.reviewService.getReview(this.reviewId));
+  }
+
+  selectCriterion(uuid: string | undefined) {
+    this.criterion.set(uuid);
   }
 }
 

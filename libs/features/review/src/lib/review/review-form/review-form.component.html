@@ -11,8 +11,7 @@
         <mat-accordion>
           <div class="criteria-container">
             @for (criterion of group?.criteria; track criterion.uuid) {
-
-              <mat-card>
+              <mat-card (click)="selectCriterion(criterion.uuid)">
                 <mat-card-content>
                   {{ criterion.description }} | {{ criterion?.reviewResults?.[0]?.status }}
                 </mat-card-content>
@@ -26,6 +25,6 @@
     }
   </div>
   <div class="review-panel">
-
+    {{ criterion() }}
   </div>
 </div>

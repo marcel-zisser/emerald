@@ -20,7 +20,6 @@ import { MatListItem, MatNavList } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import {
-  ActivatedRoute,
   ActivatedRouteSnapshot,
   NavigationEnd,
   Router,
@@ -70,7 +69,6 @@ export class SidebarComponent implements AfterViewInit {
   private readonly renderer = inject(Renderer2);
   private readonly elementRef = inject(ElementRef);
   private readonly router = inject(Router);
-  private readonly activatedRoute = inject(ActivatedRoute);
 
   protected readonly Feature = Feature;
   protected pageTitle = signal<string>(this.titleService.getTitle());
