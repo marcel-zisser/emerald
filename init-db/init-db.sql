@@ -27,26 +27,32 @@ VALUES ('5e85eea3-7cea-416d-85ee-a37cea516d78',
         'lorem ipsum dolor sit amet consectetur adipiscing elit eleifend officia lorem accumsan accusam proident nam placerat adipisici erat elit quod suscipit congue laborum aliquam consectetur facer esse liber consequat adipiscing tempor eleifend iusto anim possim feugait illum aute incidunt nibh duis reprehenderit ut rebum iure sea non in nulla nostrud',
         '40ffd4b2-68a4-4309-9610-1c6b4e554d96');
 
-INSERT INTO "CriteriaGroup" ("uuid", "description", "checklistId")
+INSERT INTO "CriteriaGroup" ("uuid", "title", "description", "checklistId")
 VALUES ('2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3',
         'Criteria Group 1',
+        'Criteria Group 1 Description',
         '5e85eea3-7cea-416d-85ee-a37cea516d78'),
        ('981b7203-b24a-4b53-bf8d-b33ee5c259f1',
         'Criteria Group 2',
+        'Criteria Group 2 Description',
         '5e85eea3-7cea-416d-85ee-a37cea516d78');
 
-INSERT INTO "Criterion" ("uuid", "description", "groupId")
+INSERT INTO "Criterion" ("uuid", "description", "type","groupId")
 VALUES ('d568a98e-4a1d-43d2-a8a9-8e4a1db3d269',
         'Criteria 1',
+        'Binary',
         '2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3'),
        ('8fe9420e-bcc8-4742-9c31-fb79494bc2de',
         'Criteria 2',
+        'Binary',
         '2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3'),
        ('7f519504-1b38-48f8-a717-f033dadb39bf',
         'Criteria 3',
+        'Binary',
         '981b7203-b24a-4b53-bf8d-b33ee5c259f1'),
        ('2e2b429b-b79e-4856-9ac4-b1558fbccaf0',
         'Criteria 4',
+        'Binary',
         '981b7203-b24a-4b53-bf8d-b33ee5c259f1');
 
 INSERT INTO "Review" ("uuid", "userId", "checklistId")

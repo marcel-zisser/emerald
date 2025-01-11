@@ -45,7 +45,7 @@ import { CriteriaComponent } from './criteria/criteria.component';
     MatIcon,
     AddReviewerComponent,
     BasicProjectDataComponent,
-    CriteriaComponent
+    CriteriaComponent,
   ],
   templateUrl: './create-project.component.html',
   styleUrl: './create-project.component.scss',
@@ -75,7 +75,10 @@ export class CreateProjectComponent {
     });
 
     this.criteriaForm = this.fb.group({
-      criteriaGroups: this.fb.array<FormCriteriaGroup>([], arrayNotEmptyValidator()),
+      criteriaGroups: this.fb.array<FormCriteriaGroup>(
+        [],
+        arrayNotEmptyValidator()
+      ),
     });
 
     this.reviewerForm = this.fb.group({
@@ -108,10 +111,14 @@ export class CreateProjectComponent {
           this.router.navigate([FeatureRoutes.get(Feature.Projects)]);
         });
     } else {
-      this.snackbar.open('There has been an error saving the checklist. Please check if your data is valid.', 'Close', {
-        duration: 3000,
-        verticalPosition: 'top',
-      });
+      this.snackbar.open(
+        'There has been an error saving the checklist. Please check if your data is valid.',
+        'Close',
+        {
+          duration: 3000,
+          verticalPosition: 'top',
+        }
+      );
     }
   }
 
@@ -122,11 +129,13 @@ export class CreateProjectComponent {
       criteriaGroups?.map((criteriaGroup) => {
         const mappedCriteria = criteriaGroup.criteria?.map((criterion) => {
           return {
-            description: criterion.title ?? '',
+            description: criterion.description ?? '',
+            criterionType: criterion.criterionType,
             maxPoints: criterion.maxPoints,
           } satisfies Criterion;
         });
         return {
+          title: criteriaGroup.title ?? '',
           description: criteriaGroup.description ?? '',
           criteria: mappedCriteria,
         } satisfies CriteriaGroup;

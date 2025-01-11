@@ -54,10 +54,12 @@ export class ChecklistController {
       },
       groups: {
         create: body.criteriaGroups.map((group) => ({
+          title: group.title,
           description: group.description,
           criteria: {
             create: group.criteria.map((criterion) => ({
               description: criterion.description,
+              type: criterion.criterionType,
             })),
           },
         })),

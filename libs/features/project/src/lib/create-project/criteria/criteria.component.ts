@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import {
   NonNullableFormBuilder,
@@ -20,6 +22,11 @@ import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { CriteriaForm, FormCriterion } from './criteria.form';
 import { arrayNotEmptyValidator } from '@emerald/services';
+import {
+  MatButtonToggle,
+  MatButtonToggleGroup,
+} from '@angular/material/button-toggle';
+import { CriterionType } from '@emerald/models';
 
 @Component({
   selector: 'project-criteria',
@@ -33,6 +40,8 @@ import { arrayNotEmptyValidator } from '@emerald/services';
     MatButton,
     MatExpansionPanelHeader,
     MatLabel,
+    MatButtonToggleGroup,
+    MatButtonToggle,
   ],
   templateUrl: './criteria.component.html',
   styleUrl: './criteria.component.scss',
@@ -41,6 +50,8 @@ import { arrayNotEmptyValidator } from '@emerald/services';
 })
 export class CriteriaComponent {
   private readonly fb = inject(NonNullableFormBuilder);
+
+  protected readonly CriterionType = CriterionType;
 
   form = input.required<CriteriaForm>();
 
@@ -59,8 +70,8 @@ export class CriteriaComponent {
       .controls.criteriaGroups.at(groupIndex)
       .controls.criteria.push(
         this.fb.group({
-          title: ['', Validators.required],
-          description: '',
+          description: [''],
+          criterionType: [CriterionType.Binary],
           maxPoints: 0,
         })
       );

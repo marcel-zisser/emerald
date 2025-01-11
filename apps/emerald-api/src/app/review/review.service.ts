@@ -118,6 +118,7 @@ export class ReviewService {
         criteriaGroups: review.CheckList.groups.map((group) => {
           return {
             uuid: group.uuid,
+            title: group.title,
             description: group.description,
             criteria: group.criteria.map((criterion) => {
               return {

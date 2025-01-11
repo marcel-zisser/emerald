@@ -9,3 +9,4 @@ export { CriterionStatus } from './criterion-status.enum';
 export { DashboardChecklist } from './dashboard-checklist';
 export { CriteriaSummary } from './criteria-summary';
 export { ReviewSummary } from './review-summary';
+export { CriterionType } from './criterion-type.enum';

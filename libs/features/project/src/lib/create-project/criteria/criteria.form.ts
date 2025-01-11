@@ -1,8 +1,9 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { CriterionType } from '@emerald/models';
 
 export type FormCriterion = FormGroup<{
-  title: FormControl<string>;
   description: FormControl<string>;
+  criterionType: FormControl<CriterionType>;
   maxPoints: FormControl<number>;
 }>;
 

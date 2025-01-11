@@ -42,19 +42,22 @@
 
               <div class="form-container">
                 <mat-form-field>
-                  <mat-label>Criterion Title</mat-label>
-                  <input matInput formControlName="title" placeholder="Enter criterion title" required/>
-                </mat-form-field>
-
-                <mat-form-field>
                   <mat-label>Criterion Description</mat-label>
                   <input matInput formControlName="description" placeholder="Enter criterion description" />
                 </mat-form-field>
 
-                <mat-form-field>
-                  <mat-label>Max. Points</mat-label>
-                  <input matInput type="number" formControlName="maxPoints" placeholder="Enter the maximum points of the criterion" />
-                </mat-form-field>
+                <mat-button-toggle-group formControlName="criterionType">
+                  <mat-button-toggle class="toggle-button" [value]="CriterionType.Binary">Binary</mat-button-toggle>
+                  <mat-button-toggle class="toggle-button" [value]="CriterionType.Points">Points</mat-button-toggle>
+                </mat-button-toggle-group>
+
+                @if(criterion.controls.criterionType.value === CriterionType.Points) {
+                  <mat-form-field class="max-points">
+                    <mat-label>Max. Points</mat-label>
+                    <input matInput type="number" formControlName="maxPoints"
+                           placeholder="Enter the maximum points of the criterion" />
+                  </mat-form-field>
+                }
               </div>
 
               <div class="criterion-actions">
