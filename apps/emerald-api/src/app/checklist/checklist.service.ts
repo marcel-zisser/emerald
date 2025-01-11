@@ -2,7 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 import { Prisma } from '@prisma/client';
 import { ResultService } from '../result/result.service';
-import { Checklist, CriteriaSummary, ReviewStatus, ReviewSummary } from '@emerald/models';
+import {
+  Checklist,
+  CriteriaSummary,
+  ReviewResult,
+  ReviewStatus,
+  ReviewSummary,
+} from '@emerald/models';
 
 type ReviewWithRelations = Prisma.ReviewGetPayload<{
   include: { reviewResults: true };
@@ -10,23 +16,21 @@ type ReviewWithRelations = Prisma.ReviewGetPayload<{
 
 type ChecklistWithReviews = Prisma.ChecklistGetPayload<{
   include: {
-    owner: true,
+    owner: true;
     reviews: {
       include: {
-        reviewResults: true
-      }
-    }
+        reviewResults: true;
+      };
+    };
   };
 }>;
 
 @Injectable()
 export class ChecklistService {
-
   constructor(
     private prisma: PrismaService,
     private resultService: ResultService
-  ) {
-  }
+  ) {}
 
   /**
    * Gets all checklists from the database
@@ -50,10 +54,10 @@ export class ChecklistService {
         owner: true,
         reviews: {
           include: {
-            reviewResults: true
-          }
-        }
-      }
+            reviewResults: true,
+          },
+        },
+      },
     });
 
     return checklists.map((checklist) => {
@@ -74,10 +78,10 @@ export class ChecklistService {
         owner: true,
         reviews: {
           include: {
-            reviewResults: true
-          }
-        }
-      }
+            reviewResults: true,
+          },
+        },
+      },
     });
 
     return this.mapPrismaChecklist(checklist);
@@ -93,9 +97,9 @@ export class ChecklistService {
       include: {
         owner: true,
         reviews: {
-          include: { reviewResults: true }
-        }
-      }
+          include: { reviewResults: true },
+        },
+      },
     });
 
     await this.resultService.createDefaultResults(checklist);
@@ -118,9 +122,9 @@ export class ChecklistService {
       include: {
         owner: true,
         reviews: {
-          include: { reviewResults: true }
-        }
-      }
+          include: { reviewResults: true },
+        },
+      },
     });
 
     return this.mapPrismaChecklist(checklist);
@@ -138,9 +142,9 @@ export class ChecklistService {
       include: {
         owner: true,
         reviews: {
-          include: { reviewResults: true }
-        }
-      }
+          include: { reviewResults: true },
+        },
+      },
     });
 
     return this.mapPrismaChecklist(checklist);
@@ -150,11 +154,15 @@ export class ChecklistService {
     const reviewSummary: ReviewSummary = { completed: 0, uncompleted: 0 };
 
     reviews.forEach((review) => {
-      const status = this.resultService.getReviewStatus(review.reviewResults);
+      const status = this.resultService.getReviewStatus(
+        review.reviewResults as ReviewResult[]
+      );
 
-      if (status === ReviewStatus.InProgress || status === ReviewStatus.NotStarted) {
+      if (
+        status === ReviewStatus.InProgress ||
+        status === ReviewStatus.NotStarted
+      ) {
         reviewSummary.uncompleted++;
-
       } else {
         reviewSummary.completed++;
       }
@@ -167,7 +175,9 @@ export class ChecklistService {
     const criteriaSummary: CriteriaSummary = { passed: 0, failed: 0, TBD: 0 };
 
     reviews.forEach((review) => {
-      const summary = this.resultService.getCriterionSummary(review.reviewResults);
+      const summary = this.resultService.getCriterionSummary(
+        review.reviewResults as ReviewResult[]
+      );
 
       criteriaSummary.passed += summary.passed;
       criteriaSummary.failed += summary.failed;
@@ -188,7 +198,7 @@ export class ChecklistService {
         lastName: checklist.owner.lastName,
       },
       criteriaSummary: this.getCriterionSummary(checklist.reviews),
-      reviewSummary: this.getReviewSummary(checklist.reviews)
+      reviewSummary: this.getReviewSummary(checklist.reviews),
     } satisfies Checklist;
   }
 }

@@ -11,6 +11,7 @@ export const ApiRoutes = new Map<ApiEndpoint, string>([
   [ApiEndpoint.Checklist, 'checklist'],
 
   [ApiEndpoint.Review, 'review'],
+  [ApiEndpoint.ReviewResult, 'result'],
 
   [ApiEndpoint.Dashboard, 'dashboard'],
 ]);

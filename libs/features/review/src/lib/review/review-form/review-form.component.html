@@ -11,9 +11,9 @@
         <mat-accordion>
           <div class="criteria-container">
             @for (criterion of group?.criteria; track criterion.uuid) {
-              <mat-card (click)="selectCriterion(criterion.uuid)">
-                <mat-card-content>
-                  {{ criterion.description }} | {{ criterion?.reviewResults?.[0]?.status }}
+              <mat-card (click)="selectCriterion(criterion)">
+                <mat-card-content class="criterion">
+                  <span>{{ criterion.description }} | {{ criterion?.reviewResults?.[0]?.status }}</span>
                 </mat-card-content>
               </mat-card>
             }
@@ -25,6 +25,33 @@
     }
   </div>
   <div class="review-panel">
-    {{ criterion() }}
+    @if (selectedCriterion()) {
+      <mat-card>
+        <mat-card-header class="card-header">
+          {{ selectedCriterion()?.description }}
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="criterionForm">
+            <div class="form-field">
+              <mat-label class="outside-label">Comments</mat-label>
+              <mat-form-field appearance="fill">
+                <textarea matInput formControlName="comments"></textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="button-container">
+              <button mat-fab extended="true" class="status-button pass" (click)="setStatus(CriterionStatus.Pass)">
+                <mat-icon>check</mat-icon>
+                Pass
+              </button>
+              <button mat-fab extended="true" class="status-button fail" (click)="setStatus(CriterionStatus.Fail)">
+                <mat-icon>close</mat-icon>
+                Fail
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    }
   </div>
 </div>

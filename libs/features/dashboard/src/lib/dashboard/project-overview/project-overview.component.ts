@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MatCard,
   MatCardContent,
@@ -24,7 +19,7 @@ import { Feature, FeatureRoutes } from '@emerald/models';
     MatCardTitle,
     MatCardContent,
     ProjectTableComponent,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './project-overview.component.html',
   styleUrl: './project-overview.component.scss',

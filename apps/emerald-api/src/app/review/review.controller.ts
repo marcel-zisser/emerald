@@ -5,24 +5,26 @@ import { Review } from '@emerald/models';
 
 @Controller('review')
 export class ReviewController {
-  constructor(private reviewService: ReviewService) {
-  }
+  constructor(private reviewService: ReviewService) {}
 
   @Get()
-  getReviews(@Req() request: Request, @Query('checklistId') checklistId: string): Promise<Review[]> {
+  getReviews(
+    @Req() request: Request,
+    @Query('checklistId') checklistId: string
+  ): Promise<Review[]> {
     const userId = request['jwt'].sub;
 
     if (checklistId) {
       return this.reviewService.reviews({
         where: {
-          checklistId: checklistId
-        }
+          checklistId: checklistId,
+        },
       });
     } else {
       return this.reviewService.reviews({
         where: {
-          userId: userId
-        }
+          userId: userId,
+        },
       });
     }
   }
@@ -30,7 +32,7 @@ export class ReviewController {
   @Get(':reviewId')
   getReview(@Param('reviewId') reviewId: string): Promise<Review> {
     return this.reviewService.review({
-      uuid: reviewId
+      uuid: reviewId,
     });
   }
 }

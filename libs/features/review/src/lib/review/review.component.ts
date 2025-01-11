@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReviewListComponent } from '@emerald/components';
 
 @Component({
@@ -10,6 +7,6 @@ import { ReviewListComponent } from '@emerald/components';
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
+  standalone: true,
 })
 export class ReviewComponent {}

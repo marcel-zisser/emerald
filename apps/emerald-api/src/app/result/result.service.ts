@@ -3,10 +3,10 @@ import { PrismaService } from '../../prisma.service';
 import {
   CriteriaSummary,
   CriterionStatus,
+  ReviewResult,
   ReviewStatus,
-  ReviewSummary,
 } from '@emerald/models';
-import { Checklist, ReviewResult } from '@prisma/client';
+import { Checklist, Prisma } from '@prisma/client';
 
 @Injectable()
 export class ResultService {
@@ -90,5 +90,25 @@ export class ResultService {
         });
       }
     }
+  }
+
+  /**
+   * Updates an already existing result
+   * @param params update params of the result
+   */
+  async updateResult(params: {
+    where: Prisma.ReviewResultWhereUniqueInput;
+    data: Prisma.ReviewResultUpdateInput;
+  }): Promise<ReviewResult> {
+    const { where, data } = params;
+    const updateResult = await this.prismaService.reviewResult.update({
+      data,
+      where,
+    });
+
+    return {
+      status: updateResult.status as CriterionStatus,
+      comments: updateResult.comments,
+    } satisfies ReviewResult;
   }
 }

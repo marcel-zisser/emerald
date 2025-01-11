@@ -11,6 +11,48 @@
   flex: 6;
 }
 
+.criterion {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .review-panel {
   flex: 4;
+}
+
+.card-header {
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .outside-label {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.status-button {
+  flex: 1;
+  color: white;
+
+  &.pass {
+    background-color: green;
+  }
+
+  &.fail {
+    background-color: firebrick;
+  }
 }
