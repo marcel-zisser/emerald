@@ -5,7 +5,7 @@
     <div class="step-container">
       <project-basic-data [form]="basicData"></project-basic-data>
       <div class="button-container">
-        <button mat-flat-button matStepperNext>Next</button>
+        <button mat-flat-button matStepperNext [disabled]="!basicData.valid">Next</button>
       </div>
     </div>
   </mat-step>
@@ -14,7 +14,7 @@
       <project-criteria [form]="criteriaForm"></project-criteria>
       <div class="button-container">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-flat-button matStepperNext>Next</button>
+        <button mat-flat-button matStepperNext [disabled]="!criteriaForm.valid">Next</button>
       </div>
     </div>
   </mat-step>
