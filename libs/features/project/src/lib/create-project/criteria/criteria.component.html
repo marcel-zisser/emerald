@@ -52,6 +52,14 @@
                 </mat-form-field>
 
                 <mat-form-field>
+                  <mat-label>Criterion Type</mat-label>
+                  <mat-select formControlName="type">
+                    <mat-option value="binary">Binary</mat-option>
+                    <mat-option value="integer">Integer</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field *ngIf="isIntegerCriterion(groupIndex, criterionIndex)">
                   <mat-label>Max. Points</mat-label>
                   <input matInput type="number" formControlName="maxPoints" placeholder="Enter the maximum points of the criterion" />
                 </mat-form-field>

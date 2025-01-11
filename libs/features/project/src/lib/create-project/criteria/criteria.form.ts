@@ -3,6 +3,8 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 export type FormCriterion = FormGroup<{
   title: FormControl<string>;
   description: FormControl<string>;
+  /* TODO enum? */
+  type: FormControl<string>;
   maxPoints: FormControl<number>;
 }>;
 

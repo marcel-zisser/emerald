@@ -20,6 +20,8 @@ import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { CriteriaForm, FormCriterion } from './criteria.form';
 import { arrayNotEmptyValidator } from '@emerald/services';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'project-criteria',
@@ -33,6 +35,9 @@ import { arrayNotEmptyValidator } from '@emerald/services';
     MatButton,
     MatExpansionPanelHeader,
     MatLabel,
+    MatSelect,
+    MatOption,
+    NgIf,
   ],
   templateUrl: './criteria.component.html',
   styleUrl: './criteria.component.scss',
@@ -61,6 +66,7 @@ export class CriteriaComponent {
         this.fb.group({
           title: ['', Validators.required],
           description: '',
+          type: 'binary',
           maxPoints: 0,
         })
       );
@@ -83,5 +89,17 @@ export class CriteriaComponent {
     this.form()
       .controls.criteriaGroups.at(groupIndex)
       .controls.criteria.removeAt(criterionIndex);
+  }
+
+  /**
+   * Checks if a criterion is from type integer or not
+   * @param groupIndex the group from which the criterion is to be checked
+   * @param criterionIndex the index of the criterion is to be checked
+   */
+  isIntegerCriterion(groupIndex: number, criterionIndex: number): boolean {
+    return this.form().get([
+      'criteriaGroups', groupIndex,
+      'criteria', criterionIndex,
+      'type'])?.value === 'integer';
   }
 }

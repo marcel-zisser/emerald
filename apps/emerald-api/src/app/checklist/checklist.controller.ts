@@ -58,6 +58,7 @@ export class ChecklistController {
           criteria: {
             create: group.criteria.map((criterion) => ({
               description: criterion.description,
+              type: criterion.type,
             })),
           },
         })),

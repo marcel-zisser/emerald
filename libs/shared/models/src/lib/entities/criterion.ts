@@ -5,6 +5,7 @@ export interface Criterion {
   description: string;
   status?: string;
   comments?: string;
+  type?: string;
   maxPoints?: number;
   groupId?: string;
   reviewResults?: ReviewResult[];
