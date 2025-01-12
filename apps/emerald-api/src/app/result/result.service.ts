@@ -109,6 +109,7 @@ export class ResultService {
     return {
       status: updateResult.status as CriterionStatus,
       comments: updateResult.comments,
+      points: updateResult.points,
     } satisfies ReviewResult;
   }
 }

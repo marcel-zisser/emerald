@@ -18,6 +18,7 @@ export class ResultController {
       data: {
         status: body.status,
         comments: body.comments,
+        points: body.points,
       },
     });
   }

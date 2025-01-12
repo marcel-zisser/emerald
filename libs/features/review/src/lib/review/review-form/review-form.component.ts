@@ -5,7 +5,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { Criterion, CriterionStatus } from '@emerald/models';
+import { Criterion, CriterionStatus, CriterionType } from '@emerald/models';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -13,12 +13,23 @@ import {
   MatExpansionPanelTitle,
 } from '@angular/material/expansion';
 import { MatFabButton } from '@angular/material/button';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import {
+  MatError,
+  MatFormField,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { ReviewFormService } from './review-form.service';
+import { ReviewForm } from './review.form';
 
 @Component({
   selector: 'review-review-form',
@@ -36,6 +47,8 @@ import { ReviewFormService } from './review-form.service';
     MatCardHeader,
     MatIcon,
     MatFabButton,
+    MatSuffix,
+    MatError,
   ],
   providers: [ReviewFormService],
   templateUrl: './review-form.component.html',
@@ -45,17 +58,24 @@ import { ReviewFormService } from './review-form.service';
 })
 export class ReviewFormComponent {
   private readonly reviewFormService = inject(ReviewFormService);
-  private readonly fb = inject(FormBuilder);
+  private readonly fb = inject(NonNullableFormBuilder);
 
   protected review = this.reviewFormService.getReview();
   protected selectedCriterion = signal<Criterion | undefined>(undefined);
 
-  protected criterionForm: FormGroup;
+  protected criterionForm: ReviewForm;
+  protected readonly CriterionType = CriterionType;
+  protected readonly CriterionStatus = CriterionStatus;
+
+  private maxPointsValidator: ValidatorFn | undefined;
 
   constructor() {
     this.criterionForm = this.fb.group({
-      status: [],
-      comments: [],
+      status: this.fb.control<CriterionStatus | undefined>(undefined),
+      points: this.fb.control<number | undefined>(undefined, [
+        Validators.min(0),
+      ]),
+      comments: this.fb.control<string | undefined>(undefined),
     });
 
     effect(() => {
@@ -76,6 +96,19 @@ export class ReviewFormComponent {
               (result) => result.criterionId === selectedCriterion.uuid
             )?.comments
           );
+
+        if (this.maxPointsValidator) {
+          this.criterionForm
+            .get('points')
+            ?.removeValidators(this.maxPointsValidator);
+        }
+
+        this.maxPointsValidator = Validators.max(
+          selectedCriterion.maxPoints ?? 0
+        );
+        this.criterionForm
+          .get('points')
+          ?.addValidators(this.maxPointsValidator);
       }
     });
   }
@@ -84,15 +117,21 @@ export class ReviewFormComponent {
     this.selectedCriterion.set(criterion);
   }
 
-  protected readonly CriterionStatus = CriterionStatus;
-
   setStatus(status: CriterionStatus) {
     this.criterionForm.get('status')?.patchValue(status);
+  }
 
-    this.reviewFormService.reviewCriterion({
-      reviewId: this.review()?.uuid,
-      criterionId: this.selectedCriterion()?.uuid,
-      ...this.criterionForm.value,
-    });
+  submitResult() {
+    const reviewId = this.review()?.uuid;
+    const criterionId = this.selectedCriterion()?.uuid;
+
+    if (reviewId && criterionId && this.criterionForm.valid) {
+      this.reviewFormService.reviewCriterion({
+        reviewId: reviewId,
+        criterionId: criterionId,
+        status: this.criterionForm.value.status ?? CriterionStatus.TBD,
+        ...this.criterionForm.value,
+      });
+    }
   }
 }

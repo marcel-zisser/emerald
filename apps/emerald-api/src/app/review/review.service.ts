@@ -4,6 +4,7 @@ import { Prisma } from '@prisma/client';
 import {
   CriteriaGroup,
   CriterionStatus,
+  CriterionType,
   Review,
   ReviewResult,
 } from '@emerald/models';
@@ -124,6 +125,8 @@ export class ReviewService {
               return {
                 uuid: criterion.uuid,
                 description: criterion.description,
+                criterionType: criterion.type as CriterionType,
+                maxPoints: criterion.maxPoints,
               };
             }),
           } satisfies CriteriaGroup;

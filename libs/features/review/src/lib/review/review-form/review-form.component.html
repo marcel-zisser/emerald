@@ -4,7 +4,7 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{ group.description }}
+            {{ group.title }}
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -31,7 +31,7 @@
           {{ selectedCriterion()?.description }}
         </mat-card-header>
         <mat-card-content>
-          <form [formGroup]="criterionForm">
+          <form [formGroup]="criterionForm" (ngSubmit)="submitResult()">
             <div class="form-field">
               <mat-label class="outside-label">Comments</mat-label>
               <mat-form-field appearance="fill">
@@ -39,15 +39,64 @@
               </mat-form-field>
             </div>
 
+            @if (selectedCriterion()?.criterionType === CriterionType.Points) {
+              <div class="form-field">
+                <mat-label class="outside-label">Points</mat-label>
+                <mat-form-field appearance="fill">
+                  <input matInput type=number formControlName="points" />
+
+                  <div class="point-suffix" matSuffix>out of {{ selectedCriterion()?.maxPoints }}</div>
+                  @if (criterionForm.controls.points.hasError('max') || criterionForm.controls.points.hasError('min')) {
+                    <mat-error>
+                      Only numbers between 0 and {{ selectedCriterion()?.maxPoints }} are allowed!
+                    </mat-error>
+                  }
+                </mat-form-field>
+
+              </div>
+            }
+
             <div class="button-container">
-              <button mat-fab extended="true" class="status-button pass" (click)="setStatus(CriterionStatus.Pass)">
-                <mat-icon>check</mat-icon>
-                Pass
-              </button>
-              <button mat-fab extended="true" class="status-button fail" (click)="setStatus(CriterionStatus.Fail)">
-                <mat-icon>close</mat-icon>
-                Fail
-              </button>
+              <div class="pass-fail-container">
+                <button mat-fab
+                        extended="true"
+                        class="status-button pass"
+                        type="button"
+                        [class.selected]="criterionForm.controls.status.value === CriterionStatus.Pass"
+                        (click)="setStatus(CriterionStatus.Pass)">
+                  <mat-icon>check</mat-icon>
+                  Pass
+                </button>
+                <button mat-fab
+                        extended="true"
+                        class="status-button fail"
+                        type="button"
+                        [class.selected]="criterionForm.controls.status.value === CriterionStatus.Fail"
+                        (click)="setStatus(CriterionStatus.Fail)">
+                  <mat-icon>close</mat-icon>
+                  Fail
+                </button>
+              </div>
+              <div>
+                <button mat-fab
+                        extended="true"
+                        class="status-button skip"
+                        type="button"
+                        (click)="setStatus(CriterionStatus.TBD)">
+                  <mat-icon>question_mark</mat-icon>
+                  Skip
+                </button>
+              </div>
+
+              <div>
+                <button mat-fab
+                        extended="true"
+                        class="status-button skip"
+                        type="submit">
+                  <mat-icon>save</mat-icon>
+                  Save
+                </button>
+              </div>
             </div>
           </form>
         </mat-card-content>

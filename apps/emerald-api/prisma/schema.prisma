@@ -25,6 +25,7 @@ model Criterion {
   uuid        String        @id @default(uuid()) @db.Uuid
   description String        @db.Text
   type        String        @db.VarChar(8) @default("Binary")
+  maxPoints   Int?          @db.Integer
   group       CriteriaGroup @relation(fields: [groupId], references: [uuid])
   groupId     String        @db.Uuid
 
@@ -74,6 +75,7 @@ model ReviewResult {
   Criterion   Criterion @relation(fields: [criterionId], references: [uuid])
 
   status   String @default("TBD") @db.VarChar(16)
+  points   Int?   @db.Integer
   comments String @default("") @db.Text
 
   @@id([reviewId, criterionId])
