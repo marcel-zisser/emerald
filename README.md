@@ -19,6 +19,14 @@ The following variables MUST be defined:
   - This serves as your JWT encryption key.
   - Make sure this key is long enough and not guessable. (using something like 'secret' is not a good idea)
 
+In case you want to use the provided Docker file for just trying it out, the following variables must be defined as well:
+- POSTGRES_USER
+  - This is the username for the Postgres Database
+- POSTGRES_PASSWORD
+  - Tha passwords for the user defined above
+- POSTGRES_DB
+  - The name of the database
+
 **Important**
 
 If another database provider than Postgres is used, this needs to be changed in the `schema.prisma`, which can be found in `apps/emerald-api/prisma`.
@@ -34,6 +42,10 @@ A sample `.env` file for the provided development setup could look like this:
 # Databse name:       emerald
 # Schema:             public
 DATABASE_URL=postgresql://iaweb:iaweb123!@localhost:5432/emerald?schema=public
+
+POSTGRES_USER=iaweb
+POSTGRES_PASSWORD=iaweb123!
+POSTGRES_DB=emerald
 
 JWT_SECRET=5f5695668f956d0268a4248b8d1770a64259cf64e128c67bccaa62879b29487d
 ```
