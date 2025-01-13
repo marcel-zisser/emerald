@@ -55,8 +55,9 @@ model Checklist {
 }
 
 model Review {
-  uuid       String   @id @default(uuid()) @db.Uuid
-  assignedAt DateTime @default(now())
+  uuid       String     @id @default(uuid()) @db.Uuid
+  assignedAt DateTime   @default(now())
+  dueDate    DateTime?
 
   userId      String    @db.Uuid
   checklistId String    @db.Uuid
@@ -74,9 +75,10 @@ model ReviewResult {
   Review      Review    @relation(fields: [reviewId], references: [uuid])
   Criterion   Criterion @relation(fields: [criterionId], references: [uuid])
 
-  status   String @default("TBD") @db.VarChar(16)
-  points   Int?   @db.Integer
-  comments String @default("") @db.Text
+  status      String @default("TBD") @db.VarChar(16)
+  points      Int?   @db.Integer
+  comments    String @default("") @db.Text
+  reviewDate  DateTime?
 
   @@id([reviewId, criterionId])
 }

@@ -1,4 +1,4 @@
-import { inject, Injectable, Signal, signal } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { BackendService } from '@emerald/services';
 import {
   ApiEndpoint,
@@ -9,6 +9,7 @@ import {
 } from '@emerald/models';
 import { first } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { cloneDeep } from 'lodash';
 
 @Injectable()
 export class ReviewFormService {
@@ -18,6 +19,9 @@ export class ReviewFormService {
   private readonly reviewId = this.activatedRoute.snapshot.params['reviewId'];
 
   private _review = signal<Review | undefined>(undefined);
+  private _results = computed<Map<string | undefined, ReviewResult>>(() => {
+    return new Map<string | undefined, ReviewResult>(this._review()?.results?.map(result => [result?.criterionId, result]));
+  });
 
   constructor() {
     this.backendService
@@ -29,11 +33,19 @@ export class ReviewFormService {
   }
 
   /**
-   * Gets a review by uuid
-   * @returns { Review } the review with the specified uuid
+   * Gets a review
+   * @returns { Review } the review
    */
   getReview(): Signal<Review | undefined> {
     return this._review.asReadonly();
+  }
+
+  /**
+   * Gets the review results
+   * @returns { Map<string | undefined, ReviewResult> } the review results
+   */
+  getResults(): Signal<Map<string | undefined, ReviewResult>> {
+    return this._results;
   }
 
   reviewCriterion(request: CriterionReviewRequest) {
@@ -45,21 +57,23 @@ export class ReviewFormService {
       .pipe(first())
       .subscribe((updatedResult) => {
         this._review.update((review) => {
-          const index = review?.results?.findIndex(
+          const newReview = cloneDeep(review);
+
+          const index = newReview?.results?.findIndex(
             (result) =>
               result.criterionId === request.criterionId &&
               result.reviewId === request.reviewId
           );
 
-          if (index !== undefined && index !== -1 && review?.results?.[index]) {
-            review.results[index] = {
-              ...review.results[index],
+          if (index !== undefined && index !== -1 && newReview?.results?.[index]) {
+            newReview.results[index] = {
+              ...newReview.results[index],
               status: updatedResult.status,
               comments: updatedResult.comments,
             } satisfies ReviewResult;
           }
 
-          return review;
+          return newReview;
         });
       });
   }

@@ -11,10 +11,21 @@
         <mat-accordion>
           <div class="criteria-container">
             @for (criterion of group?.criteria; track criterion.uuid) {
-              <mat-card (click)="selectCriterion(criterion)">
+              <mat-card
+                class="criterion-card"
+                [class.selected]="selectedCriterion()?.uuid === criterion.uuid"
+                (click)="selectCriterion(criterion)">
+
                 <mat-card-content class="criterion">
-                  <span>{{ criterion.description }} | {{ criterion?.reviewResults?.[0]?.status }}</span>
+                  <span>{{ criterion.description }}</span>
+                  <span
+                    class="status"
+                    [class.pass]="results().get(criterion.uuid)?.status === CriterionStatus.Pass"
+                    [class.fail]="results().get(criterion.uuid)?.status === CriterionStatus.Fail">
+                    {{ results().get(criterion.uuid)?.status }}
+                  </span>
                 </mat-card-content>
+
               </mat-card>
             }
           </div>
@@ -95,6 +106,19 @@
                         type="submit">
                   <mat-icon>save</mat-icon>
                   Save
+                </button>
+              </div>
+
+              <div class="next-prev-container">
+                <button mat-button
+                        type="button"
+                        (click)="selectPreviousCriterion()">
+                  Previous
+                </button>
+                <button mat-button
+                        type="button"
+                        (click)="selectNextCriterion()">
+                  Next
                 </button>
               </div>
             </div>
