@@ -71,7 +71,7 @@ export class CriteriaComponent {
       .controls.criteria.push(
         this.fb.group({
           description: [''],
-          criterionType: [CriterionType.Binary],
+          criterionType: [CriterionType.BINARY],
           maxPoints: 0,
         })
       );

@@ -7,6 +7,7 @@ export interface Review {
   uuid: string;
   status: ReviewStatus;
   assignedAt: Date;
+  dueDate: Date;
   user?: User;
   checklist?: Checklist;
   results?: ReviewResult[];

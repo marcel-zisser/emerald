@@ -7,11 +7,11 @@ import { CriterionStatus } from '@emerald/models';
 export class CriterionStatusPipe implements PipeTransform {
   transform(status: CriterionStatus): string {
     switch (status) {
-      case CriterionStatus.Pass:
+      case CriterionStatus.PASSED:
         return 'Passed';
-        case CriterionStatus.Fail:
+        case CriterionStatus.FAILED:
           return 'Failed';
-      case CriterionStatus.Pending:
+      case CriterionStatus.PENDING:
         return 'Pending';
     }
   }

@@ -30,12 +30,12 @@
   .status {
     font-weight: bold;
 
-    &.pass {
+    &.passed {
       color: green;
       font-weight: bold;
     }
 
-    &.fail {
+    &.failed {
       color: firebrick;
       font-weight: bold;
     }

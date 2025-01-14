@@ -1,5 +1,5 @@
 export enum CriterionStatus {
-  Pending = 'PENDING',
-  Pass = 'PASS',
-  Fail = 'FAIL',
+  PENDING = 'PENDING',
+  PASSED = 'PASSED',
+  FAILED = 'FAILED',
 }

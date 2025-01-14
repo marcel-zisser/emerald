@@ -1,4 +1,4 @@
 export enum CriterionType {
-  Binary = 'Binary',
-  Points = 'Points',
+  BINARY = "BINARY",
+  POINTS = "POINTS",
 }

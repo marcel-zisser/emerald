@@ -25,9 +25,9 @@
                       <span>{{ criterion.description }}</span>
                       <span
                         class="status"
-                        [class.pass]="results().get(criterion.uuid)?.status === CriterionStatus.Pass"
-                        [class.fail]="results().get(criterion.uuid)?.status === CriterionStatus.Fail">
-                    {{ results().get(criterion.uuid)?.status ?? CriterionStatus.Pending | criterionStatus }}
+                        [class.passed]="results().get(criterion.uuid)?.status === CriterionStatus.PASSED"
+                        [class.failed]="results().get(criterion.uuid)?.status === CriterionStatus.FAILED">
+                    {{ results().get(criterion.uuid)?.status ?? CriterionStatus.PENDING | criterionStatus }}
                   </span>
                     </mat-card-content>
 
@@ -58,7 +58,7 @@
               </mat-form-field>
             </div>
 
-            @if (selectedCriterion()?.criterionType === CriterionType.Points) {
+            @if (selectedCriterion()?.criterionType === CriterionType.POINTS) {
               <div class="form-field">
                 <mat-label class="outside-label">Points</mat-label>
                 <mat-form-field appearance="fill">
@@ -81,8 +81,8 @@
                         extended="true"
                         class="status-button pass"
                         type="button"
-                        [class.selected]="criterionForm.controls.status.value === CriterionStatus.Pass"
-                        (click)="setStatus(CriterionStatus.Pass)">
+                        [class.selected]="criterionForm.controls.status.value === CriterionStatus.PASSED"
+                        (click)="setStatus(CriterionStatus.PASSED)">
                   <mat-icon>check</mat-icon>
                   Pass
                 </button>
@@ -90,8 +90,8 @@
                         extended="true"
                         class="status-button fail"
                         type="button"
-                        [class.selected]="criterionForm.controls.status.value === CriterionStatus.Fail"
-                        (click)="setStatus(CriterionStatus.Fail)">
+                        [class.selected]="criterionForm.controls.status.value === CriterionStatus.FAILED"
+                        (click)="setStatus(CriterionStatus.FAILED)">
                   <mat-icon>close</mat-icon>
                   Fail
                 </button>
@@ -101,7 +101,7 @@
                         extended="true"
                         class="status-button skip"
                         type="button"
-                        (click)="setStatus(CriterionStatus.Pending)">
+                        (click)="setStatus(CriterionStatus.PENDING)">
                   <mat-icon>question_mark</mat-icon>
                   Skip
                 </button>

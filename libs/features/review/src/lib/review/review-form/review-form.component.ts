@@ -118,7 +118,7 @@ export class ReviewFormComponent {
       this.reviewFormService.reviewCriterion({
         reviewId: reviewId,
         criterionId: criterionId,
-        status: this.criterionForm.value.status ?? CriterionStatus.Pending,
+        status: this.criterionForm.value.status ?? CriterionStatus.PENDING,
         ...this.criterionForm.value
       });
     }

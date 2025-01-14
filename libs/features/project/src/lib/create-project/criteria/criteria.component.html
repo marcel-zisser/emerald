@@ -47,11 +47,11 @@
                 </mat-form-field>
 
                 <mat-button-toggle-group formControlName="criterionType">
-                  <mat-button-toggle class="toggle-button" [value]="CriterionType.Binary">Binary</mat-button-toggle>
-                  <mat-button-toggle class="toggle-button" [value]="CriterionType.Points">Points</mat-button-toggle>
+                  <mat-button-toggle class="toggle-button" [value]="CriterionType.BINARY">Binary</mat-button-toggle>
+                  <mat-button-toggle class="toggle-button" [value]="CriterionType.POINTS">Points</mat-button-toggle>
                 </mat-button-toggle-group>
 
-                @if(criterion.controls.criterionType.value === CriterionType.Points) {
+                @if(criterion.controls.criterionType.value === CriterionType.POINTS) {
                   <mat-form-field class="max-points">
                     <mat-label>Max. Points</mat-label>
                     <input matInput type="number" formControlName="maxPoints"

@@ -14,25 +14,25 @@ export class ReviewResultService {
   getCriterionSummary(results: ReviewResult[]): CriteriaSummary {
     let passed = 0;
     let failed = 0;
-    let tbd = 0;
+    let pending = 0;
 
     results.forEach((criterion) => {
       switch (criterion.status) {
-        case CriterionStatus.Pass:
+        case CriterionStatus.PASSED:
           passed += 1;
           break;
-        case CriterionStatus.Fail:
+        case CriterionStatus.FAILED:
           failed += 1;
           break;
         default:
-          tbd += 1;
+          pending += 1;
       }
     });
 
     return {
       passed: passed,
       failed: failed,
-      pending: tbd
+      pending: pending
     } satisfies CriteriaSummary;
   }
 
@@ -46,7 +46,7 @@ export class ReviewResultService {
     let uncompleted = 0;
 
     const complete = results.every((reviewResult) => {
-      return reviewResult.status !== CriterionStatus.Pending;
+      return reviewResult.status !== CriterionStatus.PENDING;
     });
 
     if (complete) {
