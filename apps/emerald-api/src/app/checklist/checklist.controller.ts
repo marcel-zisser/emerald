@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { Roles } from '../authentication/decorators/roles.decorator';
 import { Prisma } from '@prisma/client';
 import { Checklist, CreateChecklistRequest, Role } from '@emerald/models';
@@ -7,16 +15,15 @@ import { ChecklistService } from './checklist.service';
 
 @Controller('checklist')
 export class ChecklistController {
-  constructor(private checklistService: ChecklistService) {
-  }
+  constructor(private checklistService: ChecklistService) {}
 
   @Get()
   getChecklists(@Req() request: Request): Promise<Checklist[]> {
     const ownerId = request['jwt'].sub;
     return this.checklistService.checklists({
       where: {
-        ownerId: ownerId
-      }
+        ownerId: ownerId,
+      },
     });
   }
 
@@ -36,15 +43,14 @@ export class ChecklistController {
       description: body.description,
       owner: {
         connect: {
-          uuid: request['jwt'].sub
-        }
+          uuid: request['jwt'].sub,
+        },
       },
+      dueDate: body.dueDate,
       reviews: {
         createMany: {
-          data: body.reviewerIds.map((reviewerId) => (
-            { userId: reviewerId, dueDate: body.dueDate }
-          ))
-        }
+          data: body.reviewerIds.map((reviewerId) => ({ userId: reviewerId })),
+        },
       },
       groups: {
         create: body.criteriaGroups.map((group) => ({
@@ -53,11 +59,11 @@ export class ChecklistController {
           criteria: {
             create: group.criteria.map((criterion) => ({
               description: criterion.description,
-              type: criterion.criterionType
-            }))
-          }
-        }))
-      }
+              type: criterion.criterionType,
+            })),
+          },
+        })),
+      },
     } satisfies Prisma.ChecklistCreateInput;
 
     return this.checklistService.createChecklist(checklist);

@@ -1,21 +1,44 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
-import { Criterion, CriterionStatus, CriterionType, ReviewResult } from '@emerald/models';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
+import {
+  Criterion,
+  CriterionStatus,
+  CriterionType,
+  ReviewResult,
+} from '@emerald/models';
 import {
   MatAccordion,
   MatExpansionPanel,
   MatExpansionPanelHeader,
-  MatExpansionPanelTitle
+  MatExpansionPanelTitle,
 } from '@angular/material/expansion';
 import { MatButton, MatFabButton } from '@angular/material/button';
-import { MatError, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import {
+  MatError,
+  MatFormField,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { NonNullableFormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import {
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { ReviewFormService } from './review-form.service';
 import { ReviewForm } from './review.form';
 import { ReviewListComponent } from '@emerald/components';
 import { CriterionStatusPipe } from '@emerald/services';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'review-review-form',
@@ -36,17 +59,18 @@ import { CriterionStatusPipe } from '@emerald/services';
     MatSuffix,
     MatError,
     MatButton,
-    CriterionStatusPipe
+    CriterionStatusPipe,
   ],
   providers: [ReviewFormService],
   templateUrl: './review-form.component.html',
   styleUrl: './review-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
+  standalone: true,
 })
 export class ReviewFormComponent {
   private readonly reviewFormService = inject(ReviewFormService);
   private readonly fb = inject(NonNullableFormBuilder);
+  private readonly snackbar = inject(MatSnackBar);
 
   protected review = this.reviewFormService.getReview();
   protected results = this.reviewFormService.getResults();
@@ -62,9 +86,9 @@ export class ReviewFormComponent {
     this.criterionForm = this.fb.group({
       status: this.fb.control<CriterionStatus | undefined>(undefined),
       points: this.fb.control<number | undefined>(undefined, [
-        Validators.min(0)
+        Validators.min(0),
       ]),
-      comments: this.fb.control<string | undefined>(undefined)
+      comments: this.fb.control<string | undefined>(undefined),
     });
 
     effect(() => {
@@ -119,7 +143,7 @@ export class ReviewFormComponent {
         reviewId: reviewId,
         criterionId: criterionId,
         status: this.criterionForm.value.status ?? CriterionStatus.Pending,
-        ...this.criterionForm.value
+        ...this.criterionForm.value,
       });
     }
   }

@@ -61,6 +61,7 @@ export class ReviewService {
           uuid: review.CheckList.uuid,
           title: review.CheckList.title,
           description: review.CheckList.description,
+          dueDate: review.CheckList.dueDate,
           owner: {
             uuid: review.CheckList.owner.uuid,
             firstName: review.CheckList.owner.firstName,
@@ -112,6 +113,7 @@ export class ReviewService {
         uuid: review.CheckList.uuid,
         title: review.CheckList.title,
         description: review.CheckList.description,
+        dueDate: review.CheckList.dueDate,
         owner: {
           firstName: review.CheckList.owner.firstName,
           lastName: review.CheckList.owner.lastName,

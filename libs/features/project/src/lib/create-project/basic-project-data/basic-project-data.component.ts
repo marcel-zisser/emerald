@@ -5,17 +5,19 @@ import {
   input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { MatError, MatFormField, MatHint, MatLabel, MatSuffix } from '@angular/material/form-field';
+  MatError,
+  MatFormField,
+  MatHint,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import {
   MatDatepicker,
   MatDatepickerInput,
-  MatDatepickerToggle
+  MatDatepickerToggle,
 } from '@angular/material/datepicker';
 
 @Component({
@@ -30,8 +32,7 @@ import {
     MatDatepickerInput,
     MatDatepickerToggle,
     MatDatepicker,
-    MatHint,
-    MatSuffix
+    MatSuffix,
   ],
   templateUrl: './basic-project-data.component.html',
   styleUrl: './basic-project-data.component.scss',

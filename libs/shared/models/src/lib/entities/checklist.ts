@@ -8,6 +8,7 @@ export interface Checklist {
   title: string;
   description: string;
   owner?: User;
+  dueDate?: Date;
   criteriaGroups?: CriteriaGroup[];
   reviewers?: User[];
   criteriaSummary?: CriteriaSummary;

@@ -7,6 +7,7 @@ export enum Feature {
   ProjectOwner = 'Project Owner',
   Projects = 'Projects',
   CreateProject = 'Create Project',
+  ProjectSummary = 'Project Summary',
 
   Reviewer = 'Reviewer',
   Reviews = 'Reviews',

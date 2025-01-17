@@ -21,11 +21,12 @@ VALUES ('dacdfcb2-b9f9-4bb1-a61c-9f41637d96c8',
         'review@emerald.com',
         '$2b$10$VmeNNuedxhMVp3joJ43D4.D7zyfNiGpBaQ6GXoCoXwjxdIIZayfoS');
 
-INSERT INTO "Checklist" ("uuid", "title", "description", "ownerId")
+INSERT INTO "Checklist" ("uuid", "title", "description", "ownerId", "dueDate")
 VALUES ('5e85eea3-7cea-416d-85ee-a37cea516d78',
         'Checklist 1',
         'lorem ipsum dolor sit amet consectetur adipiscing elit eleifend officia lorem accumsan accusam proident nam placerat adipisici erat elit quod suscipit congue laborum aliquam consectetur facer esse liber consequat adipiscing tempor eleifend iusto anim possim feugait illum aute incidunt nibh duis reprehenderit ut rebum iure sea non in nulla nostrud',
-        '40ffd4b2-68a4-4309-9610-1c6b4e554d96');
+        '40ffd4b2-68a4-4309-9610-1c6b4e554d96',
+        '2025-01-30 23:00:00.000');
 
 INSERT INTO "CriteriaGroup" ("uuid", "title", "description", "checklistId")
 VALUES ('2a9bc67f-6eb2-4b6e-9bc6-7f6eb26b6eb3',

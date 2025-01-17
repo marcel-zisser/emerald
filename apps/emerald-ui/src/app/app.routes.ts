@@ -1,17 +1,15 @@
 import { Route } from '@angular/router';
 import { LoginComponent } from '@emerald/components';
-import {
-  Feature,
-  FeatureRoutes,
-} from '@emerald/models';
-import {
-  authenticationGuard,
-  roleGuard,
-} from '@emerald/authentication';
+import { Feature, FeatureRoutes } from '@emerald/models';
+import { authenticationGuard, roleGuard } from '@emerald/authentication';
 import { UserTableComponent } from '@emerald/admin';
 import { AccountComponent } from '@emerald/account';
 import { DashboardComponent } from '@emerald/dashboard';
-import { ProjectComponent, CreateProjectComponent } from '@emerald/project';
+import {
+  ProjectComponent,
+  CreateProjectComponent,
+  ProjectSummaryComponent,
+} from '@emerald/project';
 import { ReviewComponent, ReviewFormComponent } from '@emerald/review';
 
 export const appRoutes: Route[] = [
@@ -42,6 +40,12 @@ export const appRoutes: Route[] = [
     path: FeatureRoutes.get(Feature.CreateProject),
     component: CreateProjectComponent,
     title: getPageTitle(Feature.CreateProject),
+    canActivate: [authenticationGuard, roleGuard],
+  },
+  {
+    path: `${FeatureRoutes.get(Feature.ProjectSummary)}/:projectId`,
+    component: ProjectSummaryComponent,
+    title: getPageTitle(Feature.ProjectSummary),
     canActivate: [authenticationGuard, roleGuard],
   },
   {

@@ -46,6 +46,7 @@ model Checklist {
   title       String          @db.VarChar(128)
   description String          @db.Text
   createdAt   DateTime        @default(now())
+  dueDate    DateTime?
   groups      CriteriaGroup[]
 
   owner   User   @relation(fields: [ownerId], references: [uuid])
@@ -57,7 +58,6 @@ model Checklist {
 model Review {
   uuid       String    @id @default(uuid()) @db.Uuid
   assignedAt DateTime  @default(now())
-  dueDate    DateTime?
 
   userId      String    @db.Uuid
   checklistId String    @db.Uuid

@@ -1,16 +1,39 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
-import { CriteriaSummaryChartPipe, CriterionStatusPipe, ReviewResultService, ReviewService } from '@emerald/services';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
+import {
+  CriteriaSummaryChartPipe,
+  CriterionStatusPipe,
+  ReviewResultService,
+  ReviewService,
+} from '@emerald/services';
 import { first, Observable } from 'rxjs';
-import { CriteriaSummary, CriterionStatus, Feature, FeatureRoutes, Review, ReviewResult } from '@emerald/models';
+import {
+  CriteriaSummary,
+  CriterionStatus,
+  Feature,
+  FeatureRoutes,
+  Review,
+  ReviewResult,
+} from '@emerald/models';
 import { StatusBarComponent } from '../status-bar';
 import {
-  MatCell, MatCellDef,
+  MatCell,
+  MatCellDef,
   MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef,
-  MatRow, MatRowDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
   MatTable,
-  MatTableDataSource
+  MatTableDataSource,
 } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
@@ -36,12 +59,12 @@ import { RouterLink } from '@angular/router';
     MatRowDef,
     DatePipe,
     RouterLink,
-    CriterionStatusPipe
+    CriterionStatusPipe,
   ],
   templateUrl: './review-list.component.html',
   styleUrl: './review-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
+  standalone: true,
 })
 export class ReviewListComponent implements OnInit {
   checklistId = input<string>();
@@ -55,9 +78,10 @@ export class ReviewListComponent implements OnInit {
 
   protected displayedColumns: string[] = [
     'assignedAt',
+    'dueDate',
     'status',
     'summary',
-    'actions'
+    'actions',
   ];
 
   trackByReviewId(index: number, review: Review): string {
@@ -75,9 +99,7 @@ export class ReviewListComponent implements OnInit {
       this.displayedColumns.unshift('checklistTitle', 'checklistOwner');
     }
 
-    this.reviews$.pipe(
-      first()
-    ).subscribe(reviews => {
+    this.reviews$.pipe(first()).subscribe((reviews) => {
       this.reviews.set(reviews);
       this.dataSource.data = reviews;
     });
