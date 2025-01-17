@@ -8,18 +8,18 @@ import { first } from 'rxjs';
 export class DashboardService {
   private readonly backendService = inject(BackendService);
 
-  private readonly _checklists: Signal<Checklist[]>;
+  private _checklists: Signal<Checklist[]> | null = null;
 
   get checklists() {
-    return this._checklists;
-  }
+    if (!this._checklists) {
+      this._checklists = toSignal(
+        this.backendService
+          .doGet<Checklist[]>(ApiRoutes.get(ApiEndpoint.Dashboard))
+          .pipe(first()),
+        { initialValue: [] }
+      );
+    }
 
-  constructor() {
-    this._checklists = toSignal(
-      this.backendService
-        .doGet<Checklist[]>(ApiRoutes.get(ApiEndpoint.Dashboard))
-        .pipe(first()),
-      { initialValue: [] }
-    );
+    return this._checklists;
   }
 }

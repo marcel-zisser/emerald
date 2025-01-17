@@ -18,12 +18,14 @@ export class ProjectService {
   createChecklist(
     title: string,
     description: string,
+    dueDate: Date,
     criteriaGroups: CriteriaGroup[],
     reviewerIds: string[]
   ): Observable<Checklist> {
     const request: CreateChecklistRequest = {
       title: title,
       description: description,
+      dueDate: dueDate,
       criteriaGroups: criteriaGroups,
       reviewerIds: reviewerIds,
     };

@@ -14,6 +14,8 @@ import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { ReviewFormService } from './review-form.service';
 import { ReviewForm } from './review.form';
+import { ReviewListComponent } from '@emerald/components';
+import { CriterionStatusPipe } from '@emerald/services';
 
 @Component({
   selector: 'review-review-form',
@@ -33,7 +35,8 @@ import { ReviewForm } from './review.form';
     MatFabButton,
     MatSuffix,
     MatError,
-    MatButton
+    MatButton,
+    CriterionStatusPipe
   ],
   providers: [ReviewFormService],
   templateUrl: './review-form.component.html',
@@ -115,7 +118,7 @@ export class ReviewFormComponent {
       this.reviewFormService.reviewCriterion({
         reviewId: reviewId,
         criterionId: criterionId,
-        status: this.criterionForm.value.status ?? CriterionStatus.TBD,
+        status: this.criterionForm.value.status ?? CriterionStatus.Pending,
         ...this.criterionForm.value
       });
     }

@@ -7,7 +7,7 @@ import { CriteriaSummary, StatusBarSegment } from '@emerald/models';
 })
 export class CriteriaSummaryChartPipe implements PipeTransform {
   transform(segments: CriteriaSummary): StatusBarSegment[] {
-    const total = segments.TBD + segments.failed + segments.passed;
+    const total = segments.pending + segments.failed + segments.passed;
     return [
       {
         label: 'Pass',
@@ -23,8 +23,8 @@ export class CriteriaSummaryChartPipe implements PipeTransform {
       },
       {
         label: 'TBD',
-        count: segments.TBD,
-        width: (segments.TBD / total) * 100,
+        count: segments.pending,
+        width: (segments.pending / total) * 100,
         color: 'grey',
       }
     ];

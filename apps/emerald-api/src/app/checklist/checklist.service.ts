@@ -172,7 +172,7 @@ export class ChecklistService {
   }
 
   private getCriterionSummary(reviews: ReviewWithRelations[]): CriteriaSummary {
-    const criteriaSummary: CriteriaSummary = { passed: 0, failed: 0, TBD: 0 };
+    const criteriaSummary: CriteriaSummary = { passed: 0, failed: 0, pending: 0 };
 
     reviews.forEach((review) => {
       const summary = this.resultService.getCriterionSummary(
@@ -181,7 +181,7 @@ export class ChecklistService {
 
       criteriaSummary.passed += summary.passed;
       criteriaSummary.failed += summary.failed;
-      criteriaSummary.TBD += summary.TBD;
+      criteriaSummary.pending += summary.pending;
     });
 
     return criteriaSummary;

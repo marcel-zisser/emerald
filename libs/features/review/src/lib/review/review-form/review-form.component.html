@@ -1,40 +1,48 @@
 <div class="review-container">
-  <div class="criteria-container">
-    @for (group of review()?.checklist?.criteriaGroups; track group.uuid) {
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            {{ group.title }}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+  <mat-card class="card">
+    <mat-card-header class="card-title">
+      {{ review()?.checklist?.title }}
+    </mat-card-header>
+    <mat-card-content>
+      <div class="criteria-container">
+        @for (group of review()?.checklist?.criteriaGroups; track group.uuid) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ group.title }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
 
-        <mat-accordion>
-          <div class="criteria-container">
-            @for (criterion of group?.criteria; track criterion.uuid) {
-              <mat-card
-                class="criterion-card"
-                [class.selected]="selectedCriterion()?.uuid === criterion.uuid"
-                (click)="selectCriterion(criterion)">
+            <mat-accordion>
+              <div class="criteria-container">
+                @for (criterion of group?.criteria; track criterion.uuid) {
+                  <mat-card
+                    class="criterion-card"
+                    [class.selected]="selectedCriterion()?.uuid === criterion.uuid"
+                    (click)="selectCriterion(criterion)">
 
-                <mat-card-content class="criterion">
-                  <span>{{ criterion.description }}</span>
-                  <span
-                    class="status"
-                    [class.pass]="results().get(criterion.uuid)?.status === CriterionStatus.Pass"
-                    [class.fail]="results().get(criterion.uuid)?.status === CriterionStatus.Fail">
-                    {{ results().get(criterion.uuid)?.status }}
+                    <mat-card-content class="criterion">
+                      <span>{{ criterion.description }}</span>
+                      <span
+                        class="status"
+                        [class.pass]="results().get(criterion.uuid)?.status === CriterionStatus.Pass"
+                        [class.fail]="results().get(criterion.uuid)?.status === CriterionStatus.Fail">
+                    {{ results().get(criterion.uuid)?.status ?? CriterionStatus.Pending | criterionStatus }}
                   </span>
-                </mat-card-content>
+                    </mat-card-content>
 
-              </mat-card>
-            }
-          </div>
-        </mat-accordion>
-      </mat-expansion-panel>
-    } @empty {
-      Nothing to show.
-    }
-  </div>
+                  </mat-card>
+                }
+              </div>
+            </mat-accordion>
+          </mat-expansion-panel>
+        } @empty {
+          Nothing to show.
+        }
+      </div>
+
+    </mat-card-content>
+  </mat-card>
   <div class="review-panel">
     @if (selectedCriterion()) {
       <mat-card>
@@ -93,7 +101,7 @@
                         extended="true"
                         class="status-button skip"
                         type="button"
-                        (click)="setStatus(CriterionStatus.TBD)">
+                        (click)="setStatus(CriterionStatus.Pending)">
                   <mat-icon>question_mark</mat-icon>
                   Skip
                 </button>

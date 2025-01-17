@@ -27,7 +27,7 @@ import {
 import { first } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { arrayNotEmptyValidator } from '@emerald/services';
+import { arrayNotEmptyValidator, futureDateValidator } from '@emerald/services';
 import { AddReviewerComponent } from './add-reviewer/add-reviewer.component';
 import { BasicProjectDataComponent } from './basic-project-data/basic-project-data.component';
 import { CriteriaComponent } from './criteria/criteria.component';
@@ -72,6 +72,7 @@ export class CreateProjectComponent {
     this.basicData = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      dueDate: [null, [Validators.required, futureDateValidator()]],
     });
 
     this.criteriaForm = this.fb.group({
@@ -99,6 +100,7 @@ export class CreateProjectComponent {
         .createChecklist(
           basicData.title,
           basicData.description,
+          basicData.dueDate,
           this.mapCriteriaGroups(this.criteriaForm),
           reviewers.map((reviewer) => reviewer.uuid ?? '')
         )

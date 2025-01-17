@@ -79,5 +79,5 @@ VALUES ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
         'This is a comment by the user'),
        ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
         '2e2b429b-b79e-4856-9ac4-b1558fbccaf0',
-        'TBD',
+        'PENDING',
         'This is a comment by the user');

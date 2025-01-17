@@ -1,5 +1,5 @@
 export interface CriteriaSummary {
-  TBD: number;
+  pending: number;
   passed: number;
   failed: number;
 }

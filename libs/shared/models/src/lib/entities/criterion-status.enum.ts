@@ -1,5 +1,5 @@
 export enum CriterionStatus {
-  TBD = 'TBD',
+  Pending = 'PENDING',
   Pass = 'PASS',
   Fail = 'FAIL',
 }

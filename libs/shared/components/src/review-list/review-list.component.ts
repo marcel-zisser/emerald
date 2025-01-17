@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
-import { CriteriaSummaryChartPipe, ReviewResultService, ReviewService } from '@emerald/services';
+import { CriteriaSummaryChartPipe, CriterionStatusPipe, ReviewResultService, ReviewService } from '@emerald/services';
 import { first, Observable } from 'rxjs';
-import { CriteriaSummary, Feature, FeatureRoutes, Review, ReviewResult } from '@emerald/models';
+import { CriteriaSummary, CriterionStatus, Feature, FeatureRoutes, Review, ReviewResult } from '@emerald/models';
 import { StatusBarComponent } from '../status-bar';
 import {
   MatCell, MatCellDef,
@@ -35,7 +35,8 @@ import { RouterLink } from '@angular/router';
     MatHeaderRowDef,
     MatRowDef,
     DatePipe,
-    RouterLink
+    RouterLink,
+    CriterionStatusPipe
   ],
   templateUrl: './review-list.component.html',
   styleUrl: './review-list.component.scss',
@@ -88,4 +89,5 @@ export class ReviewListComponent implements OnInit {
 
   protected readonly FeatureRoutes = FeatureRoutes;
   protected readonly Feature = Feature;
+  protected readonly CriterionStatus = CriterionStatus;
 }

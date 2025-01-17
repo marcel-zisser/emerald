@@ -33,7 +33,7 @@ export class ResultService {
     return {
       passed: passed,
       failed: failed,
-      TBD: tbd,
+      pending: tbd,
     } satisfies CriteriaSummary;
   }
 
@@ -41,7 +41,7 @@ export class ResultService {
     let completed = 0;
 
     results.forEach((reviewResult) => {
-      if (reviewResult.status !== CriterionStatus.TBD) {
+      if (reviewResult.status !== CriterionStatus.Pending) {
         completed++;
       }
     });

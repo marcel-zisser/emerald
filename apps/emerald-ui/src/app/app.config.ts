@@ -10,11 +10,29 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authenticationInterceptor } from '@emerald/authentication';
 import { JwtModule } from '@auth0/angular-jwt';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MatDateFormats,
+  provideNativeDateAdapter
+} from '@angular/material/core';
+import { IsoDateAdapter } from './iso-date-adapter';
 
 export function tokenGetter() {
   return localStorage.getItem('auth_token');
 }
+
+export const ISO_DATE_FORMATS: MatDateFormats = {
+  parse: {
+    dateInput: 'YYYY-MM-DD',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'YYYY-MM-DD',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,5 +49,8 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimationsAsync(),
     provideCharts(withDefaultRegisterables()),
+    provideNativeDateAdapter(),
+    { provide: DateAdapter, useClass: IsoDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: ISO_DATE_FORMATS },
   ],
 };

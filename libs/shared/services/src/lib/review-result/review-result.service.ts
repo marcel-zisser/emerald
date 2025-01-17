@@ -32,7 +32,7 @@ export class ReviewResultService {
     return {
       passed: passed,
       failed: failed,
-      TBD: tbd
+      pending: tbd
     } satisfies CriteriaSummary;
   }
 
@@ -46,7 +46,7 @@ export class ReviewResultService {
     let uncompleted = 0;
 
     const complete = results.every((reviewResult) => {
-      return reviewResult.status !== CriterionStatus.TBD;
+      return reviewResult.status !== CriterionStatus.Pending;
     });
 
     if (complete) {

@@ -10,8 +10,13 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatError, MatFormField, MatHint, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerToggle
+} from '@angular/material/datepicker';
 
 @Component({
   selector: 'project-basic-data',
@@ -22,6 +27,11 @@ import { MatInput } from '@angular/material/input';
     MatFormField,
     MatInput,
     MatLabel,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatHint,
+    MatSuffix
   ],
   templateUrl: './basic-project-data.component.html',
   styleUrl: './basic-project-data.component.scss',
@@ -30,6 +40,4 @@ import { MatInput } from '@angular/material/input';
 })
 export class BasicProjectDataComponent {
   form = input.required<FormGroup>();
-
-  private readonly formBuilder = inject(FormBuilder);
 }

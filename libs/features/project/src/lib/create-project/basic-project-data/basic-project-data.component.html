@@ -20,5 +20,16 @@
         <mat-error>Description is required.</mat-error>
       }
     </mat-form-field>
+
+    <mat-label class="outside-label">Due date</mat-label>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" formControlName="dueDate" placeholder="YYYY-MM-DD">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      @if (form().get('dueDate')?.hasError('futureDate')) {
+        <mat-error>Due date cannot be in the past.</mat-error>
+      }
+    </mat-form-field>
+
   </div>
 </form>
