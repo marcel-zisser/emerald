@@ -55,6 +55,7 @@ export class ReviewListComponent implements OnInit {
 
   protected displayedColumns: string[] = [
     'assignedAt',
+    'dueDate',
     'status',
     'summary',
     'actions'

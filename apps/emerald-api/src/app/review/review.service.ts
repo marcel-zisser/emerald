@@ -52,6 +52,7 @@ export class ReviewService {
           review.reviewResults as ReviewResult[]
         ),
         assignedAt: review.assignedAt,
+        dueDate: review.dueDate,
         user: {
           uuid: review.userId,
           firstName: review.User.firstName,
@@ -108,6 +109,7 @@ export class ReviewService {
         review.reviewResults as ReviewResult[]
       ),
       assignedAt: review.assignedAt,
+      dueDate: review.dueDate,
       checklist: {
         uuid: review.CheckList.uuid,
         title: review.CheckList.title,

@@ -3,15 +3,15 @@
   <div class="legend">
     <div class="legend-item">
       <span class="legend-dot green"></span>
-      <span class="legend-text">{{CriterionStatus.Pass | criterionStatus }}</span>
+      <span class="legend-text">{{CriterionStatus.PASSED | criterionStatus }}</span>
     </div>
     <div class="legend-item">
       <span class="legend-dot red"></span>
-      <span class="legend-text">{{CriterionStatus.Fail | criterionStatus }}</span>
+      <span class="legend-text">{{CriterionStatus.FAILED | criterionStatus }}</span>
     </div>
     <div class="legend-item">
       <span class="legend-dot grey"></span>
-      <span class="legend-text">{{CriterionStatus.Pending | criterionStatus }}</span>
+      <span class="legend-text">{{CriterionStatus.PENDING | criterionStatus }}</span>
     </div>
   </div>
 
@@ -19,12 +19,12 @@
   <div class="table-container">
     <mat-table [dataSource]="dataSource" class="review-table" [trackBy]="trackByReviewId">
       <ng-container matColumnDef="checklistTitle">
-        <th mat-header-cell *matHeaderCellDef>Checklist Title</th>
+        <th mat-header-cell *matHeaderCellDef>Project Title</th>
         <td mat-cell *matCellDef="let review"> {{ review?.checklist?.title }}</td>
       </ng-container>
 
       <ng-container matColumnDef="checklistOwner">
-        <th mat-header-cell *matHeaderCellDef>Checklist Owner</th>
+        <th mat-header-cell *matHeaderCellDef>Project Owner</th>
         <td mat-cell
             *matCellDef="let review"> {{ review?.checklist?.owner?.firstName }} {{ review?.checklist?.owner?.lastName }}
         </td>
@@ -33,6 +33,11 @@
       <ng-container matColumnDef="assignedAt">
         <th mat-header-cell *matHeaderCellDef>Assignment Date</th>
         <td mat-cell *matCellDef="let review"> {{ review?.assignedAt | date:'yyyy-MM-dd' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef>Due Date</th>
+        <td mat-cell *matCellDef="let review"> {{ review?.dueDate | date:'yyyy-MM-dd' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="reviewer">
