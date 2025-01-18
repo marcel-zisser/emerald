@@ -53,8 +53,6 @@ export class SidebarService {
     switch (role) {
       case Role.Admin:
         menuItems.set(Feature.Admin, this.adminMenuItems);
-        menuItems.set(Feature.ProjectOwner, this.projectOwnerMenuItems);
-        menuItems.set(Feature.Reviewer, this.reviewerMenuItems);
         break;
       case Role.ProjectOwner:
         menuItems.set(Feature.ProjectOwner, this.projectOwnerMenuItems);

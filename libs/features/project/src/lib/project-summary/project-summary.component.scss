@@ -14,6 +14,31 @@
   background-color: lightgrey;
 }
 
+.header-cell {
+  text-align: center;
+}
+
 .criterion-cell {
   padding-left: 2rem;
+}
+
+.review-cell {
+  text-align: center;
+
+  &.status {
+    &.pass {
+      color: green;
+      font-weight: bold;
+    }
+
+    &.fail {
+      color: firebrick;
+      font-weight: bold;
+    }
+
+    .status-icon {
+      font-size: large;
+      font-weight: bold;
+    }
+  }
 }

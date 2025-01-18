@@ -32,7 +32,7 @@ export class ChecklistController {
     return this.checklistService.checklist({ uuid: uuid });
   }
 
-  @Roles(Role.Admin, Role.ProjectOwner)
+  @Roles(Role.ProjectOwner)
   @Post('')
   createChecklist(
     @Req() request: Request,
@@ -60,6 +60,7 @@ export class ChecklistController {
             create: group.criteria.map((criterion) => ({
               description: criterion.description,
               type: criterion.criterionType,
+              maxPoints: criterion.maxPoints,
             })),
           },
         })),
@@ -88,7 +89,7 @@ export class ChecklistController {
   //   });
   // }
 
-  @Roles(Role.Admin, Role.ProjectOwner)
+  @Roles(Role.ProjectOwner)
   @Delete(':uuid')
   deleteChecklist(@Param('uuid') uuid: string): Promise<Checklist> {
     return this.checklistService.deleteChecklist({ uuid: uuid });

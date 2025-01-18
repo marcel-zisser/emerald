@@ -1,10 +1,7 @@
 import {
-  Component,
+  Component, effect,
   inject,
-  input,
   Signal,
-  signal,
-  ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -17,26 +14,14 @@ import {
   MatHeaderRowDef,
   MatRow,
   MatRowDef,
-  MatTable,
+  MatTable, MatTableDataSource
 } from '@angular/material/table';
-import { Checklist, CriteriaGroup, Criterion } from '@emerald/models';
+import { Checklist, CriteriaGroup, Criterion, CriterionStatus, Review } from '@emerald/models';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ProjectService } from '../project/project.service';
-
-export interface Product {
-  category: string;
-  name: string;
-  price: number;
-  test: string;
-}
-
-export const PRODUCTS: Product[] = [
-  { category: 'Fruits', name: 'Apple', price: 1.2, test: 'true' },
-  { category: 'Fruits', name: 'Banana', price: 0.8, test: 'false' },
-  { category: 'Vegetables', name: 'Carrot', price: 1.5, test: 'true' },
-  { category: 'Vegetables', name: 'Lettuce', price: 2.0, test: 'false' },
-];
+import { StatusIconPipe } from '@emerald/services';
+import { MatIcon } from '@angular/material/icon';
 
 export interface GroupRow {
   name: string;
@@ -57,6 +42,8 @@ export interface GroupRow {
     MatCellDef,
     MatHeaderCellDef,
     MatHeaderRowDef,
+    MatIcon,
+    StatusIconPipe,
   ],
   templateUrl: './project-summary.component.html',
   styleUrl: './project-summary.component.scss',
@@ -69,12 +56,61 @@ export class ProjectSummaryComponent {
   private readonly checklistId =
     this.activatedRoute.snapshot.params['projectId'];
 
-  protected checklist: Signal<Checklist | undefined>;
+  protected checklist!: Signal<Checklist | undefined>;
+  protected reviews!: Signal<Review[] | undefined>;
 
-  displayedColumns: string[] = ['name', 'price'];
-  groupedData: (Criterion | GroupRow)[] = [];
+  displayedColumns: string[] = ['description'];
+  dataSource = new MatTableDataSource<Criterion | GroupRow>([]);
+
+  isGroup = (index: number, row: any): boolean => row.group;
+  isData = (index: number, row: any): boolean => !row.group;
 
   constructor() {
+    this.getChecklist();
+    this.getReviews();
+  }
+
+  groupData(
+    criteriaGroups: CriteriaGroup[],
+    reviews: Review[]
+  ): ((Criterion & { [key: string]: CriterionStatus;})| GroupRow)[] {
+    const groups: ((Criterion & {[key: string]: CriterionStatus;})| GroupRow)[] = [];
+
+    criteriaGroups.forEach((criteriaGroup) => {
+      groups.push({
+        name: criteriaGroup.title,
+        group: true,
+      } satisfies GroupRow);
+
+      if (criteriaGroup.criteria) {
+        const criteria = criteriaGroup.criteria.map((criterion) => {
+          let criterionRow: Criterion & {
+            [key: string]: any;
+          } = criterion;
+
+          reviews.forEach((review) => {
+            criterionRow = {
+              ...criterionRow,
+              [review.uuid]: review.results?.find(
+                (result) => result.criterionId === criterion.uuid
+              )?.status,
+            };
+          });
+
+          return criterionRow;
+        });
+        groups.push(...criteria);
+      }
+    });
+
+    return groups;
+  }
+
+  /**
+   * Sets up the retrieval of the checklist
+   * @private
+   */
+  private getChecklist() {
     this.checklist = toSignal(
       this.projectService.getChecklist(this.checklistId),
       {
@@ -82,36 +118,31 @@ export class ProjectSummaryComponent {
       }
     );
 
-    this.groupData(PRODUCTS);
-  }
-
-  groupData(criteriaGroups: CriteriaGroup[]) {
-    criteriaGroups.forEach((criteriaGroup) => {
-      this.groupedData.push({
-        name: criteriaGroup.title,
-        group: true,
-      } satisfies GroupRow);
-
-      this.groupedData.push(...[criteriaGroup.criteria]);
-    });
-
-    const grouped = data.reduce((acc, current) => {
-      const group = acc.find((g) => g.groupName === current.category);
-      if (!group) {
-        acc.push({ name: current.category, group: true } satisfies GroupRow);
-        return acc;
+    effect(() => {
+      const checklist = this.checklist();
+      const reviews = this.reviews();
+      if (checklist && checklist.criteriaGroups && reviews) {
+        this.dataSource.data = this.groupData(
+          checklist.criteriaGroups,
+          reviews
+        );
+        this.displayedColumns = [
+          'description',
+          ...reviews.map((review) => review.uuid),
+        ];
       }
-      acc.push(current);
-      return acc;
-    }, []);
-    console.log(grouped);
-    this.groupedData = grouped;
+    });
   }
 
-  isGroup = (index: number, row: any): boolean => row.group;
-  isData = (index: number, row: any): boolean => !row.group;
-
-  addColumn() {
-    this.displayedColumns.push('test');
+  /**
+   * Sets up the retrieval of the reviews
+   * @private
+   */
+  private getReviews() {
+    this.reviews = toSignal(this.projectService.getReviews(this.checklistId), {
+      initialValue: undefined,
+    });
   }
+
+  protected readonly CriterionStatus = CriterionStatus;
 }

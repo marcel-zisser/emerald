@@ -1,21 +1,26 @@
 import { Feature, FeatureRoutes } from '@emerald/models';
 
-export const reviewerRoutes: string[] = [
-  '',
-  FeatureRoutes.get(Feature.Reviews) ?? '',
+const baseRoutes: string[] = [
   FeatureRoutes.get(Feature.Account) ?? '',
   FeatureRoutes.get(Feature.Login) ?? '',
-  FeatureRoutes.get(Feature.Logout) ?? '',
+  FeatureRoutes.get(Feature.Logout) ?? ''
+];
+
+export const reviewerRoutes: string[] = [
+  '',
+  ...baseRoutes,
+  FeatureRoutes.get(Feature.Reviews) ?? ''
+
 ];
 
 export const checklistOwnerRoutes: string[] = [
   ...reviewerRoutes,
   FeatureRoutes.get(Feature.Projects) ?? '',
   FeatureRoutes.get(Feature.CreateProject) ?? '',
-  FeatureRoutes.get(Feature.ProjectSummary) ?? '',
+  FeatureRoutes.get(Feature.ProjectSummary) ?? ''
 ];
 
 export const adminRoutes: string[] = [
-  ...checklistOwnerRoutes,
-  FeatureRoutes.get(Feature.UserManagement) ?? '',
+  ...baseRoutes,
+  FeatureRoutes.get(Feature.UserManagement) ?? ''
 ];

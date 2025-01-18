@@ -51,6 +51,17 @@
       </mat-form-field>
     </mat-grid-tile>
 
+    <!-- Password -->
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" required>
+        @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
+          <mat-error>Password is required.</mat-error>
+        }
+      </mat-form-field>
+    </mat-grid-tile>
+
     <!-- Role -->
     <mat-grid-tile>
       <mat-form-field appearance="fill">

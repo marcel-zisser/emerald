@@ -70,6 +70,7 @@ export class ReviewService {
         },
         results: review.reviewResults.map((result) => {
           return {
+            criterionId: result.criterionId,
             status: result.status as CriterionStatus,
             comments: result.comments,
           } satisfies ReviewResult;

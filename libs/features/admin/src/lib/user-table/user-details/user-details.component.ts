@@ -18,7 +18,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Role, User } from '@emerald/models';
-import { v4 as uuid } from 'uuid';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
@@ -59,6 +58,7 @@ export class UserDetailsComponent {
         this.userToEdit?.email ?? '',
         [Validators.required, Validators.email],
       ],
+      password: ['', Validators.required],
       role: [this.userToEdit?.role ?? '', Validators.required],
     });
   }
