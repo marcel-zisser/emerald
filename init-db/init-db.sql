@@ -62,13 +62,14 @@ VALUES ('d568a98e-4a1d-43d2-a8a9-8e4a1db3d269',
 INSERT INTO "Review" ("uuid", "userId", "checklistId", "dueDate")
 VALUES ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
         '715d2bf3-a1f4-4332-8804-2f313e3dc1a9',
-        '5e85eea3-7cea-416d-85ee-a37cea516d78');
+        '5e85eea3-7cea-416d-85ee-a37cea516d78',
+        '2025-01-31');
 
 INSERT INTO "ReviewResult" ("reviewId", "criterionId", "status", "comments")
 VALUES ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
         'd568a98e-4a1d-43d2-a8a9-8e4a1db3d269',
         'PASSED',
-        'This is a comment by the user'),
+        ''),
        ('f085c223-a5c6-470d-85c2-23a5c6f70d6a',
         '8fe9420e-bcc8-4742-9c31-fb79494bc2de',
         'PASSED',
