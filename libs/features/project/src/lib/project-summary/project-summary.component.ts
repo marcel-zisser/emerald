@@ -1,4 +1,11 @@
-import { Component, input, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  Signal,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatCell,
@@ -12,8 +19,10 @@ import {
   MatRowDef,
   MatTable,
 } from '@angular/material/table';
-import { group } from '@angular/animations';
-import { Checklist } from '@emerald/models';
+import { Checklist, CriteriaGroup, Criterion } from '@emerald/models';
+import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ProjectService } from '../project/project.service';
 
 export interface Product {
   category: string;
@@ -28,6 +37,11 @@ export const PRODUCTS: Product[] = [
   { category: 'Vegetables', name: 'Carrot', price: 1.5, test: 'true' },
   { category: 'Vegetables', name: 'Lettuce', price: 2.0, test: 'false' },
 ];
+
+export interface GroupRow {
+  name: string;
+  group: boolean;
+}
 
 @Component({
   selector: 'project-project-summary',
@@ -49,18 +63,43 @@ export const PRODUCTS: Product[] = [
   standalone: true,
 })
 export class ProjectSummaryComponent {
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly projectService = inject(ProjectService);
+
+  private readonly checklistId =
+    this.activatedRoute.snapshot.params['projectId'];
+
+  protected checklist: Signal<Checklist | undefined>;
+
   displayedColumns: string[] = ['name', 'price'];
-  groupedData: any[] = [];
+  groupedData: (Criterion | GroupRow)[] = [];
 
   constructor() {
+    this.checklist = toSignal(
+      this.projectService.getChecklist(this.checklistId),
+      {
+        initialValue: undefined,
+      }
+    );
+
     this.groupData(PRODUCTS);
   }
 
-  groupData(data: any[]) {
+  groupData(criteriaGroups: CriteriaGroup[]) {
+    criteriaGroups.forEach((criteriaGroup) => {
+      this.groupedData.push({
+        name: criteriaGroup.title,
+        group: true,
+      } satisfies GroupRow);
+
+      this.groupedData.push(...[criteriaGroup.criteria]);
+    });
+
     const grouped = data.reduce((acc, current) => {
-      const group = acc.find((g: any) => g.groupName === current.category);
+      const group = acc.find((g) => g.groupName === current.category);
       if (!group) {
-        acc.push({ groupName: current.category, group: true });
+        acc.push({ name: current.category, group: true } satisfies GroupRow);
+        return acc;
       }
       acc.push(current);
       return acc;

@@ -76,6 +76,11 @@ export class ChecklistService {
       where: checklistWhereUniqueInput,
       include: {
         owner: true,
+        groups: {
+          include: {
+            criteria: true,
+          },
+        },
         reviews: {
           include: {
             reviewResults: true,
@@ -84,7 +89,19 @@ export class ChecklistService {
       },
     });
 
-    return this.mapPrismaChecklist(checklist);
+    return {
+      uuid: checklist.uuid,
+      title: checklist.title,
+      description: checklist.description,
+      owner: {
+        uuid: checklist.owner.uuid,
+        firstName: checklist.owner.firstName,
+        lastName: checklist.owner.lastName,
+      },
+      criteriaGroups: checklist.groups,
+      criteriaSummary: this.getCriterionSummary(checklist.reviews),
+      reviewSummary: this.getReviewSummary(checklist.reviews),
+    } satisfies Checklist;
   }
 
   /**
@@ -172,7 +189,11 @@ export class ChecklistService {
   }
 
   private getCriterionSummary(reviews: ReviewWithRelations[]): CriteriaSummary {
-    const criteriaSummary: CriteriaSummary = { passed: 0, failed: 0, pending: 0 };
+    const criteriaSummary: CriteriaSummary = {
+      passed: 0,
+      failed: 0,
+      pending: 0,
+    };
 
     reviews.forEach((review) => {
       const summary = this.resultService.getCriterionSummary(

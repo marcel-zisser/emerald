@@ -7,13 +7,21 @@ import {
   CreateChecklistRequest,
   CriteriaGroup,
 } from '@emerald/models';
-import { Observable } from 'rxjs';
+import { first, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectService {
   private readonly backendService = inject(BackendService);
+
+  getChecklist(checklistId: string): Observable<Checklist> {
+    return this.backendService
+      .doGet<Checklist>(
+        `${ApiRoutes.get(ApiEndpoint.Checklist)}/${checklistId}`
+      )
+      .pipe(first());
+  }
 
   createChecklist(
     title: string,
