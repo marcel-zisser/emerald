@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Select reviewers</h1>
+<form mat-dialog-content
+      class="selectionForm"
+      [formGroup]="selectedReviewersForm"
+      (ngSubmit)="submit()">
+  <div class="checkbox-container">
+    @for (user of reviewers; track user.uuid) {
+      <mat-checkbox
+        (change)="onCheckboxChange($event, user?.uuid ?? '')"
+        [checked]="selectedReviewers.value.includes(user.uuid)"
+      >
+        {{ user.firstName }} {{ user.lastName }}
+      </mat-checkbox>
+    }
+  </div>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close type="button">Cancel</button>
+    <button mat-button>OK</button>
+  </mat-dialog-actions>
+</form>
+

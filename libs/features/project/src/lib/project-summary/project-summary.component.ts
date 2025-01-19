@@ -1,8 +1,4 @@
-import {
-  Component, effect,
-  inject,
-  Signal,
-} from '@angular/core';
+import { Component, effect, inject, signal, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatCell,
@@ -14,14 +10,26 @@ import {
   MatHeaderRowDef,
   MatRow,
   MatRowDef,
-  MatTable, MatTableDataSource
+  MatTable,
+  MatTableDataSource,
 } from '@angular/material/table';
-import { Checklist, CriteriaGroup, Criterion, CriterionStatus, Review } from '@emerald/models';
+import {
+  Checklist,
+  CriteriaGroup,
+  Criterion,
+  CriterionStatus,
+  Review,
+  User,
+} from '@emerald/models';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ProjectService } from '../project/project.service';
 import { StatusIconPipe } from '@emerald/services';
 import { MatIcon } from '@angular/material/icon';
+import { MatFabButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { ReviewerSelectionDialogComponent } from './reviewer-selection-dialog/reviewer-selection-dialog.component';
+import { first } from 'rxjs';
 
 export interface GroupRow {
   name: string;
@@ -44,6 +52,7 @@ export interface GroupRow {
     MatHeaderRowDef,
     MatIcon,
     StatusIconPipe,
+    MatFabButton,
   ],
   templateUrl: './project-summary.component.html',
   styleUrl: './project-summary.component.scss',
@@ -52,12 +61,14 @@ export interface GroupRow {
 export class ProjectSummaryComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly projectService = inject(ProjectService);
+  private readonly dialog = inject(MatDialog);
 
   private readonly checklistId =
     this.activatedRoute.snapshot.params['projectId'];
 
   protected checklist!: Signal<Checklist | undefined>;
   protected reviews!: Signal<Review[] | undefined>;
+  protected selectedReviewers = signal<string[]>([]);
 
   displayedColumns: string[] = ['description'];
   dataSource = new MatTableDataSource<Criterion | GroupRow>([]);
@@ -73,8 +84,11 @@ export class ProjectSummaryComponent {
   groupData(
     criteriaGroups: CriteriaGroup[],
     reviews: Review[]
-  ): ((Criterion & { [key: string]: CriterionStatus;})| GroupRow)[] {
-    const groups: ((Criterion & {[key: string]: CriterionStatus;})| GroupRow)[] = [];
+  ): ((Criterion & { [key: string]: CriterionStatus }) | GroupRow)[] {
+    const groups: (
+      | (Criterion & { [key: string]: CriterionStatus })
+      | GroupRow
+    )[] = [];
 
     criteriaGroups.forEach((criteriaGroup) => {
       groups.push({
@@ -120,7 +134,9 @@ export class ProjectSummaryComponent {
 
     effect(() => {
       const checklist = this.checklist();
-      const reviews = this.reviews();
+      const reviews = this.reviews()?.filter((review) =>
+        this.selectedReviewers().includes(review?.user?.uuid ?? '')
+      );
       if (checklist && checklist.criteriaGroups && reviews) {
         this.dataSource.data = this.groupData(
           checklist.criteriaGroups,
@@ -145,4 +161,24 @@ export class ProjectSummaryComponent {
   }
 
   protected readonly CriterionStatus = CriterionStatus;
+
+  openReviewerSelection() {
+    const dialogRef = this.dialog.open(ReviewerSelectionDialogComponent, {
+      data: {
+        reviewers: this.reviews()?.map((review) => review.user),
+        selectedReviewers: this.selectedReviewers()
+      },
+      width: '50%',
+      height: '50%',
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(first())
+      .subscribe((selectedReviewerUuids: string[]) => {
+        if(selectedReviewerUuids) {
+          this.selectedReviewers.set(selectedReviewerUuids);
+        }
+      });
+  }
 }

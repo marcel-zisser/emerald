@@ -2,6 +2,11 @@
 
 <p>{{ checklist()?.description }}</p>
 
+<button mat-fab extended="true" (click)="openReviewerSelection()">
+  <mat-icon>group</mat-icon>
+  Select reviewers
+</button>
+
 <table mat-table [dataSource]="dataSource" class="custom-table mat-elevation-z8">
   <!-- Group Header Row -->
   <ng-container matColumnDef="group">
