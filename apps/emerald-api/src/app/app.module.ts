@@ -10,6 +10,8 @@ import { ChecklistModule } from './checklist/checklist.module';
 import { ReviewModule } from './review/review.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ResultModule } from './result/result.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -19,6 +21,9 @@ import { ResultModule } from './result/result.module';
     ReviewModule,
     DashboardModule,
     ResultModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'emerald-ui', 'browser'),
+    }),
   ],
   controllers: [AppController],
   providers: [
