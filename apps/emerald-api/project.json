@@ -25,9 +25,9 @@
         "command": "webpack-cli build",
         "args": ["node-env=production"]
       },
-      "dependsOn": ["init-db"],
       "configurations": {
         "development": {
+          "dependsOn": ["init-db"],
           "args": ["node-env=development"]
         }
       }
