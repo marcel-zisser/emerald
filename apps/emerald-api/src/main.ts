@@ -11,13 +11,18 @@ import * as dotenv from 'dotenv';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {cors: true});
+  const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.use(cookieParser()); // Enable cookie parsing
 
   const port = process.env.PORT || 3000;
-
+  app.enableCors({
+    origin: 'http://localhost',
+    methods: 'GET,POST,PUT,PATCH,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true,
+  });
 
   dotenv.config();
 
