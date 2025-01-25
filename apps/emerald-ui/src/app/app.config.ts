@@ -1,7 +1,7 @@
 import {
   ApplicationConfig,
   importProvidersFrom,
-  provideZoneChangeDetection,
+  provideZoneChangeDetection
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
@@ -9,7 +9,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authenticationInterceptor } from '@emerald/authentication';
 import { JwtModule } from '@auth0/angular-jwt';
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
@@ -17,6 +16,8 @@ import {
   provideNativeDateAdapter
 } from '@angular/material/core';
 import { IsoDateAdapter } from './iso-date-adapter';
+import { environment } from '../environments/environment';
+import { API_URL_TOKEN } from '@emerald/services';
 
 export function tokenGetter() {
   return localStorage.getItem('auth_token');
@@ -48,9 +49,9 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideAnimationsAsync(),
-    provideCharts(withDefaultRegisterables()),
     provideNativeDateAdapter(),
     { provide: DateAdapter, useClass: IsoDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: ISO_DATE_FORMATS },
+    { provide: API_URL_TOKEN, useValue: environment.apiUrl },
   ],
 };

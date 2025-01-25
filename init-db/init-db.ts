@@ -3,11 +3,12 @@ import * as fs from 'fs';
 
 async function executeSQL() {
   const client = new Client({
-    host: 'localhost',
+    host: process.env.POSTGRES_HOST,
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
     port: 5432,
+    ssl: true,
   });
 
   try {

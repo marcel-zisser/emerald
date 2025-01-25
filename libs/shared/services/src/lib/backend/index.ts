@@ -1,1 +1,1 @@
-export { BackendService } from './backend.service';
+export { BackendService, API_URL_TOKEN } from './backend.service';
