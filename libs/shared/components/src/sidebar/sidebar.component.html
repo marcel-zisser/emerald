@@ -1,7 +1,7 @@
 <!-- sidebar.component.html -->
 <mat-sidenav-container class="sidenav-container" autosize>
   <mat-sidenav
-    mode="side"
+    [mode]="isMobile() ? 'over' : 'side'"
     [opened]="isExpanded"
     [class.collapsed]="!isExpanded"
     class="sidenav"

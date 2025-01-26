@@ -23,7 +23,7 @@ export class ReviewFormService {
   private _review = signal<Review | undefined>(undefined);
   private _results = computed<Map<string | undefined, ReviewResult>>(() => {
     return new Map<string | undefined, ReviewResult>(
-      this._review()?.results?.map((result) => [result?.criterionId, result])
+      this._review()?.results?.map((result) => [result?.criterionId, result]),
     );
   });
 
@@ -56,7 +56,7 @@ export class ReviewFormService {
     this.backendService
       .doPut<ReviewResult, CriterionReviewRequest>(
         ApiRoutes.get(ApiEndpoint.ReviewResult),
-        request
+        request,
       )
       .pipe(first())
       .subscribe({
@@ -67,7 +67,7 @@ export class ReviewFormService {
             const index = newReview?.results?.findIndex(
               (result) =>
                 result.criterionId === request.criterionId &&
-                result.reviewId === request.reviewId
+                result.reviewId === request.reviewId,
             );
 
             if (
@@ -79,6 +79,7 @@ export class ReviewFormService {
                 ...newReview.results[index],
                 status: updatedResult.status,
                 comments: updatedResult.comments,
+                points: updatedResult.points,
               } satisfies ReviewResult;
             }
 
@@ -96,7 +97,7 @@ export class ReviewFormService {
             {
               duration: 3000,
               verticalPosition: 'top',
-            }
+            },
           );
         },
       });

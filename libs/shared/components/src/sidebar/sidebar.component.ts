@@ -104,7 +104,7 @@ export class SidebarComponent implements AfterViewInit {
     });
 
     this.sidebarService.setMenuItems(
-      jwtDecode<JwtTokenInformation>(this.authService.getToken() ?? '').role
+      jwtDecode<JwtTokenInformation>(this.authService.getToken() ?? '').role,
     );
 
     this.router.events
@@ -122,7 +122,7 @@ export class SidebarComponent implements AfterViewInit {
    */
   ngAfterViewInit() {
     const drawerContainer = this.elementRef.nativeElement.querySelector(
-      '.mat-drawer-inner-container'
+      '.mat-drawer-inner-container',
     );
     if (drawerContainer) {
       this.renderer.setStyle(drawerContainer, 'display', 'flex');
@@ -144,4 +144,6 @@ export class SidebarComponent implements AfterViewInit {
     }
     return route.title ?? 'Emerald';
   }
+
+  protected readonly isMobile = isMobile;
 }

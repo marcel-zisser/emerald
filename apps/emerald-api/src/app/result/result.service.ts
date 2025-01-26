@@ -102,8 +102,11 @@ export class ResultService {
   }): Promise<ReviewResult> {
     const { where, data } = params;
     const updateResult = await this.prismaService.reviewResult.update({
-      data,
-      where,
+      data: {
+        ...data,
+        reviewDate: new Date(),
+      },
+      where: where,
     });
 
     return {

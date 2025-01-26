@@ -14,6 +14,8 @@ export class StatusIconPipe implements PipeTransform {
         return 'close';
       case CriterionStatus.Pending:
         return 'schedule';
-    };
+    }
+
+    return '';
   }
 }
