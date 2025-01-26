@@ -43,6 +43,7 @@ A sample `.env` file for the provided development setup could look like this:
 # Schema:             public
 DATABASE_URL=postgresql://iaweb:iaweb123!@localhost:5432/emerald?schema=public
 
+POSTGRES_HOST=localhost
 POSTGRES_USER=iaweb
 POSTGRES_PASSWORD=iaweb123!
 POSTGRES_DB=emerald
