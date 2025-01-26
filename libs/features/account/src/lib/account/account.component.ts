@@ -26,7 +26,7 @@ export class AccountComponent {
     if (jwtInformation) {
       this.currentUser = toSignal<User>(
         this.backendService
-          .doGet<User>(ApiRoutes.get(ApiEndpoint.User) + jwtInformation.sub)
+          .doGet<User>(ApiRoutes.get(ApiEndpoint.User) + '/' + jwtInformation.sub)
           .pipe(first()),
         { initialValue: undefined }
       );
