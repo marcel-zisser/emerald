@@ -8,7 +8,7 @@ async function executeSQL() {
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
     port: 5432,
-    ssl: true,
+    ssl: process.env.PRODUCTION === 'true',
   });
 
   try {

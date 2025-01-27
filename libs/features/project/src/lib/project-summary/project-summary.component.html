@@ -34,7 +34,7 @@
           [class.fail]="criterion[review.uuid].status === CriterionStatus.Fail"
           (click)="openReviewDetails(review, criterion.uuid)"
       >
-        @if(criterion.type === CriterionType.Binary) {
+        @if(criterion[review.uuid].status === CriterionStatus.Pending || criterion.type === CriterionType.Binary) {
           <mat-icon [inline]="true" class="status-icon">{{ criterion[review.uuid].status | statusIcon }}</mat-icon>
         } @else {
           {{ criterion[review.uuid].points }} out of {{ criterion.maxPoints }}

@@ -27,6 +27,7 @@
   cursor: pointer;
 
   &.status {
+
     &.pass {
       color: green;
       font-weight: bold;
@@ -38,6 +39,7 @@
     }
 
     .status-icon {
+      vertical-align: middle;
       font-size: large;
       font-weight: bold;
     }
