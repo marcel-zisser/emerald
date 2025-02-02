@@ -1,6 +1,6 @@
 <mat-stepper orientation="horizontal">
   <mat-step [stepControl]="basicData"
-            label="Basic Checklist configuration"
+            label="Basic Project configuration"
             state="description">
     <div class="step-container">
       <project-basic-data [form]="basicData"></project-basic-data>
@@ -23,7 +23,7 @@
       <project-add-reviewer [form]="reviewerForm"></project-add-reviewer>
       <div class="button-container">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-flat-button (click)="createChecklist()">Save Checklist</button>
+        <button mat-flat-button (click)="createChecklist()">Save Project</button>
       </div>
     </div>
   </mat-step>
