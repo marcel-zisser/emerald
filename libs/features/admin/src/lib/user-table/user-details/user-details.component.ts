@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,12 +13,13 @@ import {
   MatDialogActions,
   MatDialogClose,
 } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MatSuffix } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Role, User } from '@emerald/models';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'admin-user-details',
@@ -34,6 +35,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    MatIcon,
+    MatSuffix
   ],
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.scss'],
@@ -46,6 +49,8 @@ export class UserDetailsComponent {
   protected readonly Roles = Role;
   protected userForm: FormGroup;
   protected userToEdit: User | null = null;
+
+  hide = signal(true);
 
   constructor() {
     this.userToEdit = this.dialogData;
@@ -61,6 +66,11 @@ export class UserDetailsComponent {
       password: ['', Validators.required],
       role: [this.userToEdit?.role ?? '', Validators.required],
     });
+  }
+
+  hidePassword(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 
   protected onSubmit(): void {

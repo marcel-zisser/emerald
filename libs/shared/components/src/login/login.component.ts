@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 import { first } from 'rxjs';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import {
   MatCardHeader,
   MatCardTitle,
 } from '@angular/material/card';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import {
   FormBuilder,
   FormGroup,
@@ -17,9 +17,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '@emerald/authentication';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'em-login',
@@ -36,7 +37,10 @@ import { AuthenticationService } from '@emerald/authentication';
     MatLabel,
     MatError,
     MatCardHeader,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatIcon,
+    MatIconButton,
+    MatSuffix
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -48,6 +52,8 @@ export class LoginComponent {
   private readonly authenticationService = inject(AuthenticationService);
   private readonly router = inject(Router);
   private readonly snackbarService = inject(MatSnackBar);
+
+  hide = signal(true);
 
   constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -102,5 +108,10 @@ export class LoginComponent {
       control?.markAsDirty();
       control?.setErrors({ wrongCredentials: true })
     });
+  }
+
+  hidePassword(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 }
