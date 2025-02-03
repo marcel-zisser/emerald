@@ -6,4 +6,5 @@ export interface ReviewResult {
   status: CriterionStatus;
   points?: number;
   comments: string;
+  lastModified?: Date;
 }

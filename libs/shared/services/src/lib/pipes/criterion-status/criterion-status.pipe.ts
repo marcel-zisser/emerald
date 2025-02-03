@@ -14,6 +14,8 @@ export class CriterionStatusPipe implements PipeTransform {
         return 'Failed';
       case CriterionStatus.Pending:
         return 'Pending';
+      case CriterionStatus.Evaluated:
+        return 'Evaluated';
     }
   }
 }

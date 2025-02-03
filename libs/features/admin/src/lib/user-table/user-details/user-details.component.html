@@ -55,7 +55,17 @@
     <mat-grid-tile>
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password" required>
+        <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" required />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
           <mat-error>Password is required.</mat-error>
         }

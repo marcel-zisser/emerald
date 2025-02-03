@@ -1,18 +1,19 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { ApiEndpoint, ApiRoutes, User } from '@emerald/models';
 import { matchValuesValidator } from './match-values.validator';
 import { first } from 'rxjs';
 import { BackendService } from '@emerald/services';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'account-change-password',
-  imports: [FormsModule, MatButton, MatCard, MatCardHeader, MatCardTitle, MatError, MatFormField, MatInput, MatLabel, ReactiveFormsModule],
+  imports: [FormsModule, MatButton, MatCard, MatCardHeader, MatCardTitle, MatError, MatFormField, MatInput, MatLabel, ReactiveFormsModule, MatIconButton, MatSuffix, MatIcon],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +26,10 @@ export class ChangePasswordComponent {
 
   protected changePasswordForm: FormGroup;
 
+  hidePassword = signal(true);
+  hideConfirmPassword = signal(true);
+  hideCurrentPassword = signal(true);
+
   constructor() {
     this.changePasswordForm = this.formBuilder.group({
       password: [null, Validators.required],
@@ -34,6 +39,21 @@ export class ChangePasswordComponent {
       {
         validators: [matchValuesValidator('password', 'confirmPassword')]
       });
+  }
+
+  hidePasswordEvent(event: MouseEvent) {
+    this.hidePassword.set(!this.hidePassword());
+    event.stopPropagation();
+  }
+
+  hideCurrentPasswordEvent(event: MouseEvent) {
+    this.hideCurrentPassword.set(!this.hideCurrentPassword());
+    event.stopPropagation();
+  }
+
+  hideConfirmPasswordEvent(event: MouseEvent) {
+    this.hideConfirmPassword.set(!this.hideConfirmPassword());
+    event.stopPropagation();
   }
 
   protected onSubmit(): void {

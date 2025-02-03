@@ -45,11 +45,12 @@ function executeSQL() {
             switch (_a.label) {
                 case 0:
                     client = new pg_1.Client({
-                        host: 'localhost',
+                        host: process.env.POSTGRES_HOST,
                         user: process.env.POSTGRES_USER,
                         password: process.env.POSTGRES_PASSWORD,
                         database: process.env.POSTGRES_DB,
                         port: 5432,
+                        ssl: process.env.PRODUCTION === 'true',
                     });
                     _a.label = 1;
                 case 1:

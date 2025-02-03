@@ -1,17 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   effect,
   inject,
   signal,
 } from '@angular/core';
-import {
-  Criterion,
-  CriterionStatus,
-  CriterionType,
-  ReviewResult,
-} from '@emerald/models';
+import { Criterion, CriterionStatus, CriterionType } from '@emerald/models';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -36,7 +30,6 @@ import { MatCard, MatCardContent, MatCardHeader } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { ReviewFormService } from './review-form.service';
 import { ReviewForm } from './review.form';
-import { ReviewListComponent } from '@emerald/components';
 import { CriterionStatusPipe } from '@emerald/services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -99,15 +92,23 @@ export class ReviewFormComponent {
           .get('status')
           ?.patchValue(
             review.results?.find(
-              (result) => result.criterionId === selectedCriterion.uuid
-            )?.status
+              (result) => result.criterionId === selectedCriterion.uuid,
+            )?.status,
           );
         this.criterionForm
           .get('comments')
           ?.patchValue(
             review.results?.find(
-              (result) => result.criterionId === selectedCriterion.uuid
-            )?.comments
+              (result) => result.criterionId === selectedCriterion.uuid,
+            )?.comments,
+          );
+
+        this.criterionForm
+          .get('points')
+          ?.patchValue(
+            review.results?.find(
+              (result) => result.criterionId === selectedCriterion.uuid,
+            )?.points,
           );
 
         if (this.maxPointsValidator) {
@@ -117,7 +118,7 @@ export class ReviewFormComponent {
         }
 
         this.maxPointsValidator = Validators.max(
-          selectedCriterion.maxPoints ?? 0
+          selectedCriterion.maxPoints ?? 0,
         );
         this.criterionForm
           .get('points')
@@ -139,12 +140,23 @@ export class ReviewFormComponent {
     const criterionId = this.selectedCriterion()?.uuid;
 
     if (reviewId && criterionId && this.criterionForm.valid) {
-      this.reviewFormService.reviewCriterion({
-        reviewId: reviewId,
-        criterionId: criterionId,
-        status: this.criterionForm.value.status ?? CriterionStatus.Pending,
-        ...this.criterionForm.value,
-      });
+      if (this.selectedCriterion()?.criterionType === CriterionType.Binary) {
+        this.reviewFormService.reviewCriterion({
+          reviewId: reviewId,
+          criterionId: criterionId,
+          status: this.criterionForm.value.status ?? CriterionStatus.Pending,
+          ...this.criterionForm.value,
+        });
+      } else {
+        this.reviewFormService.reviewCriterion({
+          reviewId: reviewId,
+          criterionId: criterionId,
+          ...this.criterionForm.value,
+          status: this.criterionForm.value.points
+            ? CriterionStatus.Evaluated
+            : CriterionStatus.Pending,
+        });
+      }
     }
   }
 

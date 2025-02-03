@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>Criterion Review Details</h1>
+
+<div mat-dialog-content>
+  <div class="content-container">
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Criterion</mat-label>
+        <input matInput [value]="criterion.description" disabled />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Reviewer</mat-label>
+        <input matInput [value]="review.user?.firstName + ' ' + review.user?.lastName" disabled />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <input matInput [value]="reviewResult.status" disabled />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Comment</mat-label>
+        <textarea matInput [value]="reviewResult.comments" rows="3" disabled></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Points</mat-label>
+        <input matInput [value]="reviewResult.points" type="number" disabled />
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Last Modified</mat-label>
+        <input
+          matInput
+          [value]="reviewResult.lastModified ?? '' | date: 'yyyy-MM-dd hh:mm:ss'"
+          disabled
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+</div>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close type="button">Close</button>
+</mat-dialog-actions>
+
+

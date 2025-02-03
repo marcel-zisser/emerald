@@ -14,7 +14,7 @@ import { ResultService } from '../result/result.service';
 export class ReviewService {
   constructor(
     private prisma: PrismaService,
-    private resultService: ResultService
+    private resultService: ResultService,
   ) {}
 
   /**
@@ -49,7 +49,7 @@ export class ReviewService {
       return {
         uuid: review.uuid,
         status: this.resultService.getReviewStatus(
-          review.reviewResults as ReviewResult[]
+          review.reviewResults as ReviewResult[],
         ),
         assignedAt: review.assignedAt,
         user: {
@@ -73,6 +73,8 @@ export class ReviewService {
             criterionId: result.criterionId,
             status: result.status as CriterionStatus,
             comments: result.comments,
+            points: result.points,
+            lastModified: result.reviewDate,
           } satisfies ReviewResult;
         }),
       } satisfies Review;
@@ -84,7 +86,7 @@ export class ReviewService {
    * @param reviewWhereUniqueInput criteria to find review
    */
   async review(
-    reviewWhereUniqueInput: Prisma.ReviewWhereUniqueInput
+    reviewWhereUniqueInput: Prisma.ReviewWhereUniqueInput,
   ): Promise<Review | null> {
     const review = await this.prisma.review.findUnique({
       where: reviewWhereUniqueInput,
@@ -107,7 +109,7 @@ export class ReviewService {
     return {
       uuid: review.uuid,
       status: this.resultService.getReviewStatus(
-        review.reviewResults as ReviewResult[]
+        review.reviewResults as ReviewResult[],
       ),
       assignedAt: review.assignedAt,
       checklist: {
@@ -140,6 +142,8 @@ export class ReviewService {
         criterionId: results.criterionId,
         comments: results.comments,
         status: results.status as CriterionStatus,
+        points: results.points,
+        lastModified: results.reviewDate,
       })),
     } satisfies Review;
   }

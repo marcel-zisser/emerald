@@ -23,12 +23,18 @@
 
                     <mat-card-content class="criterion">
                       <span>{{ criterion.description }}</span>
-                      <span
-                        class="status"
-                        [class.pass]="results().get(criterion.uuid)?.status === CriterionStatus.Pass"
-                        [class.fail]="results().get(criterion.uuid)?.status === CriterionStatus.Fail">
-                    {{ results().get(criterion.uuid)?.status ?? CriterionStatus.Pending | criterionStatus }}
-                  </span>
+                      @if (criterion.criterionType === CriterionType.Points && results().get(criterion.uuid)?.status === CriterionStatus.Evaluated) {
+                        <span class="status">
+                          {{ results().get(criterion.uuid)?.points }} out of {{ criterion.maxPoints }}
+                        </span>
+                      } @else {
+                        <span
+                          class="status"
+                          [class.pass]="results().get(criterion.uuid)?.status === CriterionStatus.Pass"
+                          [class.fail]="results().get(criterion.uuid)?.status === CriterionStatus.Fail">
+                          {{ results().get(criterion.uuid)?.status ?? CriterionStatus.Pending | criterionStatus }}
+                        </span>
+                      }
                     </mat-card-content>
 
                   </mat-card>
@@ -54,7 +60,8 @@
             <div class="form-field">
               <mat-label class="outside-label">Comments</mat-label>
               <mat-form-field appearance="fill">
-                <textarea class="comment-area" matInput formControlName="comments" placeholder="Enter your comments here..."></textarea>
+                <textarea class="comment-area" matInput formControlName="comments"
+                          placeholder="Enter your comments here..."></textarea>
               </mat-form-field>
             </div>
 
@@ -76,26 +83,28 @@
             }
 
             <div class="button-container">
-              <div class="pass-fail-container">
-                <button mat-fab
-                        extended="true"
-                        class="status-button pass"
-                        type="button"
-                        [class.selected]="criterionForm.controls.status.value === CriterionStatus.Pass"
-                        (click)="setStatus(CriterionStatus.Pass)">
-                  <mat-icon>check</mat-icon>
-                  Pass
-                </button>
-                <button mat-fab
-                        extended="true"
-                        class="status-button fail"
-                        type="button"
-                        [class.selected]="criterionForm.controls.status.value === CriterionStatus.Fail"
-                        (click)="setStatus(CriterionStatus.Fail)">
-                  <mat-icon>close</mat-icon>
-                  Fail
-                </button>
-              </div>
+              @if (selectedCriterion()?.criterionType === CriterionType.Binary) {
+                <div class="pass-fail-container">
+                  <button mat-fab
+                          extended="true"
+                          class="status-button pass"
+                          type="button"
+                          [class.selected]="criterionForm.controls.status.value === CriterionStatus.Pass"
+                          (click)="setStatus(CriterionStatus.Pass)">
+                    <mat-icon>check</mat-icon>
+                    Pass
+                  </button>
+                  <button mat-fab
+                          extended="true"
+                          class="status-button fail"
+                          type="button"
+                          [class.selected]="criterionForm.controls.status.value === CriterionStatus.Fail"
+                          (click)="setStatus(CriterionStatus.Fail)">
+                    <mat-icon>close</mat-icon>
+                    Fail
+                  </button>
+                </div>
+              }
               <div>
                 <button mat-fab
                         extended="true"

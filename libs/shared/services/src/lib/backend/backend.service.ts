@@ -1,14 +1,17 @@
-import { inject, Injectable } from '@angular/core';
+import { Inject, inject, Injectable, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '@emerald/models';
+
+export const API_URL_TOKEN = new InjectionToken<string>('apiUrl');
 
 @Injectable({
   providedIn: 'root',
 })
 export class BackendService {
-  private apiUrl = 'http://localhost:3000/api/';
   private readonly httpClient = inject(HttpClient);
+
+  constructor(@Inject(API_URL_TOKEN) public apiUrl: string) {}
 
   /**
    * Executes a GET request to the backend API to a specific endpoint

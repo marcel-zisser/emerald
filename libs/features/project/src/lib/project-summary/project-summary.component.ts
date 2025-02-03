@@ -18,8 +18,9 @@ import {
   CriteriaGroup,
   Criterion,
   CriterionStatus,
+  CriterionType,
   Review,
-  User,
+  ReviewResult,
 } from '@emerald/models';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -30,6 +31,7 @@ import { MatFabButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewerSelectionDialogComponent } from './reviewer-selection-dialog/reviewer-selection-dialog.component';
 import { first } from 'rxjs';
+import { ReviewDetailDialogComponent } from './review-detail-dialog/review-detail-dialog.component';
 
 export interface GroupRow {
   name: string;
@@ -69,6 +71,7 @@ export class ProjectSummaryComponent {
   protected checklist!: Signal<Checklist | undefined>;
   protected reviews!: Signal<Review[] | undefined>;
   protected selectedReviewers = signal<string[]>([]);
+  protected readonly CriterionType = CriterionType;
 
   displayedColumns: string[] = ['description'];
   dataSource = new MatTableDataSource<Criterion | GroupRow>([]);
@@ -83,7 +86,7 @@ export class ProjectSummaryComponent {
 
   groupData(
     criteriaGroups: CriteriaGroup[],
-    reviews: Review[]
+    reviews: Review[],
   ): ((Criterion & { [key: string]: CriterionStatus }) | GroupRow)[] {
     const groups: (
       | (Criterion & { [key: string]: CriterionStatus })
@@ -103,11 +106,16 @@ export class ProjectSummaryComponent {
           } = criterion;
 
           reviews.forEach((review) => {
+            const result = review.results?.find(
+              (result) => result.criterionId === criterion.uuid,
+            );
+
             criterionRow = {
               ...criterionRow,
-              [review.uuid]: review.results?.find(
-                (result) => result.criterionId === criterion.uuid
-              )?.status,
+              [review.uuid]: {
+                status: result?.status,
+                points: result?.points,
+              },
             };
           });
 
@@ -129,18 +137,18 @@ export class ProjectSummaryComponent {
       this.projectService.getChecklist(this.checklistId),
       {
         initialValue: undefined,
-      }
+      },
     );
 
     effect(() => {
       const checklist = this.checklist();
       const reviews = this.reviews()?.filter((review) =>
-        this.selectedReviewers().includes(review?.user?.uuid ?? '')
+        this.selectedReviewers().includes(review?.user?.uuid ?? ''),
       );
       if (checklist && checklist.criteriaGroups && reviews) {
         this.dataSource.data = this.groupData(
           checklist.criteriaGroups,
-          reviews
+          reviews,
         );
         this.displayedColumns = [
           'description',
@@ -166,7 +174,7 @@ export class ProjectSummaryComponent {
     const dialogRef = this.dialog.open(ReviewerSelectionDialogComponent, {
       data: {
         reviewers: this.reviews()?.map((review) => review.user),
-        selectedReviewers: this.selectedReviewers()
+        selectedReviewers: this.selectedReviewers(),
       },
       width: '50%',
       height: '50%',
@@ -176,9 +184,33 @@ export class ProjectSummaryComponent {
       .afterClosed()
       .pipe(first())
       .subscribe((selectedReviewerUuids: string[]) => {
-        if(selectedReviewerUuids) {
+        if (selectedReviewerUuids) {
           this.selectedReviewers.set(selectedReviewerUuids);
         }
       });
+  }
+
+  /**
+   * Opens a dialog for the result details
+   * @param review the relevant review
+   * @param criterionId the ID of the criterion
+   */
+  openReviewDetails(review: Review, criterionId: string) {
+    const result = review.results?.find(
+      (result) => result.criterionId === criterionId,
+    );
+    const criterion = this.checklist()
+      ?.criteriaGroups?.map((group) => group.criteria)
+      .flat()
+      .find((criterion) => criterion?.uuid === criterionId);
+
+    this.dialog.open(ReviewDetailDialogComponent, {
+      data: {
+        review: review,
+        reviewResult: result,
+        criterion: criterion,
+      },
+      width: '50%',
+    });
   }
 }

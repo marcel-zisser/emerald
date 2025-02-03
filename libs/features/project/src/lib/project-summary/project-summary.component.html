@@ -30,9 +30,15 @@
       <td mat-cell
           *matCellDef="let criterion"
           class="review-cell status"
-          [class.pass]="criterion[review.uuid] === CriterionStatus.Pass"
-          [class.fail]="criterion[review.uuid] === CriterionStatus.Fail">
-        <mat-icon [inline]="true" class="status-icon">{{ criterion[review.uuid] | statusIcon }}</mat-icon>
+          [class.pass]="criterion[review.uuid].status === CriterionStatus.Pass"
+          [class.fail]="criterion[review.uuid].status === CriterionStatus.Fail"
+          (click)="openReviewDetails(review, criterion.uuid)"
+      >
+        @if(criterion[review.uuid].status === CriterionStatus.Pending || criterion.type === CriterionType.Binary) {
+          <mat-icon [inline]="true" class="status-icon">{{ criterion[review.uuid].status | statusIcon }}</mat-icon>
+        } @else {
+          {{ criterion[review.uuid].points }} out of {{ criterion.maxPoints }}
+        }
       </td>
     </ng-container>
   }

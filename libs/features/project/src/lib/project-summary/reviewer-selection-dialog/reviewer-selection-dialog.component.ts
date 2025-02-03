@@ -1,21 +1,33 @@
-import { ChangeDetectionStrategy, Component, inject, Inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogClose,
-  MatDialogContent, MatDialogRef,
-  MatDialogTitle
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
 } from '@angular/material/dialog';
 import { User } from '@emerald/models';
-import { FormArray, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormGroup,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatCheckbox } from '@angular/material/checkbox';
 
-type dialogData = {
-  reviewers: User[],
-  selectedReviewers: string[]
-}
+type DialogData = {
+  reviewers: User[];
+  selectedReviewers: string[];
+};
 
 @Component({
   selector: 'project-reviewer-selection-dialog',
@@ -36,20 +48,22 @@ type dialogData = {
 })
 export class ReviewerSelectionDialogComponent {
   private readonly fb = inject(NonNullableFormBuilder);
-  private readonly dialogRef = inject(MatDialogRef<ReviewerSelectionDialogComponent>);
+  private readonly dialogRef = inject(
+    MatDialogRef<ReviewerSelectionDialogComponent>,
+  );
 
   protected selectedReviewersForm: FormGroup;
   protected reviewers: User[];
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: dialogData) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.reviewers = data.reviewers;
 
     this.selectedReviewersForm = this.fb.group({
-      selectedReviewers: this.fb.array([], Validators.maxLength(5))
-    })
+      selectedReviewers: this.fb.array([], Validators.maxLength(5)),
+    });
 
-    for(const selectedReviewer of data.selectedReviewers) {
-      this.selectedReviewers.push((this.fb.control(selectedReviewer)));
+    for (const selectedReviewer of data.selectedReviewers) {
+      this.selectedReviewers.push(this.fb.control(selectedReviewer));
     }
   }
 
@@ -67,14 +81,14 @@ export class ReviewerSelectionDialogComponent {
       this.selectedReviewers.push(this.fb.control(userId));
     } else {
       const index = this.selectedReviewers.controls.findIndex(
-        (ctrl) => ctrl.value === userId
+        (ctrl) => ctrl.value === userId,
       );
       this.selectedReviewers.removeAt(index);
     }
   }
 
   submit() {
-    if(this.selectedReviewersForm.valid) {
+    if (this.selectedReviewersForm.valid) {
       this.dialogRef.close(this.selectedReviewers.value);
     }
   }
