@@ -23,6 +23,19 @@
       <project-add-reviewer [form]="reviewerForm"></project-add-reviewer>
       <div class="button-container">
         <button mat-button matStepperPrevious>Back</button>
+        <button mat-flat-button matStepperNext [disabled]="!criteriaForm.valid">Next</button>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="reviewerForm" label="Finalize Project" state="finish">
+    <div class="step-container">
+      <h2>Finalize Project</h2>
+      <p>
+        Are you ready to save your project?
+      </p>
+      <div class="button-container">
+        <button mat-button matStepperPrevious>Back</button>
         <button mat-flat-button (click)="createChecklist()">Save Project</button>
       </div>
     </div>
