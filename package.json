@@ -6,7 +6,9 @@
   "scripts": {
     "start:emerald": "concurrently -n \"API,UI\" -c \"blue,green\" \"nx serve emerald-api\" \"nx serve emerald-ui\"",
     "clean:windows": "del /f /s /q .angular .nx package-lock.json && npm install",
-    "clean:linux": "rm -rf .angular .nx package-lock.json && npm install"
+    "clean:linux": "rm -rf .angular .nx package-lock.json && npm install",
+    "build:production": "nx generate-prisma emerald-api && nx build emerald-ui && nx build emerald-api",
+    "generate-demo-data": "nx init-db emerald-api"
   },
   "dependencies": {
     "@angular/animations": "19.1.3",

@@ -18,12 +18,15 @@ The following variables MUST be defined:
 - JWT_SECRET
   - This serves as your JWT encryption key.
   - Make sure this key is long enough and not guessable. (using something like 'secret' is not a good idea)
+- PRODUCTION
+  - Determines if we use SSL/TLS for the database connection.
+  - Only important if the demo data should be loaded
 
 In case you want to use the provided Docker file for just trying it out, the following variables must be defined as well:
 - POSTGRES_USER
   - This is the username for the Postgres Database
 - POSTGRES_PASSWORD
-  - Tha passwords for the user defined above
+  - The password for the user defined above
 - POSTGRES_DB
   - The name of the database
 
@@ -47,6 +50,8 @@ POSTGRES_HOST=localhost
 POSTGRES_USER=iaweb
 POSTGRES_PASSWORD=iaweb123!
 POSTGRES_DB=emerald
+
+PRODUCTION=false
 
 JWT_SECRET=5f5695668f956d0268a4248b8d1770a64259cf64e128c67bccaa62879b29487d
 ```
@@ -81,6 +86,28 @@ There will be 3 users for development out of the box:
   - pw: admin
 - reviewer
   - pw: admin
+
+## Deployment
+To deploy Emerald to a server use the following commands in the root directory of the repository.
+```sh
+npm install
+```
+```sh
+npm build:production
+```
+
+After these two commands, you can find the built project in the `dist` folder on the root level of the repository.
+To launch Emerald, simply start the Node.js server using:
+```sh
+node ./dist/apps/emerald-api/main.js
+```
+
+Optionally, demo data can be generated in the database. This wipes the database clean, so be careful and use backups before doing that.
+```sh
+npm generate-demo-data
+```
+
+
 
 ### Install Nx Console
 

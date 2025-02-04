@@ -19,6 +19,13 @@
       },
       "dependsOn": ["migrate-db"]
     },
+    "generate-prisma": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "prisma generate",
+        "args": ["--schema=apps/emerald-api/prisma/schema.prisma"]
+      }
+    },
     "build": {
       "executor": "nx:run-commands",
       "options": {
